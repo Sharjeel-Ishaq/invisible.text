@@ -53,8 +53,20 @@ externalPort = 3000
 localPort = 5000
 externalPort = 80
 
+[[ports]]
+localPort = 5001
+externalPort = 3001
+
 [userenv]
 
 [userenv.shared]
 ADMIN_USERNAME = "admin"
 ADMIN_EMAIL = "mr.sakhawat100@gmail.com"
+
+[userenv.production]
+ALLOWED_ORIGINS = "https://textsinvisible.com,https://www.textsinvisible.com"
+
+[deployment]
+deploymentTarget = "autoscale"
+run = ["bash", "-c", "cd Invisible-Text-WebApp/artifacts/api-server && node --enable-source-maps ./dist/index.mjs"]
+build = ["bash", "-c", "cd Invisible-Text-WebApp/artifacts/invisible-webapp && pnpm run build && mkdir -p ../api-server/public && cp -r dist/public/. ../api-server/public/ && cd ../api-server && pnpm run build"]
