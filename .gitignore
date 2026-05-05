@@ -1,0 +1,27 @@
+# Top-level .gitignore for workspace
+
+# Node modules and build outputs
+node_modules/
+dist/
+build/
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.local
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Lockfiles
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Allow committing build artifacts but still ignore node_modules and env files inside
+# (we previously ignored the whole artifacts folder; prefer to only ignore large or secret files)
+Invisible-Text-WebApp/artifacts/**/node_modules/
+Invisible-Text-WebApp/artifacts/**/.env
