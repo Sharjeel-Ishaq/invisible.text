@@ -76,7 +76,7 @@ app.use(express.static(publicDir));
 app.use("/api", router);
 
 // SPA fallback
-app.get("*", (_req, res, next) => {
+app.get("/{*splat}", (_req, res, next) => {
   if (_req.path.startsWith("/api")) return next();
   const indexHtml = path.join(publicDir, "index.html");
   if (fs.existsSync(indexHtml)) {

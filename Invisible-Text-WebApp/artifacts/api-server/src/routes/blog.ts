@@ -8,7 +8,6 @@ import { blogPosts } from "@workspace/db";
 import { eq, desc } from "drizzle-orm";
 import { requireAdmin } from "./admin";
 import { z } from "zod";
-import { MySqlTableWithColumns, MySqlColumn } from "drizzle-orm/mysql-core";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -97,7 +96,7 @@ export function registerBlogRoutes(app: Express) {
     const scheduledDate = data.scheduledDate ? new Date(data.scheduledDate) : null;
 
     try {
-      const [result] = await db
+      const [post] = await db
         .insert(blogPosts)
         .values({
           title: data.title,
@@ -109,13 +108,12 @@ export function registerBlogRoutes(app: Express) {
           featuredImage: data.featuredImage,
           status: data.status,
           scheduledDate,
-        });
+        })
+        .returning();
 
-      const insertId = (result as any).insertId;
-      const [post] = await db.select().from(blogPosts).where(eq(blogPosts.id, insertId)).limit(1);
       res.status(201).json(post);
     } catch (e: any) {
-      if (e.code === "ER_DUP_ENTRY") {
+      if (e.code === "23505") {
         return void res.status(409).json({ message: "Slug already exists. Choose a different slug." });
       }
       throw e;
@@ -156,7 +154,7 @@ export function registerBlogRoutes(app: Express) {
       if (!post) return void res.status(404).json({ message: "Post not found" });
       res.json(post);
     } catch (e: any) {
-      if (e.code === "ER_DUP_ENTRY") {
+      if (e.code === "23505") {
         return void res.status(409).json({ message: "Slug already exists. Choose a different slug." });
       }
       throw e;

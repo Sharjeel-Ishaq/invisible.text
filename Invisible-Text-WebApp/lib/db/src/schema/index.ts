@@ -1,15 +1,14 @@
 import {
-  mysqlTable,
+  pgTable,
   text,
-  int,
   timestamp,
   varchar,
-} from "drizzle-orm/mysql-core";
+  serial,
+} from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
-import { z } from "zod";
 
-export const contactSubmissions = mysqlTable("contact_submissions", {
-  id: int("id").primaryKey().autoincrement(),
+export const contactSubmissions = pgTable("contact_submissions", {
+  id: serial("id").primaryKey(),
   name: text("name").notNull(),
   email: varchar("email", { length: 255 }).notNull(),
   message: text("message").notNull(),
@@ -23,8 +22,8 @@ export const insertContactSchema = createInsertSchema(contactSubmissions).omit({
 export type InsertContact = typeof contactSubmissions.$inferInsert;
 export type ContactSubmission = typeof contactSubmissions.$inferSelect;
 
-export const blogPosts = mysqlTable("blog_posts", {
-  id: int("id").primaryKey().autoincrement(),
+export const blogPosts = pgTable("blog_posts", {
+  id: serial("id").primaryKey(),
   title: text("title").notNull(),
   slug: varchar("slug", { length: 255 }).notNull().unique(),
   content: text("content").notNull(),
@@ -44,8 +43,8 @@ export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
 export type InsertBlogPost = typeof blogPosts.$inferInsert;
 export type BlogPost = typeof blogPosts.$inferSelect;
 
-export const adminUsers = mysqlTable("admin_users", {
-  id: int("id").primaryKey().autoincrement(),
+export const adminUsers = pgTable("admin_users", {
+  id: serial("id").primaryKey(),
   username: varchar("username", { length: 255 }).notNull().unique(),
   email: varchar("email", { length: 255 }).notNull().unique(),
   passwordHash: text("password_hash").notNull(),
@@ -54,8 +53,8 @@ export const adminUsers = mysqlTable("admin_users", {
 
 export type AdminUser = typeof adminUsers.$inferSelect;
 
-export const session = mysqlTable("sessions", {
-  session_id: varchar("session_id", { length: 128 }).primaryKey(),
-  expires: int("expires").notNull(),
-  data: text("data"),
+export const session = pgTable("session", {
+  sid: varchar("sid").primaryKey(),
+  sess: text("sess").notNull(),
+  expire: timestamp("expire", { precision: 6 }).notNull(),
 });
