@@ -435,8 +435,8 @@ export default function FreeFire() {
               { problem: "Too Many Characters", solution: "Reduce the invisible text quantity to 15–20 characters." },
               { problem: "Name Already Taken", solution: "Add a small symbol or number alongside the invisible space." },
             ].map((item) => (
-              <div key={item.problem} className="flex gap-4 p-4 rounded-xl bg-muted/30 border border-border">
-                <div className="flex-shrink-0 text-sm font-semibold text-destructive min-w-[160px]">
+              <div key={item.problem} className="flex flex-col sm:flex-row gap-1 sm:gap-4 p-4 rounded-xl bg-muted/30 border border-border">
+                <div className="text-sm font-semibold text-destructive sm:flex-shrink-0 sm:min-w-[160px]">
                   Problem: {item.problem}
                 </div>
                 <div className="text-sm text-muted-foreground">
