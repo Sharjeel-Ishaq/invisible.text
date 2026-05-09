@@ -39,10 +39,9 @@ function Router() {
       <Route path="/admin/login" component={AdminLogin} />
       <Route path="/admin/dashboard" component={AdminDashboard} />
       <Route path="/free-fire-text" component={FreeFire} />
-      {/* Old /free-fire removed — use /free-fire-text as the official path */}
       <Route path="/reverse-text" component={ReverseText} />
       <Route path="/mirror-text-generator" component={MirrorTextGenerator} />
-        <Route path="/unicode-text-converter" component={UnicodeConverter} />
+      <Route path="/unicode-text-converter" component={UnicodeConverter} />
       <Route path="/text-spacer" component={TextSpacer} />
       <Route path="/contact" component={Contact} />
       <Route path="/privacy-policy" component={Privacy} />

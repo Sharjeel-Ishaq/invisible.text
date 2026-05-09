@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "preinstall": "node -e \"const fs=require('fs');['package-lock.json','yarn.lock'].forEach(f=>{try{fs.unlinkSync(f)}catch(e){}});if(!process.env.npm_config_user_agent||!process.env.npm_config_user_agent.startsWith('pnpm')){process.stderr.write('Warning: pnpm not detected — proceeding with npm/yarn\\n')}\"",
+    "start": "cd Invisible-Text-WebApp/artifacts/api-server && node --enable-source-maps ./dist/index.mjs",
     "build": "node ./Invisible-Text-WebApp/scripts/build.js",
     "typecheck:libs": "tsc --build",
     "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck",
