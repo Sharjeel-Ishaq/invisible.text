@@ -66,6 +66,7 @@ const postSchema = z.object({
   featuredImage: z.string().default(""),
   status: z.enum(["draft", "published", "scheduled"]).default("draft"),
   scheduledDate: z.string().nullable().optional(),
+  publishedAt: z.string().nullable().optional(),
 });
 
 export function registerBlogRoutes(app: Express) {
@@ -94,6 +95,11 @@ export function registerBlogRoutes(app: Express) {
     }
     const data = parsed.data;
     const scheduledDate = data.scheduledDate ? new Date(data.scheduledDate) : null;
+    const publishedAt = data.publishedAt
+      ? new Date(data.publishedAt)
+      : data.status === "published"
+        ? new Date()
+        : null;
 
     try {
       const [post] = await db
@@ -108,6 +114,7 @@ export function registerBlogRoutes(app: Express) {
           featuredImage: data.featuredImage,
           status: data.status,
           scheduledDate,
+          publishedAt,
         })
         .returning();
 
@@ -142,6 +149,15 @@ export function registerBlogRoutes(app: Express) {
 
     if ("scheduledDate" in data) {
       updates["scheduledDate"] = data.scheduledDate ? new Date(data.scheduledDate as string) : null;
+    }
+
+    if ("publishedAt" in data) {
+      updates["publishedAt"] = data.publishedAt ? new Date(data.publishedAt as string) : null;
+    } else if (data.status === "published") {
+      const [existing] = await db.select({ publishedAt: blogPosts.publishedAt }).from(blogPosts).where(eq(blogPosts.id, id)).limit(1);
+      if (!existing?.publishedAt) {
+        updates["publishedAt"] = new Date();
+      }
     }
 
     try {

@@ -39,6 +39,7 @@ type BlogPost = {
   featuredImage: string;
   status: "draft" | "published" | "scheduled";
   scheduledDate: string | null;
+  publishedAt: string | null;
   createdAt: string;
 };
 
@@ -488,6 +489,7 @@ const postFormSchema = z.object({
   featuredImage: z.string().default(""),
   status: z.enum(["draft", "published", "scheduled"]).default("draft"),
   scheduledDate: z.string().optional(),
+  publishedAt: z.string().optional(),
 });
 type PostForm = z.infer<typeof postFormSchema>;
 
@@ -516,6 +518,9 @@ function BlogPostForm({
       status: initialData?.status || "published",
       scheduledDate: initialData?.scheduledDate
         ? new Date(initialData.scheduledDate).toISOString().slice(0, 16)
+        : "",
+      publishedAt: initialData?.publishedAt
+        ? new Date(initialData.publishedAt).toISOString().slice(0, 16)
         : "",
     },
   });
@@ -720,7 +725,9 @@ function BlogPostForm({
           <div className="space-y-5">
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-base">Publish Settings</CardTitle>
+                <CardTitle className="text-base flex items-center gap-2">
+                  <Clock className="h-4 w-4" /> Publish Settings
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-1">
@@ -741,13 +748,36 @@ function BlogPostForm({
                   />
                 </div>
 
+                {statusValue === "published" && (
+                  <div className="space-y-1">
+                    <Label className="flex items-center gap-1.5">
+                      <Globe className="h-3.5 w-3.5 text-green-600" />
+                      Publish Date & Time
+                    </Label>
+                    <Input
+                      type="datetime-local"
+                      {...form.register("publishedAt")}
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      Leave blank to use now. Set a past date to backdate the post.
+                    </p>
+                  </div>
+                )}
+
                 {statusValue === "scheduled" && (
                   <div className="space-y-1">
-                    <Label>Scheduled Date & Time</Label>
+                    <Label className="flex items-center gap-1.5">
+                      <Clock className="h-3.5 w-3.5 text-blue-600" />
+                      Scheduled Date & Time
+                    </Label>
                     <Input
                       type="datetime-local"
                       {...form.register("scheduledDate")}
+                      min={new Date().toISOString().slice(0, 16)}
                     />
+                    <p className="text-xs text-muted-foreground">
+                      Post will auto-publish at this date and time.
+                    </p>
                   </div>
                 )}
 
@@ -898,8 +928,22 @@ function BlogPostList({
                   <h3 className="font-semibold truncate">{post.title}</h3>
                   {statusBadge(post.status)}
                 </div>
-                <p className="text-xs text-muted-foreground mt-1">
-                  /{post.slug} · {new Date(post.createdAt).toLocaleDateString()}
+                <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1 flex-wrap">
+                  <span>/{post.slug}</span>
+                  <span>·</span>
+                  {post.status === "published" && post.publishedAt ? (
+                    <span className="flex items-center gap-0.5 text-green-700">
+                      <Globe className="h-3 w-3" />
+                      {new Date(post.publishedAt).toLocaleString([], { dateStyle: "medium", timeStyle: "short" })}
+                    </span>
+                  ) : post.status === "scheduled" && post.scheduledDate ? (
+                    <span className="flex items-center gap-0.5 text-blue-600">
+                      <Clock className="h-3 w-3" />
+                      {new Date(post.scheduledDate).toLocaleString([], { dateStyle: "medium", timeStyle: "short" })}
+                    </span>
+                  ) : (
+                    <span>{new Date(post.createdAt).toLocaleDateString()}</span>
+                  )}
                 </p>
               </div>
               <div className="flex items-center gap-2 shrink-0">

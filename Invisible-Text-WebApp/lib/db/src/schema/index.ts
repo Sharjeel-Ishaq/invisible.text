@@ -33,6 +33,7 @@ export const blogPosts = pgTable("blog_posts", {
   featuredImage: text("featured_image").notNull(),
   status: varchar("status", { length: 20 }).notNull().default("draft"),
   scheduledDate: timestamp("scheduled_date"),
+  publishedAt: timestamp("published_at"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
