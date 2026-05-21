@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "Z8gQTHwXCqtoH6_EEGqrM"
+uri = "file://textsinvisible-hostinger.zip"
+type = "unspecified"
+title = "textsinvisible-hostinger.zip — Hostinger Node.js Deploy Package"

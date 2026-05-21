@@ -324,7 +324,7 @@ export default function ReverseText() {
               { title: "Discord and Chat Apps", desc: "Use reversed text to create funny or mysterious messages in chats.", bg: "rgb(239, 246, 255)", border: "rgb(191, 219, 254)" },
               { title: "Coding and Programming", desc: "Developers test string manipulation functions and quickly verify reversed outputs.", bg: "rgb(239, 246, 255)", border: "rgb(191, 219, 254)" },
             ].map((item) => (
-              <div key={item.title} className="rounded-xl p-4 border" style={{ backgroundColor: item.bg, borderColor: item.border }}>
+              <div key={item.title} className="rounded-xl p-4 border transition-shadow duration-300 hover:shadow-sm" style={{ backgroundColor: item.bg, borderColor: item.border }}>
                 <h3 className="font-semibold text-foreground mb-1">{item.title}</h3>
                 <p className="text-sm text-muted-foreground">{item.desc}</p>
               </div>

@@ -5,13 +5,41 @@ import { z } from "zod";
 import { Layout } from "@/components/Layout";
 import { SeoHead } from "@/components/SeoHead";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useGenerateText } from "@/hooks/use-generator";
-import { Copy,Sparkles, AlignVerticalSpaceAround, Instagram, Gamepad2, Check, Plus, Minus, CheckCircle2, Flame, ArrowRight, ChevronDown, ChevronUp, EyeOff, ArrowLeftRight, Hash, MessageCircle, MessageSquare, Music, RefreshCw } from "lucide-react";
+import {
+  Copy,
+  Sparkles,
+  AlignVerticalSpaceAround,
+  Instagram,
+  Gamepad2,
+  Check,
+  Plus,
+  Minus,
+  CheckCircle2,
+  Flame,
+  ArrowRight,
+  ChevronDown,
+  ChevronUp,
+  EyeOff,
+  ArrowLeftRight,
+  Hash,
+  MessageCircle,
+  MessageSquare,
+  Music,
+  RefreshCw,
+} from "lucide-react";
 
 import { motion } from "framer-motion";
 import { Link } from "wouter";
@@ -58,9 +86,6 @@ export default function Home() {
   const [copied, setCopied] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-
-
-
   const form = useForm<z.infer<typeof generateSchema>>({
     resolver: zodResolver(generateSchema),
     defaultValues: { length: 1 },
@@ -68,8 +93,14 @@ export default function Home() {
 
   const currentLength = Number(form.watch("length")) || 1;
 
-  const increment = () => form.setValue("length", Math.min(currentLength + 1, 1000), { shouldValidate: true });
-  const decrement = () => form.setValue("length", Math.max(currentLength - 1, 1), { shouldValidate: true });
+  const increment = () =>
+    form.setValue("length", Math.min(currentLength + 1, 1000), {
+      shouldValidate: true,
+    });
+  const decrement = () =>
+    form.setValue("length", Math.max(currentLength - 1, 1), {
+      shouldValidate: true,
+    });
 
   const onSubmit = (data: z.infer<typeof generateSchema>) => {
     generateMutation.mutate(data, {
@@ -78,7 +109,11 @@ export default function Home() {
         toast({ title: "Text Generated!", description: response.message });
       },
       onError: (error) => {
-        toast({ title: "Error", description: error.message, variant: "destructive" });
+        toast({
+          title: "Error",
+          description: error.message,
+          variant: "destructive",
+        });
       },
     });
   };
@@ -87,7 +122,10 @@ export default function Home() {
     if (!generatedText) return;
     navigator.clipboard.writeText(generatedText);
     setCopied(true);
-    toast({ title: "Copied!", description: "Invisible text copied to clipboard successfully." });
+    toast({
+      title: "Copied!",
+      description: "Invisible text copied to clipboard successfully.",
+    });
     setTimeout(() => setCopied(false), 2000);
   };
 
@@ -109,37 +147,43 @@ export default function Home() {
   const features = [
     {
       title: "100% Free Forever",
-      description: "Completely free to use — no sign-up, registration, or hidden fees required at any point.",
+      description:
+        "Completely free to use — no sign-up, registration, or hidden fees required at any point.",
       bg: "rgb(239, 246, 255)",
       border: "rgb(191, 219, 254)",
     },
     {
       title: "True Unicode Characters",
-      description: "Generates real Hangul Filler (U+3164) invisible characters that work consistently across platforms.",
+      description:
+        "Generates real Hangul Filler (U+3164) invisible characters that work consistently across platforms.",
       bg: "rgb(239, 246, 255)",
       border: "rgb(191, 219, 254)",
     },
     {
       title: "Customizable Length",
-      description: "Generate anywhere from 1 to 1000 invisible characters to fit any need or platform limit.",
+      description:
+        "Generate anywhere from 1 to 1000 invisible characters to fit any need or platform limit.",
       bg: "rgb(239, 246, 255)",
       border: "rgb(191, 219, 254)",
     },
     {
       title: "One-Click Copy",
-      description: "Copy your invisible text to the clipboard instantly with a single click — ready to paste anywhere.",
+      description:
+        "Copy your invisible text to the clipboard instantly with a single click — ready to paste anywhere.",
       bg: "rgb(239, 246, 255)",
       border: "rgb(191, 219, 254)",
     },
     {
       title: "Universal Compatibility",
-      description: "Works perfectly on WhatsApp, Instagram, Snapchat, Twitter/X, Discord, and most mobile games.",
+      description:
+        "Works perfectly on WhatsApp, Instagram, Snapchat, Twitter/X, Discord, and most mobile games.",
       bg: "rgb(239, 246, 255)",
       border: "rgb(191, 219, 254)",
     },
     {
       title: "Private & Lightning Fast",
-      description: "Results are generated instantly with no page reload, and no data is ever stored or tracked.",
+      description:
+        "Results are generated instantly with no page reload, and no data is ever stored or tracked.",
       bg: "rgb(239, 246, 255)",
       border: "rgb(191, 219, 254)",
     },
@@ -163,7 +207,10 @@ export default function Home() {
         className="space-y-4"
       >
         {/* Hero Section */}
-        <motion.div variants={fadeIn} className="text-center space-y-6 py-6 md:py-10">
+        <motion.div
+          variants={fadeIn}
+          className="text-center space-y-6 py-6 md:py-10"
+        >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-4 border border-primary/20">
             <EyeOff className="h-4 w-4" /> The Original Invisible Text Tool
           </div>
@@ -171,8 +218,9 @@ export default function Home() {
             Generate <span className="text-gradient">Invisible Text</span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Create hidden Unicode characters instantly. Perfect for sending blank messages on WhatsApp,
-            adding space to Instagram bios, or hiding your username in games.
+            Create hidden Unicode characters instantly. Perfect for sending
+            blank messages on WhatsApp, adding space to Instagram bios, or
+            hiding your username in games.
           </p>
         </motion.div>
 
@@ -180,17 +228,25 @@ export default function Home() {
         <motion.div variants={fadeIn} className="max-w-3xl mx-auto">
           <Card
             className="glass-card overflow-hidden"
-            style={{ border: `2px solid ${ACCENT}30`, borderTop: `4px solid ${ACCENT}` }}
+            style={{
+              border: `2px solid ${ACCENT}30`,
+              borderTop: `4px solid ${ACCENT}`,
+            }}
           >
             <CardHeader className="bg-secondary/30 border-b border-border/50">
               <CardTitle className="flex items-center gap-2">
                 <Sparkles className="h-5 w-5" style={{ color: ACCENT }} />
                 Generator
               </CardTitle>
-              <CardDescription>Customize the length of your invisible text string.</CardDescription>
+              <CardDescription>
+                Customize the length of your invisible text string.
+              </CardDescription>
             </CardHeader>
             <CardContent className="p-6 md:p-8 space-y-6">
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
                 <div className="space-y-2">
                   <Label htmlFor="length">Number of characters (Length)</Label>
                   <div className="flex flex-col sm:flex-row gap-2">
@@ -235,11 +291,15 @@ export default function Home() {
                       className="text-white w-full sm:w-auto sm:min-w-[120px] shadow-lg"
                       style={{ backgroundColor: ACCENT }}
                     >
-                      {generateMutation.isPending ? "Generating..." : "Generate"}
+                      {generateMutation.isPending
+                        ? "Generating..."
+                        : "Generate"}
                     </Button>
                   </div>
                   {form.formState.errors.length && (
-                    <p className="text-sm text-destructive">{form.formState.errors.length.message}</p>
+                    <p className="text-sm text-destructive">
+                      {form.formState.errors.length.message}
+                    </p>
                   )}
                 </div>
               </form>
@@ -253,7 +313,9 @@ export default function Home() {
                     value={generatedText}
                     placeholder="Your invisible text will appear here..."
                     className="min-h-[150px] resize-none bg-muted/20 font-mono text-muted-foreground transition-colors"
-                    style={{ borderColor: generatedText ? `${ACCENT}40` : undefined }}
+                    style={{
+                      borderColor: generatedText ? `${ACCENT}40` : undefined,
+                    }}
                   />
                   {generatedText && (
                     <div className="absolute top-2 right-2 md:top-4 md:right-4">
@@ -277,20 +339,27 @@ export default function Home() {
                 }}
               >
                 {copied ? (
-                  <><Check className="mr-2 h-4 w-4" /> Copied!</>
+                  <>
+                    <Check className="mr-2 h-4 w-4" /> Copied!
+                  </>
                 ) : (
-                  <><Copy className="mr-2 h-4 w-4" /> Copy to Clipboard</>
+                  <>
+                    <Copy className="mr-2 h-4 w-4" /> Copy to Clipboard
+                  </>
                 )}
               </Button>
             </CardFooter>
           </Card>
         </motion.div>
 
-
-
         {/* What Is Invisible Text Section */}
-        <motion.div variants={fadeIn} className="max-w-4xl mx-auto py-8 border-t border-border">
-          <h2 className="text-3xl font-display font-bold mb-6">What Is Invisible Text?</h2>
+        <motion.div
+          variants={fadeIn}
+          className="max-w-4xl mx-auto py-8 border-t border-border"
+        >
+          <h2 className="text-3xl font-display font-bold mb-6">
+            What Is Invisible Text?
+          </h2>
           <img
             src={featuredImage}
             alt="Invisible Text and Blank Space — Create and Send Blank Messages and Hidden Names Like a Pro"
@@ -299,32 +368,51 @@ export default function Home() {
           />
           <div className="space-y-4 text-muted-foreground leading-relaxed">
             <p>
-              Invisible text refers to characters that exist in a digital message or field but cannot be seen by the naked eye.
-              These are not simply blank spaces — they are special Unicode characters that take up space and are recognized by
-              computers and apps, yet render as completely transparent to anyone reading the message.
+              Invisible text refers to characters that exist in a digital
+              message or field but cannot be seen by the naked eye. These are
+              not simply blank spaces — they are special Unicode characters that
+              take up space and are recognized by computers and apps, yet render
+              as completely transparent to anyone reading the message.
             </p>
             <p>
-              The most commonly used invisible character is the <strong className="text-foreground">Hangul Filler (U+3164)</strong>,
-              a Unicode character originally designed as a placeholder in Korean typography. When placed in a text field, it appears
-              as an empty gap — no dot, no dash, no visible mark — yet it is a fully valid character that passes most text validation
-              checks. This makes it ideal for use on platforms like WhatsApp, Instagram, Discord, and mobile games.
+              The most commonly used invisible character is the{" "}
+              <strong className="text-foreground">
+                Hangul Filler (U+3164)
+              </strong>
+              , a Unicode character originally designed as a placeholder in
+              Korean typography. When placed in a text field, it appears as an
+              empty gap — no dot, no dash, no visible mark — yet it is a fully
+              valid character that passes most text validation checks. This
+              makes it ideal for use on platforms like WhatsApp, Instagram,
+              Discord, and mobile games.
             </p>
             <p>
-              Other invisible Unicode characters include the Zero Width Space (U+200B), Zero Width Non-Joiner (U+200C), and
-              the Braille Pattern Blank (U+2800), each with slightly different behaviors across platforms. Our generator focuses on
-              the Hangul Filler because it offers the broadest compatibility and most reliable invisibility across modern apps and devices.
+              Other invisible Unicode characters include the Zero Width Space
+              (U+200B), Zero Width Non-Joiner (U+200C), and the Braille Pattern
+              Blank (U+2800), each with slightly different behaviors across
+              platforms. Our generator focuses on the Hangul Filler because it
+              offers the broadest compatibility and most reliable invisibility
+              across modern apps and devices.
             </p>
             <p>
-              Invisible text has many legitimate and creative uses: bypassing character minimums, creating blank usernames in games,
-              formatting social media bios with clean spacing, sending surprise blank messages, or even watermarking digital text
-              with hidden identifiers. Whatever your use case, this tool makes generating invisible text fast, easy, and free.
+              Invisible text has many legitimate and creative uses: bypassing
+              character minimums, creating blank usernames in games, formatting
+              social media bios with clean spacing, sending surprise blank
+              messages, or even watermarking digital text with hidden
+              identifiers. Whatever your use case, this tool makes generating
+              invisible text fast, easy, and free.
             </p>
           </div>
         </motion.div>
 
         {/* Use Cases Section */}
-        <motion.div variants={fadeIn} className="max-w-6xl mx-auto py-12 border-t border-border">
-          <h2 className="text-3xl font-display font-bold text-center mb-10">Where Do We Use Invisible Text And Blank Spaces?</h2>
+        <motion.div
+          variants={fadeIn}
+          className="max-w-6xl mx-auto py-12 border-t border-border"
+        >
+          <h2 className="text-3xl font-display font-bold text-center mb-10">
+            Where Do We Use Invisible Text And Blank Spaces?
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <Link href="/free-fire-text">
               <FFToolCard />
@@ -357,44 +445,69 @@ export default function Home() {
           </div>
         </motion.div>
 
-
         {/* Unicode Table Section */}
-        <motion.div variants={fadeIn} className="max-w-4xl mx-auto py-8 border-t border-border">
-          <h2 className="text-3xl font-display font-bold mb-3">Types Of Unicode Invisible Characters</h2>
+        <motion.div
+          variants={fadeIn}
+          className="max-w-4xl mx-auto py-8 border-t border-border"
+        >
+          <h2 className="text-3xl font-display font-bold mb-3">
+            Types Of Unicode Invisible Characters
+          </h2>
           <p className="text-muted-foreground mb-6 leading-relaxed">
-            There are dozens of Unicode characters that render as invisible or blank across different platforms.
-            Below is a complete reference table. Click any row in the <strong className="text-foreground">Example</strong> column
-            to instantly copy that character to your clipboard.
+            There are dozens of Unicode characters that render as invisible or
+            blank across different platforms. Below is a complete reference
+            table. Click any row in the{" "}
+            <strong className="text-foreground">Example</strong> column to
+            instantly copy that character to your clipboard.
           </p>
           <UnicodeTable />
         </motion.div>
 
         {/* Key Features Section */}
-        <motion.div variants={fadeIn} className="max-w-5xl mx-auto py-8 border-t border-border">
-          <h2 className="text-3xl font-display font-bold mb-6">Key Features Of Blank Text Generator</h2>
+        <motion.div
+          variants={fadeIn}
+          className="max-w-5xl mx-auto py-8 border-t border-border"
+        >
+          <h2 className="text-3xl font-display font-bold mb-6">
+            Key Features Of Blank Text Generator
+          </h2>
           <p className="text-muted-foreground mb-6 leading-relaxed">
-            Our invisible text generator is built to be simple, reliable, and accessible for everyone. Here is what sets it apart:
+            Our invisible text generator is built to be simple, reliable, and
+            accessible for everyone. Here is what sets it apart:
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="rounded-xl p-5 border transition-shadow hover:shadow-sm"
-                style={{ backgroundColor: feature.bg, borderColor: feature.border }}
+                className="rounded-xl p-5 border transition-shadow duration-300 hover:shadow-sm"
+                style={{
+                  backgroundColor: feature.bg,
+                  borderColor: feature.border,
+                }}
               >
-                <h3 className="font-semibold text-foreground mb-2">{feature.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
+                <h3 className="font-semibold text-foreground mb-2">
+                  {feature.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {feature.description}
+                </p>
               </div>
             ))}
           </div>
         </motion.div>
 
         {/* How To Use Section */}
-        <motion.div variants={fadeIn} className="max-w-6xl mx-auto py-8 border-t border-border">
-          <h2 className="text-3xl font-display font-bold mb-6">How To Use Texts Invisible?</h2>
+        <motion.div
+          variants={fadeIn}
+          className="max-w-6xl mx-auto py-8 border-t border-border"
+        >
+          <h2 className="text-3xl font-display font-bold mb-6">
+            How To Use Texts Invisible?
+          </h2>
           <p className="text-muted-foreground mb-8 leading-relaxed">
-            Using our invisible text generator is straightforward. Follow these four simple steps to create and use
-            your invisible characters wherever you need them:
+            Using our invisible text generator is straightforward. Follow these
+            four simple steps to create and use your invisible characters
+            wherever you need them:
           </p>
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
             {/* Steps - Left side on desktop, top on mobile */}
@@ -407,12 +520,14 @@ export default function Home() {
               <HowToStep
                 number={2}
                 title='Click "Generate"'
-                description='Once you have set your desired length, press the Generate button. The tool will instantly create a string of invisible Unicode characters (Hangul Filler U+3164) and display them in the output box. The output box will show the character count to confirm your text has been generated.'
+                description="Once you have set your desired length, press the Generate button. The tool will instantly create a string of invisible Unicode characters (Hangul Filler U+3164) and display them in the output box. The output box will show the character count to confirm your text has been generated."
               />
               <HowToStep
                 number={3}
                 title="Copy the Invisible Text"
-                description={"Click the \"Copy to Clipboard\" button below the output box. The invisible characters will be copied silently — you won't see anything on your clipboard, but the characters are there and ready to be pasted."}
+                description={
+                  'Click the "Copy to Clipboard" button below the output box. The invisible characters will be copied silently — you won\'t see anything on your clipboard, but the characters are there and ready to be pasted.'
+                }
               />
               <HowToStep
                 number={4}
@@ -420,7 +535,7 @@ export default function Home() {
                 description="Go to the app, game, or platform where you want to use the invisible text and paste it (Ctrl+V on desktop, long-press and Paste on mobile). The field will appear empty to others, but your invisible characters will be present. This works on WhatsApp, Instagram, Twitter/X, Discord, PUBG, Free Fire, and many other platforms."
               />
             </div>
-            
+
             {/* Image - Right side on desktop, bottom on mobile */}
             <div className="flex-1 flex items-center justify-center min-h-96 md:min-h-full">
               <img
@@ -434,8 +549,13 @@ export default function Home() {
         </motion.div>
 
         {/* Related Text Tools Section */}
-        <motion.div variants={fadeIn} className="max-w-6xl mx-auto py-12 border-t border-border">
-          <h2 className="text-3xl font-display font-bold text-center mb-8">Related Text Tools</h2>
+        <motion.div
+          variants={fadeIn}
+          className="max-w-6xl mx-auto py-12 border-t border-border"
+        >
+          <h2 className="text-3xl font-display font-bold text-center mb-8">
+            Related Text Tools
+          </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
             <RelatedToolCard
               href="/"
@@ -474,7 +594,9 @@ export default function Home() {
             />
             <RelatedToolCard
               href="/text-spacer"
-              icon={<AlignVerticalSpaceAround className="h-6 w-6 text-emerald-500" />}
+              icon={
+                <AlignVerticalSpaceAround className="h-6 w-6 text-emerald-500" />
+              }
               title="TextSpacer"
               description="Add wide spaces or dots between your text characters."
               accent="#10b981"
@@ -483,17 +605,27 @@ export default function Home() {
         </motion.div>
 
         {/* FAQ Section */}
-        <motion.div variants={fadeIn} className="max-w-4xl mx-auto py-12 border-t border-border">
-          <h2 className="text-3xl font-display font-bold text-center mb-8">Frequently Asked Questions</h2>
+        <motion.div
+          variants={fadeIn}
+          className="max-w-4xl mx-auto py-12 border-t border-border"
+        >
+          <h2 className="text-3xl font-display font-bold text-center mb-8">
+            Frequently Asked Questions
+          </h2>
           <div className="space-y-2">
             {homeFaqs.map((faq, i) => (
-              <div key={i} className="border faq-item rounded-xl overflow-hidden">
+              <div
+                key={i}
+                className="border faq-item rounded-xl overflow-hidden"
+              >
                 <button
                   className="w-full flex items-center justify-between p-4 text-left hover:bg-white/30 transition-colors"
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   data-testid={`faq-toggle-home-${i}`}
                 >
-                  <span className="font-medium text-foreground pr-4">{faq.q}</span>
+                  <span className="font-medium text-foreground pr-4">
+                    {faq.q}
+                  </span>
                   {openFaq === i ? (
                     <ChevronUp className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                   ) : (
@@ -509,9 +641,6 @@ export default function Home() {
             ))}
           </div>
         </motion.div>
-
-
-
       </motion.div>
     </Layout>
   );
@@ -524,17 +653,27 @@ function FFToolCard() {
         <div className="mb-4 bg-orange-100 p-3 rounded-xl w-fit">
           <Flame className="h-8 w-8 text-orange-500" />
         </div>
-        <h3 className="text-xl font-bold mb-2 font-display">FF Invisible Text</h3>
+        <h3 className="text-xl font-bold mb-2 font-display">
+          FF Invisible Text
+        </h3>
         <p className="text-muted-foreground">
-          Create invisible nicknames for Free Fire using Hangul Filler or Braille Blank characters.
+          Create invisible nicknames for Free Fire using Hangul Filler or
+          Braille Blank characters.
         </p>
       </CardContent>
     </Card>
   );
 }
 
-
-function UseCaseCard({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) {
+function UseCaseCard({
+  icon,
+  title,
+  description,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}) {
   return (
     <Card className="border-transparent shadow-md bg-white">
       <CardContent className="pt-6">
@@ -546,7 +685,15 @@ function UseCaseCard({ icon, title, description }: { icon: React.ReactNode; titl
   );
 }
 
-function HowToStep({ number, title, description }: { number: number; title: string; description: string }) {
+function HowToStep({
+  number,
+  title,
+  description,
+}: {
+  number: number;
+  title: string;
+  description: string;
+}) {
   return (
     <div className="flex gap-5">
       <div
@@ -563,7 +710,19 @@ function HowToStep({ number, title, description }: { number: number; title: stri
   );
 }
 
-function RelatedToolCard({ href, icon, title, description, accent }: { href: string; icon: React.ReactNode; title: string; description: string; accent: string }) {
+function RelatedToolCard({
+  href,
+  icon,
+  title,
+  description,
+  accent,
+}: {
+  href: string;
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  accent: string;
+}) {
   return (
     <Link href={href}>
       <Card
@@ -577,8 +736,12 @@ function RelatedToolCard({ href, icon, title, description, accent }: { href: str
           >
             {icon}
           </div>
-          <CardTitle className="text-sm font-bold" style={{ color: accent }}>{title}</CardTitle>
-          <CardDescription className="text-xs leading-relaxed">{description}</CardDescription>
+          <CardTitle className="text-sm font-bold" style={{ color: accent }}>
+            {title}
+          </CardTitle>
+          <CardDescription className="text-xs leading-relaxed">
+            {description}
+          </CardDescription>
         </CardHeader>
       </Card>
     </Link>

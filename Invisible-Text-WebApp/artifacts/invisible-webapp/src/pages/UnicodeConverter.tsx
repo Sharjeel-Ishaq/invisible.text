@@ -378,7 +378,7 @@ export default function UnicodeConverter() {
                 border: "rgb(191, 219, 254)",
               },
             ].map((item) => (
-              <div key={item.title} className="rounded-xl border p-5 space-y-1" style={{ backgroundColor: item.bg, borderColor: item.border }}>
+              <div key={item.title} className="rounded-xl border p-5 space-y-1 transition-shadow duration-300 hover:shadow-sm" style={{ backgroundColor: item.bg, borderColor: item.border }}>
                 <h3 className="font-semibold text-foreground">{item.title}</h3>
                 <p className="text-sm text-muted-foreground">{item.desc}</p>
               </div>
