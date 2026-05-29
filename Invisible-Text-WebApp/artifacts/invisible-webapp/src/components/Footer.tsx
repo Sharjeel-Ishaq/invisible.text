@@ -47,9 +47,8 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
-          <p>&copy; {currentYear} InvisibleText. All rights reserved.</p>
-          <span>Made with love for the internet</span>
+        <div className="pt-8 border-t border-border flex justify-center items-center text-xs text-muted-foreground">
+          <p className="text-center">&copy; {currentYear} InvisibleText. All rights reserved.</p>
         </div>
       </div>
     </footer>
