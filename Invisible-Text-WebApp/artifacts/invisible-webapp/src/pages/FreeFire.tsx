@@ -2,53 +2,22 @@ import { useState } from "react";
 import { Layout } from "@/components/Layout";
 import { SeoHead } from "@/components/SeoHead";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import {
-  Copy,
-  Check,
-  Plus,
-  Minus,
-  Flame,
-  Shield,
-  Zap,
-  ChevronDown,
-  ChevronUp,
-} from "lucide-react";
+import { Copy, Check, Plus, Minus, Flame, Shield, Zap, ChevronDown, ChevronUp } from "lucide-react";
 import { motion } from "framer-motion";
 import ffInvisibleImage from "../../../../attached_assets/ff-invisible-text.webp";
 import ffInvisibleMessageImage from "../../../../attached_assets/invisible-text-ff-message.webp";
 
+
 const MODES = {
-  generatorA: {
-    label: "Generator A",
-    char: "\u3164",
-    unicode: "U+3164",
-    name: "Hangul Filler",
-  },
-  generatorB: {
-    label: "Generator B",
-    char: "\u2800",
-    unicode: "U+2800",
-    name: "Braille Pattern Blank",
-  },
-  safeMode: {
-    label: "Safe Mode",
-    char: "\u0020",
-    unicode: "U+0020",
-    name: "Standard Space",
-  },
+  generatorA: { label: "Generator A", char: "\u3164", unicode: "U+3164", name: "Hangul Filler" },
+  generatorB: { label: "Generator B", char: "\u2800", unicode: "U+2800", name: "Braille Pattern Blank" },
+  safeMode: { label: "Safe Mode", char: "\u0020", unicode: "U+0020", name: "Standard Space" },
 };
 
 type ModeKey = keyof typeof MODES;
@@ -59,7 +28,7 @@ const faqs = [
     a: "No. Invisible text uses valid Unicode characters. It is not a hack or cheat. The game accepts these characters as legitimate input.",
   },
   {
-    q: "How many characters are allowed in a Free Fire nickname?",
+    q: "How many characters or spaces are allowed in a Free Fire nickname?",
     a: "The limit may change with updates, but generally around 12–14 visible characters. Invisible characters also count toward the limit.",
   },
   {
@@ -140,57 +109,29 @@ export default function FreeFire() {
         className="space-y-4"
       >
         {/* Hero */}
-        <motion.div
-          variants={fadeIn}
-          className="text-center space-y-6 py-6 md:py-10"
-        >
-          <div
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold mb-4 border"
-            style={{
-              backgroundColor: "#00a88415",
-              color: "#00a884",
-              borderColor: "#00a88440",
-            }}
-          >
+        <motion.div variants={fadeIn} className="text-center space-y-6 py-6 md:py-10">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold mb-4 border" style={{ backgroundColor: "#00a88415", color: "#00a884", borderColor: "#00a88440" }}>
             <Flame className="h-4 w-4" /> Free Fire Invisible Text Generator
           </div>
           <h1 className="text-4xl md:text-6xl font-display font-bold tracking-tight">
-            Free Fire <span className="text-gradient">Invisible Name</span>{" "}
-            Generator
+            Free Fire <span className="text-gradient">Invisible Name</span> Generator
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Create blank nicknames for Free Fire using Unicode{" "}
-            <a
-              href="/"
-              className="text-primary hover:text-primary/80 transition-colors"
-            >
-              invisible characters
-            </a>
-            . Choose your generator mode, set the length, copy, and paste
-            directly into your profile.
+            Create blank nicknames for Free Fire using Unicode <a href="/" className="text-primary hover:text-primary/80 transition-colors">invisible characters</a>.
+            Choose your generator mode, set the length, copy, and paste directly into your profile.
           </p>
         </motion.div>
 
         {/* Generator */}
         <motion.div variants={fadeIn} className="max-w-3xl mx-auto">
-          <Card
-            className="glass-card overflow-hidden"
-            style={{
-              border: "2px solid #00a88430",
-              borderTop: "4px solid #00a884",
-            }}
-          >
-            <CardHeader
-              className="border-b border-border/50"
-              style={{ backgroundColor: "#00a88408" }}
-            >
+          <Card className="glass-card overflow-hidden" style={{ border: "2px solid #00a88430", borderTop: "4px solid #00a884" }}>
+            <CardHeader className="border-b border-border/50" style={{ backgroundColor: "#00a88408" }}>
               <CardTitle className="flex items-center gap-2">
                 <Flame className="h-5 w-5" style={{ color: "#00a884" }} />
                 FF Invisible Text Generator
               </CardTitle>
               <CardDescription>
-                Select a generator mode, adjust the length, then copy the
-                invisible text.
+                Select a generator mode, adjust the length, then copy the invisible text.
               </CardDescription>
             </CardHeader>
             <CardContent className="p-6 md:p-8 space-y-6">
@@ -199,16 +140,10 @@ export default function FreeFire() {
                 <Label>Generator Mode</Label>
                 <Tabs value={mode} onValueChange={(v) => setMode(v as ModeKey)}>
                   <TabsList className="w-full grid grid-cols-3">
-                    <TabsTrigger
-                      value="generatorA"
-                      data-testid="tab-generator-a"
-                    >
+                    <TabsTrigger value="generatorA" data-testid="tab-generator-a">
                       <Zap className="h-3.5 w-3.5 mr-1.5" /> Generator A
                     </TabsTrigger>
-                    <TabsTrigger
-                      value="generatorB"
-                      data-testid="tab-generator-b"
-                    >
+                    <TabsTrigger value="generatorB" data-testid="tab-generator-b">
                       <Shield className="h-3.5 w-3.5 mr-1.5" /> Generator B
                     </TabsTrigger>
                     <TabsTrigger value="safeMode" data-testid="tab-safe-mode">
@@ -216,38 +151,18 @@ export default function FreeFire() {
                     </TabsTrigger>
                   </TabsList>
                   <TabsContent value="generatorA">
-                    <p
-                      className="text-sm text-muted-foreground mt-2 p-3 rounded-lg border"
-                      style={{
-                        backgroundColor: "#00a88410",
-                        borderColor: "#00a88430",
-                      }}
-                    >
-                      Uses{" "}
-                      <strong className="text-foreground">
-                        Hangul Filler ({MODES.generatorA.unicode})
-                      </strong>{" "}
-                      — best compatibility with Free Fire. Recommended for most
-                      users.
+                    <p className="text-sm text-muted-foreground mt-2 p-3 rounded-lg border" style={{ backgroundColor: "#00a88410", borderColor: "#00a88430" }}>
+                      <strong className="text-foreground">Hangul Filler ({MODES.generatorA.unicode})</strong> — provides the best compatibility with Free Fire, which is why it is the first choice of most users.
                     </p>
                   </TabsContent>
                   <TabsContent value="generatorB">
                     <p className="text-sm text-muted-foreground mt-2 p-3 bg-blue-50 rounded-lg border border-blue-100">
-                      Uses{" "}
-                      <strong className="text-foreground">
-                        Braille Pattern Blank ({MODES.generatorB.unicode})
-                      </strong>{" "}
-                      — alternative mode if Generator A is rejected.
+                      Uses <strong className="text-foreground">Braille Pattern Blank ({MODES.generatorB.unicode})</strong> — alternative mode if Generator A is rejected.
                     </p>
                   </TabsContent>
                   <TabsContent value="safeMode">
                     <p className="text-sm text-muted-foreground mt-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                      Uses{" "}
-                      <strong className="text-foreground">
-                        Standard Space ({MODES.safeMode.unicode})
-                      </strong>{" "}
-                      — good for testing text formatting. Not fully invisible in
-                      all cases.
+                      Uses <strong className="text-foreground">Standard Space ({MODES.safeMode.unicode})</strong> — good for testing text formatting. Not fully invisible in all cases.
                     </p>
                   </TabsContent>
                 </Tabs>
@@ -264,10 +179,7 @@ export default function FreeFire() {
                       onClick={decrement}
                       data-testid="button-ff-decrement"
                       className="text-white flex-shrink-0"
-                      style={{
-                        backgroundColor: "#00a884",
-                        borderColor: "#00a884",
-                      }}
+                      style={{ backgroundColor: "#00a884", borderColor: "#00a884" }}
                     >
                       <Minus className="h-4 w-4" />
                     </Button>
@@ -276,11 +188,7 @@ export default function FreeFire() {
                       data-testid="input-ff-length"
                       type="number"
                       value={length}
-                      onChange={(e) =>
-                        setLength(
-                          Math.min(200, Math.max(1, Number(e.target.value))),
-                        )
-                      }
+                      onChange={(e) => setLength(Math.min(200, Math.max(1, Number(e.target.value))))}
                       className="text-lg font-mono text-center flex-1"
                       min={1}
                       max={200}
@@ -291,10 +199,7 @@ export default function FreeFire() {
                       onClick={increment}
                       data-testid="button-ff-increment"
                       className="text-white flex-shrink-0"
-                      style={{
-                        backgroundColor: "#00a884",
-                        borderColor: "#00a884",
-                      }}
+                      style={{ backgroundColor: "#00a884", borderColor: "#00a884" }}
                     >
                       <Plus className="h-4 w-4" />
                     </Button>
@@ -323,8 +228,17 @@ export default function FreeFire() {
                     data-testid="textarea-ff-output"
                     value={generatedText}
                     placeholder="Your invisible text will appear here. Click Generate to start."
-                    className="min-h-[120px] resize-none bg-muted/20 font-mono"
+                    className={`min-h-[120px] resize-none bg-muted/20 font-mono transition-colors ${
+                      generatedText ? "text-transparent" : "text-foreground"
+                    }`}
                   />
+                  {generatedText && (
+                    <div className="absolute inset-0 pointer-events-none px-3 py-2 text-base md:text-sm font-mono break-all whitespace-pre-wrap select-none overflow-hidden">
+                      <span className="bg-[#00a8841a] text-transparent px-0.3">
+                        {generatedText}
+                      </span>
+                    </div>
+                  )}
                   {generatedText && (
                     <span className="absolute top-3 right-3 text-xs text-muted-foreground bg-background/80 backdrop-blur px-2 py-1 rounded border border-border">
                       {generatedText.length} chars
@@ -333,10 +247,7 @@ export default function FreeFire() {
                 </div>
               </div>
             </CardContent>
-            <CardFooter
-              className="border-t border-border/50 p-6 flex justify-end"
-              style={{ backgroundColor: "#00a88408" }}
-            >
+            <CardFooter className="border-t border-border/50 p-6 flex justify-end" style={{ backgroundColor: "#00a88408" }}>
               <Button
                 onClick={handleCopy}
                 data-testid="button-ff-copy"
@@ -346,13 +257,9 @@ export default function FreeFire() {
                 style={{ backgroundColor: copied ? "#16a34a" : "#00a884" }}
               >
                 {copied ? (
-                  <>
-                    <Check className="mr-2 h-4 w-4" /> Copied!
-                  </>
+                  <><Check className="mr-2 h-4 w-4" /> Copied!</>
                 ) : (
-                  <>
-                    <Copy className="mr-2 h-4 w-4" /> Copy Invisible Text
-                  </>
+                  <><Copy className="mr-2 h-4 w-4" /> Copy Invisible Text</>
                 )}
               </Button>
             </CardFooter>
@@ -360,66 +267,39 @@ export default function FreeFire() {
         </motion.div>
 
         {/* Intro Content */}
-        <motion.div
-          variants={fadeIn}
-          className="max-w-4xl mx-auto space-y-4 text-muted-foreground leading-relaxed"
-        >
+        <motion.div variants={fadeIn} className="max-w-4xl mx-auto space-y-4 text-muted-foreground leading-relaxed">
           <p>
-            In Free Fire, your nickname is part of your identity. Many players
-            want a unique name that stands out. Some prefer stylish symbols.
-            Others want something clean and mysterious — like an invisible name.
+            In Free Fire, your nickname is part of your identity. Many players want a unique name that stands out.
+            Some prefer stylish symbols. Others want something clean and mysterious — like an invisible name.
           </p>
           <p>
-            If you have ever tried adding a blank space in your Free Fire
-            nickname and received an error, you are not alone. The game does not
-            accept normal spaces at the beginning or end of a name. However,
-            there is a simple solution: special Unicode characters that look
-            empty but are recognized as valid characters by the system.
+            If you've ever tried to add a space to your Free Fire nickname and received an error, don't worry.
+            Common spaces don't work, but special Unicode characters are accepted as valid characters by the
+            system even though they look like spaces.
           </p>
         </motion.div>
 
         {/* What Is FF Invisible Text */}
-        <motion.div
-          variants={fadeIn}
-          className="max-w-4xl mx-auto border-t border-border pt-10 space-y-4"
-        >
-          <h2 className="text-3xl font-display font-bold">
-            What Is Free Fire Invisible Text?
-          </h2>
+        <motion.div variants={fadeIn} className="max-w-4xl mx-auto border-t border-border pt-10 space-y-4">
+          <h2 className="text-3xl font-display font-bold">What Is Free Fire Invisible Text?</h2>
           <div className="space-y-4 text-muted-foreground leading-relaxed">
             <p>
-              Free Fire invisible text is not a normal space. It is a special
-              Unicode character that looks empty but is still recognized as a
-              valid character by the system.
+              Free Fire invisible text is not a normal space. It is a special Unicode character that looks empty but is
+              still recognized as a valid character by the system.
             </p>
             <p>
-              When you press the spacebar on your keyboard, you create a
-              standard space. Free Fire blocks these spaces in certain
-              positions. However, some Unicode characters appear blank but are
-              technically different from regular spaces.
+              When you press the spacebar on your keyboard, you create a standard space. Free Fire blocks these spaces
+              in certain positions. However, some Unicode characters appear blank but are technically different from regular spaces.
             </p>
             <p>Two commonly used invisible characters are:</p>
             <ul className="space-y-2 pl-4">
               <li className="flex items-start gap-2">
-                <span
-                  className="mt-1.5 w-2 h-2 rounded-full flex-shrink-0"
-                  style={{ backgroundColor: "#00a884" }}
-                />
-                <span>
-                  <strong className="text-foreground">
-                    Hangul Filler (U+3164)
-                  </strong>{" "}
-                  — Often works best in Free Fire
-                </span>
+                <span className="mt-1.5 w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: "#00a884" }} />
+                <span><strong className="text-foreground">Hangul Filler (U+3164)</strong> — Often works best in Free Fire</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-2 h-2 rounded-full bg-blue-500 flex-shrink-0" />
-                <span>
-                  <strong className="text-foreground">
-                    Braille Pattern Blank (U+2800)
-                  </strong>{" "}
-                  — Alternative option if needed
-                </span>
+                <span><strong className="text-foreground">Braille Pattern Blank (U+2800)</strong> — Alternative option if needed</span>
               </li>
             </ul>
             <p>These characters allow players to:</p>
@@ -433,48 +313,21 @@ export default function FreeFire() {
         </motion.div>
 
         {/* Why Players Use */}
-        <motion.div
-          variants={fadeIn}
-          className="max-w-4xl mx-auto border-t border-border pt-10 space-y-4"
-        >
-          <h2 className="text-3xl font-display font-bold">
-            Why Players Use Invisible Names in Free Fire
-          </h2>
+        <motion.div variants={fadeIn} className="max-w-4xl mx-auto border-t border-border pt-10 space-y-4">
+          <h2 className="text-3xl font-display font-bold">Why Players Use Invisible Names in Free Fire</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
             {[
-              {
-                title: "Unique Identity",
-                desc: "A blank or minimal name stands out in matches.",
-                bg: "rgb(239, 246, 255)",
-                border: "rgb(191, 219, 254)",
-              },
-              {
-                title: "Clean Look",
-                desc: "Some players prefer a simple and silent style.",
-                bg: "rgb(239, 246, 255)",
-                border: "rgb(191, 219, 254)",
-              },
-              {
-                title: "Creative Design",
-                desc: "Invisible space can be combined with symbols.",
-                bg: "rgb(239, 246, 255)",
-                border: "rgb(191, 219, 254)",
-              },
-              {
-                title: "Clan Customization",
-                desc: "Useful in clan tags and team names.",
-                bg: "rgb(239, 246, 255)",
-                border: "rgb(191, 219, 254)",
-              },
+              { title: "Unique Identity", desc: "A blank or minimal name stands out in matches.", bg: "rgb(239, 246, 255)", border: "rgb(191, 219, 254)" },
+              { title: "Clean Look", desc: "Some players prefer a simple and silent style.", bg: "rgb(239, 246, 255)", border: "rgb(191, 219, 254)" },
+              { title: "Creative Design", desc: "Invisible space can be combined with symbols.", bg: "rgb(239, 246, 255)", border: "rgb(191, 219, 254)" },
+              { title: "Clan Customization", desc: "Useful in clan tags and team names.", bg: "rgb(239, 246, 255)", border: "rgb(191, 219, 254)" },
             ].map((item) => (
               <div
                 key={item.title}
-                className="rounded-xl p-4 border transition-shadow duration-300 hover:shadow-sm"
+                className="rounded-xl p-4 border transition-shadow duration-300 hover:shadow-sm "
                 style={{ backgroundColor: item.bg, borderColor: item.border }}
               >
-                <h3 className="font-semibold text-foreground mb-1">
-                  {item.title}
-                </h3>
+                <h3 className="font-semibold text-foreground mb-1">{item.title}</h3>
                 <p className="text-sm text-muted-foreground">{item.desc}</p>
               </div>
             ))}
@@ -485,22 +338,10 @@ export default function FreeFire() {
         </motion.div>
 
         {/* Step-by-Step Guide */}
-        <motion.div
-          variants={fadeIn}
-          className="max-w-4xl mx-auto border-t border-border pt-10 space-y-6"
-        >
-          <h2 className="text-3xl font-display font-bold">
-            How to Create a Free Fire Invisible Name
-          </h2>
+        <motion.div variants={fadeIn} className="max-w-4xl mx-auto border-t border-border pt-10 space-y-6">
+          <h2 className="text-3xl font-display font-bold">How to Create a Free Fire Hidden Name</h2>
           <p className="text-muted-foreground leading-relaxed">
-            The easiest way to create{" "}
-            <a
-              href="/"
-              className="text-primary hover:text-primary/80 transition-colors"
-            >
-              invisible text
-            </a>{" "}
-            is by using the generator at the top of this page. Here is how:
+            The easiest way to create <a href="/" className="text-primary hover:text-primary/80 transition-colors">invisible text</a> is by using the generator at the top of this page. Here is how:
           </p>
           <div className="space-y-4">
             {[
@@ -526,19 +367,12 @@ export default function FreeFire() {
               },
             ].map((step) => (
               <div key={step.n} className="flex gap-4">
-                <div
-                  className="flex-shrink-0 w-9 h-9 rounded-full text-white flex items-center justify-center font-bold"
-                  style={{ backgroundColor: "#00a884" }}
-                >
+                <div className="flex-shrink-0 w-9 h-9 rounded-full text-white flex items-center justify-center font-bold" style={{ backgroundColor: "#00a884" }}>
                   {step.n}
                 </div>
                 <div className="space-y-1 pt-1">
-                  <h3 className="font-semibold text-foreground">
-                    {step.title}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed text-sm">
-                    {step.desc}
-                  </p>
+                  <h3 className="font-semibold text-foreground">{step.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed text-sm">{step.desc}</p>
                 </div>
               </div>
             ))}
@@ -546,13 +380,8 @@ export default function FreeFire() {
         </motion.div>
 
         {/* FF Invisible Text In Nickname & Message */}
-        <motion.div
-          variants={fadeIn}
-          className="max-w-6xl mx-auto border-t border-border pt-10 pb-8 space-y-6"
-        >
-          <h2 className="text-3xl font-display font-bold">
-            Free Fire Invisible Text In Nickname & Message
-          </h2>
+        <motion.div variants={fadeIn} className="max-w-6xl mx-auto border-t border-border pt-10 pb-8 space-y-6">
+          <h2 className="text-3xl font-display font-bold">Free Fire Invisible Text In Nickname & Message</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <img
               src={ffInvisibleImage}
@@ -570,118 +399,57 @@ export default function FreeFire() {
         </motion.div>
 
         {/* Generator Modes Explained */}
-        <motion.div
-          variants={fadeIn}
-          className="max-w-4xl mx-auto border-t border-border pt-10 space-y-6"
-        >
-          <h2 className="text-3xl font-display font-bold">
-            Generator Modes Explained
-          </h2>
+        <motion.div variants={fadeIn} className="max-w-4xl mx-auto border-t border-border pt-10 space-y-6">
+          <h2 className="text-3xl font-display font-bold">Generator Modes Explained</h2>
           <p className="text-muted-foreground leading-relaxed">
-            Our tool works as a{" "}
-            <a
-              href="/reverse-text"
-              className="text-primary hover:text-primary/80 transition-colors"
-            >
-              Unicode Text Converter
-            </a>{" "}
-            with multiple modes to ensure compatibility and flexibility across
-            different platforms.
+            Our tool works as a <a href="/reverse-text" className="text-primary hover:text-primary/80 transition-colors">Unicode Text Converter</a> with multiple modes to ensure compatibility and flexibility across different platforms.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div
-              className="rounded-xl p-5 space-y-2"
-              style={{
-                border: "1px solid #00a88440",
-                backgroundColor: "#00a88410",
-              }}
-            >
+            <div className="rounded-xl p-5 space-y-2" style={{ border: "1px solid #00a88440", backgroundColor: "#00a88410" }}>
               <div className="flex items-center gap-2">
                 <Zap className="h-5 w-5" style={{ color: "#00a884" }} />
-                <h3 className="font-semibold text-foreground">
-                  Generator A (Primary)
-                </h3>
+                <h3 className="font-semibold text-foreground">Generator A (Primary)</h3>
               </div>
-              <p className="text-xs font-mono text-muted-foreground">
-                U+3164 — Hangul Filler
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Best compatibility with Free Fire. Recommended for most users.
-              </p>
+              <p className="text-xs font-mono text-muted-foreground">U+3164 — Hangul Filler</p>
+              <p className="text-sm text-muted-foreground">Best compatibility with Free Fire. Recommended for most users.</p>
             </div>
             <div className="rounded-xl border border-blue-200 bg-blue-50 p-5 space-y-2">
               <div className="flex items-center gap-2">
                 <Shield className="h-5 w-5 text-blue-500" />
-                <h3 className="font-semibold text-foreground">
-                  Generator B (Alternate)
-                </h3>
+                <h3 className="font-semibold text-foreground">Generator B (Alternate)</h3>
               </div>
-              <p className="text-xs font-mono text-muted-foreground">
-                U+2800 — Braille Pattern Blank
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Useful if Generator A is rejected. Backup option for tricky
-                cases.
-              </p>
+              <p className="text-xs font-mono text-muted-foreground">U+2800 — Braille Pattern Blank</p>
+              <p className="text-sm text-muted-foreground">Useful if Generator A is rejected. Backup option for tricky cases.</p>
             </div>
             <div className="rounded-xl border border-gray-200 bg-gray-50 p-5 space-y-2">
               <div className="flex items-center gap-2">
                 <Shield className="h-5 w-5 text-gray-400" />
                 <h3 className="font-semibold text-foreground">Safe Mode</h3>
               </div>
-              <p className="text-xs font-mono text-muted-foreground">
-                U+0020 — Standard Space
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Good for testing text formatting. Not fully invisible in most
-                cases.
-              </p>
+              <p className="text-xs font-mono text-muted-foreground">U+0020 — Standard Space</p>
+              <p className="text-sm text-muted-foreground">Good for testing text formatting. Not fully invisible in most cases.</p>
             </div>
           </div>
           <p className="text-muted-foreground text-sm">
-            If Generator A is rejected, you can switch to Generator B or Safe
-            Mode using the tabs in the generator above.
+            If Generator A is rejected, you can switch to Generator B or Safe Mode using the tabs in the generator above.
           </p>
         </motion.div>
 
         {/* Common Problems */}
-        <motion.div
-          variants={fadeIn}
-          className="max-w-4xl mx-auto border-t border-border pt-10 space-y-4"
-        >
-          <h2 className="text-3xl font-display font-bold">
-            Common Problems and Solutions
-          </h2>
+        <motion.div variants={fadeIn} className="max-w-4xl mx-auto border-t border-border pt-10 space-y-4">
+          <h2 className="text-3xl font-display font-bold">Common Problems and Solutions</h2>
           <div className="space-y-3">
             {[
-              {
-                problem: "Name Change Failed",
-                solution:
-                  "Try switching to Generator B in the mode tabs above.",
-              },
-              {
-                problem: "Too Many Characters",
-                solution:
-                  "Reduce the invisible text quantity to 15–20 characters.",
-              },
-              {
-                problem: "Name Already Taken",
-                solution:
-                  "Add a small symbol or number alongside the invisible space.",
-              },
+              { problem: "Name Change Failed", solution: "Try switching to Generator B in the mode tabs above." },
+              { problem: "Too Many Characters", solution: "Reduce the invisible text quantity to 15–20 characters." },
+              { problem: "Name Already Taken", solution: "Add a small symbol or number alongside the invisible space." },
             ].map((item) => (
-              <div
-                key={item.problem}
-                className="flex flex-col sm:flex-row gap-1 sm:gap-4 p-4 rounded-xl bg-muted/30 border border-border"
-              >
-                <div className="text-sm font-semibold text-destructive sm:flex-shrink-0 sm:min-w-[160px]">
+              <div key={item.problem} className="flex flex-col sm:flex-row gap-2 sm:gap-4 p-4 rounded-xl bg-muted/30 border border-border">
+                <div className="flex-shrink-0 text-sm font-semibold text-destructive sm:min-w-[160px]">
                   Problem: {item.problem}
                 </div>
                 <div className="text-sm text-muted-foreground">
-                  <span className="text-green-600 font-semibold">
-                    Solution:
-                  </span>{" "}
-                  {item.solution}
+                  <span className="text-green-600 font-semibold">Solution:</span> {item.solution}
                 </div>
               </div>
             ))}
@@ -689,13 +457,8 @@ export default function FreeFire() {
         </motion.div>
 
         {/* Best Practices */}
-        <motion.div
-          variants={fadeIn}
-          className="max-w-4xl mx-auto border-t border-border pt-10 space-y-4"
-        >
-          <h2 className="text-3xl font-display font-bold">
-            Best Practices for Using Invisible Text
-          </h2>
+        <motion.div variants={fadeIn} className="max-w-4xl mx-auto border-t border-border pt-10 space-y-4">
+          <h2 className="text-3xl font-display font-bold">Best Practices for Using Invisible Text</h2>
           <ul className="space-y-3">
             {[
               "Use 15–30 invisible characters for a fully blank nickname look.",
@@ -705,34 +468,22 @@ export default function FreeFire() {
               "Do not use excessive characters — stay within the name length limit.",
             ].map((tip, i) => (
               <li key={i} className="flex items-start gap-3">
-                <span
-                  className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full text-xs font-bold flex items-center justify-center"
-                  style={{ backgroundColor: "#00a88420", color: "#00a884" }}
-                >
+                <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full text-xs font-bold flex items-center justify-center" style={{ backgroundColor: "#00a88420", color: "#00a884" }}>
                   {i + 1}
                 </span>
-                <span className="text-muted-foreground leading-relaxed">
-                  {tip}
-                </span>
+                <span className="text-muted-foreground leading-relaxed">{tip}</span>
               </li>
             ))}
           </ul>
         </motion.div>
 
         {/* Creative Nickname Ideas */}
-        <motion.div
-          variants={fadeIn}
-          className="max-w-4xl mx-auto border-t border-border pt-10 space-y-4"
-        >
-          <h2 className="text-3xl font-display font-bold">
-            Creative Nickname Ideas
-          </h2>
+        <motion.div variants={fadeIn} className="max-w-4xl mx-auto border-t border-border pt-10 space-y-4">
+          <h2 className="text-3xl font-display font-bold">Creative Nickname Ideas</h2>
 
           <p className="text-muted-foreground leading-relaxed">
-            You can take your Free Fire nickname to the next level by combining
-            invisible text with other creative styles. Instead of using a
-            completely blank name, try mixing invisible characters with symbols,
-            stylish fonts, or reversed text.
+            You can take your Free Fire nickname to the next level by combining invisible text with other creative styles.
+            Instead of using a completely blank name, try mixing invisible characters with symbols, stylish fonts, or reversed text.
           </p>
 
           <ul className="space-y-3">
@@ -750,62 +501,38 @@ export default function FreeFire() {
                 >
                   {i + 1}
                 </span>
-                <span className="text-muted-foreground leading-relaxed">
-                  {tip}
-                </span>
+                <span className="text-muted-foreground leading-relaxed">{tip}</span>
               </li>
             ))}
           </ul>
 
           <p className="text-muted-foreground leading-relaxed">
             You can also use tools like a{" "}
-            <a
-              href="/reverse-text"
-              className="text-primary hover:text-primary/80 transition-colors"
-            >
+            <a href="/reverse-text" className="text-primary hover:text-primary/80 transition-colors">
               Reverse Text Generator
-            </a>
-            , a{" "}
-            <a
-              href="/text-spacer"
-              className="text-primary hover:text-primary/80 transition-colors"
-            >
+            </a>, a{" "}
+            <a href="/text-spacer" className="text-primary hover:text-primary/80 transition-colors">
               Text Spacer
-            </a>
-            , or a{" "}
-            <a
-              href="/unicode-text-converter"
-              className="text-primary hover:text-primary/80 transition-colors"
-            >
+            </a>, or a{" "}
+            <a href="/unicode-text-converter" className="text-primary hover:text-primary/80 transition-colors">
               Unicode Text Converter
             </a>{" "}
-            to experiment with different styles and create a truly unique Free
-            Fire nickname.
+            to experiment with different styles and create a truly unique Free Fire nickname.
           </p>
         </motion.div>
 
         {/* FAQ */}
-        <motion.div
-          variants={fadeIn}
-          className="max-w-4xl mx-auto border-t border-border pt-10 space-y-4"
-        >
-          <h2 className="text-3xl font-display font-bold">
-            Frequently Asked Questions
-          </h2>
+        <motion.div variants={fadeIn} className="max-w-4xl mx-auto border-t border-border pt-10 space-y-4">
+          <h2 className="text-3xl font-display font-bold">Frequently Asked Questions</h2>
           <div className="space-y-2">
             {faqs.map((faq, i) => (
-              <div
-                key={i}
-                className="border faq-item rounded-xl overflow-hidden"
-              >
+              <div key={i} className="border faq-item rounded-xl overflow-hidden">
                 <button
                   className="w-full flex items-center justify-between p-4 text-left hover:bg-white/30 transition-colors"
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   data-testid={`faq-toggle-${i}`}
                 >
-                  <span className="font-medium text-foreground pr-4">
-                    {faq.q}
-                  </span>
+                  <span className="font-medium text-foreground pr-4">{faq.q}</span>
                   {openFaq === i ? (
                     <ChevronUp className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                   ) : (
@@ -822,22 +549,18 @@ export default function FreeFire() {
           </div>
         </motion.div>
 
-        {/* Final Thoughts */}
-        <motion.div
-          variants={fadeIn}
-          className="max-w-4xl mx-auto border-t border-border pt-10 pb-12 space-y-4"
-        >
-          <h2 className="text-3xl font-display font-bold">Final Thoughts</h2>
+        {/* Final Step */}
+        <motion.div variants={fadeIn} className="max-w-4xl mx-auto border-t border-border pt-10 pb-12 space-y-4">
+          <h2 className="text-3xl font-display font-bold">Final Step</h2>
           <div className="space-y-4 text-muted-foreground leading-relaxed">
             <p>
-              An invisible nickname in Free Fire is a simple way to create a
-              unique identity. Instead of using complicated tricks, you can
-              generate safe and working invisible text in seconds using the
-              generator above.
+              Using hidden nicknames in Free Fire has become a popular way to make your profile look unique and
+              different from others. Instead of trying complicated tricks or unsafe methods, you can generate safe,
+              accurate, and fully functional hidden text in a matter of seconds with the help of the generator above,
+              which can be easily used in your nickname.
             </p>
             <p>
-              The key is to use the correct Unicode character and the right
-              amount of spacing. With the proper method, you can create:
+              The key is to use the correct Unicode character and the right amount of spacing. With the proper method, you can create:
             </p>
             <ul className="space-y-1 pl-4 list-disc">
               <li>A fully blank name</li>
@@ -845,8 +568,7 @@ export default function FreeFire() {
               <li>Minimal and clean gaming identity</li>
             </ul>
             <p>
-              If Generator A does not work on the first try, switch to Generator
-              B — both options are available directly in the tool above.
+              If Generator A does not work on the first try, switch to Generator B — both options are available directly in the tool above.
             </p>
           </div>
         </motion.div>

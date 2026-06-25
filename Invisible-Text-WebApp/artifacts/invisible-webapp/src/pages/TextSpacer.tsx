@@ -271,7 +271,7 @@ export default function TextSpacer() {
                   data-testid="textarea-ts-input"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder={"Paste or type your caption here.\n\nLeave a blank line wherever you want a paragraph break."}
+                  placeholder="Paste or type your caption here..."
                   className="min-h-[160px] resize-none text-sm"
                   style={{ borderColor: "#e5e5e5" }}
                   onFocus={(e) => (e.target.style.borderColor = ACCENT)}

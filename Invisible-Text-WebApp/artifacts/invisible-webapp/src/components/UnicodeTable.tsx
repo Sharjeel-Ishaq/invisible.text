@@ -10,12 +10,48 @@ interface UnicodeEntry {
 }
 
 const unicodeData: UnicodeEntry[] = [
-  { u: "U+0020", d: "Space", h: "&#32;", e: "[ ]", url: "https://textsinvisible.com/space/" },
-  { u: "U+00A0", d: "No-Break Space", h: "&nbsp;", e: "[ ]", url: "https://textsinvisible.com/no-break-space/" },
-  { u: "U+2000", d: "En Quad", h: "&#8192;", e: "[ ]", url: "https://textsinvisible.com/en-quad/" },
-  { u: "U+2001", d: "Em Quad", h: "&#8193;", e: "[ ]", url: "https://textsinvisible.com/em-quad/" },
-  { u: "U+2002", d: "En Space", h: "&#8194;", e: "[ ]", url: "https://textsinvisible.com/en-space/" },
-  { u: "U+2003", d: "Em Space", h: "&emsp;", e: "[ ]", url: "https://textsinvisible.com/em-space/" },
+  {
+    u: "U+0020",
+    d: "Space",
+    h: "&#32;",
+    e: "[ ]",
+    url: "https://textsinvisible.com/space/",
+  },
+  {
+    u: "U+00A0",
+    d: "No-Break Space",
+    h: "&nbsp;",
+    e: "[ ]",
+    url: "https://textsinvisible.com/no-break-space/",
+  },
+  {
+    u: "U+2000",
+    d: "En Quad",
+    h: "&#8192;",
+    e: "[ ]",
+    url: "https://textsinvisible.com/en-quad/",
+  },
+  {
+    u: "U+2001",
+    d: "Em Quad",
+    h: "&#8193;",
+    e: "[ ]",
+    url: "https://textsinvisible.com/em-quad/",
+  },
+  {
+    u: "U+2002",
+    d: "En Space",
+    h: "&#8194;",
+    e: "[ ]",
+    url: "https://textsinvisible.com/en-space/",
+  },
+  {
+    u: "U+2003",
+    d: "Em Space",
+    h: "&emsp;",
+    e: "[ ]",
+    url: "https://textsinvisible.com/em-space/",
+  },
   { u: "U+2004", d: "Three-Per-Em Space", h: "&#8196;", e: "[ ]" },
   { u: "U+2005", d: "Four-Per-Em Space", h: "&#8197;", e: "[ ]" },
   { u: "U+2006", d: "Six-Per-Em Space", h: "&#8198;", e: "[ ]" },
@@ -90,7 +126,12 @@ const unicodeData: UnicodeEntry[] = [
   { u: "U+FFA0", d: "Halfwidth Hangul Filler", h: "&#65216;", e: "[ﻀ ]" },
   { u: "U+FFFC", d: "Object Replacement Character", h: "&#65532;", e: "[￼ ]" },
   { u: "U+133FC", d: "Egyptian Hieroglyph Z015B", h: "&#80828;", e: "[𓮼 ]" },
-  { u: "U+1D159", d: "Musical Symbol Null Notehead", h: "&#119065;", e: "[𝄙 ]" },
+  {
+    u: "U+1D159",
+    d: "Musical Symbol Null Notehead",
+    h: "&#119065;",
+    e: "[𝄙 ]",
+  },
   { u: "U+1D173", d: "Musical Symbol Begin Beam", h: "&#119187;", e: "[𝆓 ]" },
   { u: "U+1D174", d: "Musical Symbol End Beam", h: "&#119188;", e: "[𝆔 ]" },
   { u: "U+1D175", d: "Musical Symbol Begin Tie", h: "&#119189;", e: "[𝆕 ]" },
@@ -125,6 +166,7 @@ function htmlDecode(input: string): string {
 }
 
 const ACCENT = "#00a884";
+const SecondColor = "#EFF6FF"
 
 export function UnicodeTable() {
   const { toast } = useToast();
@@ -166,11 +208,26 @@ export function UnicodeTable() {
         className="w-full overflow-x-auto rounded-lg bg-white shadow-sm"
         style={{ border: `2px solid ${ACCENT}` }}
       >
-        <div className="unicode-table-scroll" style={{ maxHeight: 500, overflowY: "auto" }}>
+        <div
+          className="unicode-table-scroll"
+          style={{ maxHeight: 500, overflowY: "auto" }}
+        >
           <table className="w-full border-collapse" style={{ minWidth: 560 }}>
-            <thead style={{ backgroundColor: ACCENT, position: "sticky", top: 0, zIndex: 1 }}>
+            <thead
+              style={{
+                backgroundColor: ACCENT,
+                position: "sticky",
+                top: 0,
+                zIndex: 1,
+              }}
+            >
               <tr>
-                {["Unicode", "Description", "HTML Entity", "Example (Click)"].map((h) => (
+                {[
+                  "Unicode",
+                  "Description",
+                  "HTML Entity",
+                  "Example (Click)",
+                ].map((h) => (
                   <th
                     key={h}
                     className="px-4 py-3.5 text-left text-xs font-display font-semibold uppercase tracking-wide text-white whitespace-nowrap"
@@ -192,7 +249,10 @@ export function UnicodeTable() {
                   >
                     {entry.u}
                   </td>
-                  <td className="px-4 py-3 text-sm text-gray-600" style={{ width: "35%" }}>
+                  <td
+                    className="px-4 py-3 text-sm text-gray-600"
+                    style={{ width: "35%" }}
+                  >
                     {entry.url ? (
                       <a
                         href={entry.url}
