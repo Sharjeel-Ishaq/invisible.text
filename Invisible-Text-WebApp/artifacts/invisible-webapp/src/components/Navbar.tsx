@@ -23,7 +23,7 @@ export function Navbar() {
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-white/20 bg-white/70 backdrop-blur-md supports-[backdrop-filter]:bg-white/60">
       <div className="container flex h-16 items-center justify-between px-4 sm:px-8 max-w-7xl mx-auto">
-        <Link href="/" className="flex items-center gap-2 group transition-all duration-300 hover:scale-105">
+        <Link href="/" className="flex items-center gap-2 group transition-all duration-300 hover:scale-100">
           <div className="p-2 bg-[#00a884] from-primary to-accent rounded-lg shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-shadow">
             <EyeOff className="h-5 w-5 transition-colors text-white" />
           </div>

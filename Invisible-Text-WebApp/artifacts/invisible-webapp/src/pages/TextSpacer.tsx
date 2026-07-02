@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { Link } from "wouter";
 import { Layout } from "@/components/Layout";
 import { SeoHead } from "@/components/SeoHead";
 import { Button } from "@/components/ui/button";
@@ -614,6 +615,28 @@ export default function TextSpacer() {
                   </div>
                 )}
               </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Related Text Tools */}
+        <motion.div variants={fadeIn} className="max-w-4xl mx-auto border-t border-border pt-10 space-y-6">
+          <h2 className="text-3xl font-display font-bold">Related Text Tools</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+              { href: "/", label: "Invisible Text Generator", desc: "Generate blank invisible characters instantly." },
+              { href: "/free-fire-text", label: "FF Invisible Text", desc: "Invisible text for Free Fire names & chats." },
+              { href: "/unicode-text-converter", label: "Unicode Converter", desc: "Convert text into stylish Unicode fonts." },
+              { href: "/reverse-text", label: "Reverse Text", desc: "Flip and reverse any text in one click." },
+              { href: "/mirror-text-generator", label: "Mirror Text", desc: "Create mirrored, upside-down text effects." },
+              { href: "/blogs", label: "Read Our Blogs", desc: "Tips and guides for text formatting tricks." },
+            ].map((tool) => (
+              <Link key={tool.href} href={tool.href}>
+                <div className="group border border-border rounded-xl p-4 hover:border-primary/50 hover:bg-white/60 transition-all cursor-pointer space-y-1">
+                  <p className="font-semibold text-sm text-foreground group-hover:text-primary transition-colors">{tool.label}</p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{tool.desc}</p>
+                </div>
+              </Link>
             ))}
           </div>
         </motion.div>
