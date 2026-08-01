@@ -109,162 +109,178 @@ export default function FreeFire() {
         variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
         className="space-y-4"
       >
-        {/* Hero */}
-        <motion.div variants={fadeIn} className="text-center space-y-6 py-6 md:py-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold mb-4 border" style={{ backgroundColor: "#00a88415", color: "#00a884", borderColor: "#00a88440" }}>
-            <Flame className="h-4 w-4" /> Free Fire Invisible Text Generator
-          </div>
-          <h1 className="text-4xl md:text-6xl font-display font-bold tracking-tight">
-            Free Fire <span className="text-gradient">Invisible Name</span> Generator
-          </h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Create blank nicknames for Free Fire using Unicode <a href="/" className="text-primary hover:text-primary/80 transition-colors">invisible characters</a>.
-            Choose your generator mode, set the length, copy, and paste directly into your profile.
-          </p>
-        </motion.div>
+        {/* Hero + Generator — two-column layout */}
+        <motion.div variants={fadeIn} className="py-6 md:py-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
 
-        {/* Generator */}
-        <motion.div variants={fadeIn} className="max-w-3xl mx-auto">
-          <Card className="glass-card overflow-hidden" style={{ border: "2px solid #00a88430", borderTop: "4px solid #00a884" }}>
-            <CardHeader className="border-b border-border/50" style={{ backgroundColor: "#00a88408" }}>
-              <CardTitle className="flex items-center gap-2">
-                <Flame className="h-5 w-5" style={{ color: "#00a884" }} />
-                FF Invisible Text Generator
-              </CardTitle>
-              <CardDescription>
-                Select a generator mode, adjust the length, then copy the invisible text.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="p-6 md:p-8 space-y-6">
-              {/* Mode Tabs */}
-              <div className="space-y-2">
-                <Label>Generator Mode</Label>
-                <Tabs value={mode} onValueChange={(v) => setMode(v as ModeKey)}>
-                  <TabsList className="w-full grid grid-cols-3">
-                    <TabsTrigger value="generatorA" data-testid="tab-generator-a">
-                      <Zap className="h-3.5 w-3.5 mr-1.5" /> Generator A
-                    </TabsTrigger>
-                    <TabsTrigger value="generatorB" data-testid="tab-generator-b">
-                      <Shield className="h-3.5 w-3.5 mr-1.5" /> Generator B
-                    </TabsTrigger>
-                    <TabsTrigger value="safeMode" data-testid="tab-safe-mode">
-                      Safe Mode
-                    </TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="generatorA">
-                    <p className="text-sm text-muted-foreground mt-2 p-3 rounded-lg border" style={{ backgroundColor: "#00a88410", borderColor: "#00a88430" }}>
-                      <strong className="text-foreground">Hangul Filler ({MODES.generatorA.unicode})</strong> — provides the best compatibility with Free Fire, which is why it is the first choice of most users.
-                    </p>
-                  </TabsContent>
-                  <TabsContent value="generatorB">
-                    <p className="text-sm text-muted-foreground mt-2 p-3 bg-blue-50 rounded-lg border border-blue-100">
-                      Uses <strong className="text-foreground">Braille Pattern Blank ({MODES.generatorB.unicode})</strong> — alternative mode if Generator A is rejected.
-                    </p>
-                  </TabsContent>
-                  <TabsContent value="safeMode">
-                    <p className="text-sm text-muted-foreground mt-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                      Uses <strong className="text-foreground">Standard Space ({MODES.safeMode.unicode})</strong> — good for testing text formatting. Not fully invisible in all cases.
-                    </p>
-                  </TabsContent>
-                </Tabs>
+            {/* Left: Hero Text */}
+            <div className="space-y-5 text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium border" style={{ backgroundColor: "#00a88415", color: "#00a884", borderColor: "#00a88440" }}>
+                <Flame className="h-4 w-4 flex-shrink-0" /> Free Fire Invisible Text Generator
               </div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight leading-tight">
+                Free Fire <span className="text-gradient">Invisible Name</span> Generator
+              </h1>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                Create blank nicknames for Free Fire using Unicode{" "}
+                <a href="/" className="text-primary hover:text-primary/80 transition-colors">invisible characters</a>.
+                Choose your generator mode, set the length, copy, and paste directly into your profile.
+              </p>
+              <p className="text-base text-muted-foreground">
+                Trusted by{" "}
+                <span className="font-semibold" style={{ color: "#00a884" }}>1,200,000+</span>{" "}
+                Free Fire players with over{" "}
+                <span className="font-semibold" style={{ color: "#00a884" }}>4.8 million</span>{" "}
+                invisible names generated.
+              </p>
+            </div>
 
-              {/* Length Control */}
-              <div className="space-y-2">
-                <Label htmlFor="ff-length">Number of Characters</Label>
-                <div className="flex flex-col sm:flex-row gap-2">
-                  <div className="flex gap-2 flex-1">
+            {/* Right: Step-based Generator Card */}
+            <div>
+              <Card className="glass-card overflow-hidden shadow-lg" style={{ border: "1.5px solid #00a88430" }}>
+                <CardContent className="p-6 space-y-6">
+
+                  {/* Step 1 */}
+                  <div className="space-y-3">
+                    <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                      Step 1: Choose Mode &amp; Length
+                    </p>
+                    <div className="rounded-xl border-2 border-dashed p-4 space-y-4" style={{ borderColor: "#00a88440" }}>
+                      {/* Mode Tabs */}
+                      <Tabs value={mode} onValueChange={(v) => setMode(v as ModeKey)}>
+                        <TabsList className="w-full grid grid-cols-3">
+                          <TabsTrigger value="generatorA" data-testid="tab-generator-a">
+                            <Zap className="h-3.5 w-3.5 mr-1.5" /> Gen A
+                          </TabsTrigger>
+                          <TabsTrigger value="generatorB" data-testid="tab-generator-b">
+                            <Shield className="h-3.5 w-3.5 mr-1.5" /> Gen B
+                          </TabsTrigger>
+                          <TabsTrigger value="safeMode" data-testid="tab-safe-mode">
+                            Safe Mode
+                          </TabsTrigger>
+                        </TabsList>
+                        <TabsContent value="generatorA">
+                          <p className="text-xs text-muted-foreground mt-2 p-2 rounded-lg border" style={{ backgroundColor: "#00a88410", borderColor: "#00a88430" }}>
+                            <strong className="text-foreground">Hangul Filler ({MODES.generatorA.unicode})</strong> — best compatibility with Free Fire.
+                          </p>
+                        </TabsContent>
+                        <TabsContent value="generatorB">
+                          <p className="text-xs text-muted-foreground mt-2 p-2 bg-blue-50 rounded-lg border border-blue-100">
+                            <strong className="text-foreground">Braille Pattern Blank ({MODES.generatorB.unicode})</strong> — alternative if Gen A is rejected.
+                          </p>
+                        </TabsContent>
+                        <TabsContent value="safeMode">
+                          <p className="text-xs text-muted-foreground mt-2 p-2 bg-gray-50 rounded-lg border border-gray-200">
+                            <strong className="text-foreground">Standard Space ({MODES.safeMode.unicode})</strong> — for testing text formatting.
+                          </p>
+                        </TabsContent>
+                      </Tabs>
+                      {/* Length */}
+                      <div className="flex gap-2 w-full">
+                        <Button
+                          type="button"
+                          size="icon"
+                          onClick={decrement}
+                          data-testid="button-ff-decrement"
+                          className="text-white flex-shrink-0"
+                          style={{ backgroundColor: "#00a884", borderColor: "#00a884" }}
+                        >
+                          <Minus className="h-4 w-4" />
+                        </Button>
+                        <Input
+                          id="ff-length"
+                          data-testid="input-ff-length"
+                          type="number"
+                          value={length}
+                          onChange={(e) => setLength(Math.min(200, Math.max(1, Number(e.target.value))))}
+                          className="text-lg font-mono text-center flex-1"
+                          min={1}
+                          max={200}
+                        />
+                        <Button
+                          type="button"
+                          size="icon"
+                          onClick={increment}
+                          data-testid="button-ff-increment"
+                          className="text-white flex-shrink-0"
+                          style={{ backgroundColor: "#00a884", borderColor: "#00a884" }}
+                        >
+                          <Plus className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      <p className="text-xs text-center text-muted-foreground">
+                        Recommended: 15–30 characters for a fully blank nickname
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Step 2 */}
+                  <div className="space-y-2">
+                    <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                      Step 2: Generate Text
+                    </p>
                     <Button
                       type="button"
-                      size="icon"
-                      onClick={decrement}
-                      data-testid="button-ff-decrement"
-                      className="text-white flex-shrink-0"
-                      style={{ backgroundColor: "#00a884", borderColor: "#00a884" }}
+                      data-testid="button-ff-generate"
+                      onClick={handleGenerate}
+                      className="text-white w-full shadow-md"
+                      style={{ backgroundColor: "#00a884" }}
                     >
-                      <Minus className="h-4 w-4" />
-                    </Button>
-                    <Input
-                      id="ff-length"
-                      data-testid="input-ff-length"
-                      type="number"
-                      value={length}
-                      onChange={(e) => setLength(Math.min(200, Math.max(1, Number(e.target.value))))}
-                      className="text-lg font-mono text-center flex-1"
-                      min={1}
-                      max={200}
-                    />
-                    <Button
-                      type="button"
-                      size="icon"
-                      onClick={increment}
-                      data-testid="button-ff-increment"
-                      className="text-white flex-shrink-0"
-                      style={{ backgroundColor: "#00a884", borderColor: "#00a884" }}
-                    >
-                      <Plus className="h-4 w-4" />
+                      <Flame className="mr-2 h-4 w-4" />
+                      Generate Invisible Text
                     </Button>
                   </div>
-                  <Button
-                    type="button"
-                    data-testid="button-ff-generate"
-                    onClick={handleGenerate}
-                    className="text-white w-full sm:w-auto sm:min-w-[120px] shadow-lg"
-                    style={{ backgroundColor: "#00a884" }}
-                  >
-                    Generate
-                  </Button>
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  Recommended: 15–30 characters for a fully blank nickname.
-                </p>
-              </div>
 
-              {/* Output */}
-              <div className="space-y-2">
-                <Label>Output — Invisible Text</Label>
-                <div className="relative">
-                  <Textarea
-                    readOnly
-                    data-testid="textarea-ff-output"
-                    value={generatedText}
-                    placeholder="Your invisible text will appear here. Click Generate to start."
-                    className={`min-h-[120px] resize-none bg-muted/20 font-mono transition-colors ${
-                      generatedText ? "text-transparent" : "text-foreground"
-                    }`}
-                  />
-                  {generatedText && (
-                    <div className="absolute inset-0 pointer-events-none px-3 py-2 text-base md:text-sm font-mono break-all whitespace-pre-wrap select-none overflow-hidden">
-                      <span className="bg-[#00a8841a] text-transparent px-0.3">
-                        {generatedText}
-                      </span>
+                  {/* Step 3 */}
+                  <div className="space-y-3">
+                    <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                      Step 3: Copy &amp; Paste into Free Fire
+                    </p>
+                    <div className="relative">
+                      <Textarea
+                        readOnly
+                        data-testid="textarea-ff-output"
+                        value={generatedText}
+                        placeholder="Your invisible text will appear here..."
+                        className={`min-h-[90px] resize-none bg-muted/20 font-mono transition-colors ${
+                          generatedText ? "text-transparent" : "text-foreground"
+                        }`}
+                      />
+                      {generatedText && (
+                        <div className="absolute inset-0 pointer-events-none px-3 py-2 text-sm font-mono break-all whitespace-pre-wrap select-none overflow-hidden">
+                          <span className="bg-[#00a8841a] text-transparent">{generatedText}</span>
+                        </div>
+                      )}
+                      {generatedText && (
+                        <span className="absolute top-2 right-2 text-xs text-muted-foreground bg-background/80 backdrop-blur px-2 py-1 rounded border border-border">
+                          {generatedText.length} chars
+                        </span>
+                      )}
                     </div>
-                  )}
-                  {generatedText && (
-                    <span className="absolute top-3 right-3 text-xs text-muted-foreground bg-background/80 backdrop-blur px-2 py-1 rounded border border-border">
-                      {generatedText.length} chars
-                    </span>
-                  )}
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter className="border-t border-border/50 p-6 flex justify-end" style={{ backgroundColor: "#00a88408" }}>
-              <Button
-                onClick={handleCopy}
-                data-testid="button-ff-copy"
-                disabled={!generatedText}
-                size="lg"
-                className="w-full sm:w-auto text-white"
-                style={{ backgroundColor: copied ? "#16a34a" : "#00a884" }}
-              >
-                {copied ? (
-                  <><Check className="mr-2 h-4 w-4" /> Copied!</>
-                ) : (
-                  <><Copy className="mr-2 h-4 w-4" /> Copy Invisible Text</>
-                )}
-              </Button>
-            </CardFooter>
-          </Card>
+                    <Button
+                      onClick={handleCopy}
+                      data-testid="button-ff-copy"
+                      disabled={!generatedText}
+                      size="lg"
+                      className="w-full text-white"
+                      style={{ backgroundColor: copied ? "#16a34a" : "#00a884" }}
+                    >
+                      {copied ? (
+                        <><Check className="mr-2 h-4 w-4" /> Copied!</>
+                      ) : (
+                        <><Copy className="mr-2 h-4 w-4" /> Copy Invisible Text</>
+                      )}
+                    </Button>
+                    <p className="text-xs text-center text-muted-foreground">
+                      Paste directly into your Free Fire nickname field
+                    </p>
+                  </div>
+
+                </CardContent>
+              </Card>
+            </div>
+
+          </div>
         </motion.div>
 
         {/* Intro Content */}

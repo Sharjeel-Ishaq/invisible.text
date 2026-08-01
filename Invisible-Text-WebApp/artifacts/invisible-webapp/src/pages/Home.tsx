@@ -385,7 +385,7 @@ export default function Home() {
         
         {/* Ready-Made Invisible Text Cards */}
         <motion.div variants={fadeIn} className="max-w-6xl mx-auto py-8 border-t border-border">
-          <h2 className="text-3xl font-display font-bold mb-2">Ready-Made Invisible Characters</h2>
+          <h2 className="text-3xl font-display font-bold mb-2">Use These Invisible Characters According To Your Needs</h2>
           <p className="text-muted-foreground mb-8 leading-relaxed">
             Pick any invisible character below and copy it instantly — no generation needed.
           </p>
