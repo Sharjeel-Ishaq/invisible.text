@@ -52,7 +52,37 @@ export default function FreeFire() {
   const [mode, setMode] = useState<ModeKey>("generatorA");
   const [generatedText, setGeneratedText] = useState("");
   const [copied, setCopied] = useState(false);
+  const [copiedCard, setCopiedCard] = useState<string | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const ACCENT = "#00a884";
+
+  const FF_CHARS = [
+    { code: "U+3164", char: "\u3164", name: "Hangul Filler",      hint: "(invisible)",   label: "★ BEST FOR FF", badge: "TOP PICK",  badgeColor: ACCENT },
+    { code: "U+FFA0", char: "\uffa0", name: "HW Hangul Filler",   hint: "(half-width)",  label: "HALF-WIDTH",    badge: null,        badgeColor: null },
+    { code: "U+200B", char: "\u200b", name: "Zero-Width Space",   hint: "(zero-width)",  label: "ZERO-WIDTH",    badge: null,        badgeColor: null },
+    { code: "U+00A0", char: "\u00a0", name: "No-Break Space",     hint: "(no-break)",    label: "NO-BREAK SPACE",badge: null,        badgeColor: null },
+    { code: "U+2003", char: "\u2003", name: "Em Space",           hint: "(em)",          label: "EM SPACE (WIDE)",badge: null,       badgeColor: null },
+    { code: "U+2800", char: "\u2800", name: "Braille Blank",      hint: "(braille)",     label: "✅ BEST FALLBACK",badge: null,      badgeColor: null },
+    { code: "U+200E", char: "\u200e", name: "LTR Mark",           hint: "(LTR mark)",    label: "DIRECTION MARK",badge: null,        badgeColor: null },
+    { code: "U+3000", char: "\u3000", name: "Ideographic Space",  hint: "(CJK)",         label: "IDEOGRAPHIC",   badge: null,        badgeColor: null },
+  ];
+
+  const PUBG_CHARS = [
+    { code: "U+3164", char: "\u3164", name: "Hangul Filler",      hint: "(invisible)",   label: "★ BEST FOR PUBG", badge: "TOP PICK",  badgeColor: ACCENT },
+    { code: "U+200B", char: "\u200b", name: "Zero-Width Space",   hint: "(zero-width)",  label: "ZERO-WIDTH",      badge: null,        badgeColor: null },
+    { code: "U+2800", char: "\u2800", name: "Braille Blank",      hint: "(braille)",     label: "✅ BEST FALLBACK", badge: null,        badgeColor: null },
+    { code: "U+2009", char: "\u2009", name: "Thin Space",         hint: "(thin)",        label: "THIN SPACE",      badge: null,        badgeColor: null },
+    { code: "U+200A", char: "\u200a", name: "Hair Space",         hint: "(hair)",        label: "HAIR SPACE",      badge: null,        badgeColor: null },
+    { code: "U+2007", char: "\u2007", name: "Figure Space",       hint: "(figure)",      label: "FIGURE SPACE",    badge: null,        badgeColor: null },
+  ];
+
+  const handleCopyCard = (char: string, code: string, label: string) => {
+    navigator.clipboard.writeText(char);
+    setCopiedCard(code);
+    toast({ title: "Copied!", description: `${label} character copied to clipboard.` });
+    setTimeout(() => setCopiedCard(null), 2000);
+  };
 
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
@@ -115,6 +145,7 @@ export default function FreeFire() {
 
             {/* Left: Hero Text */}
             <div className="space-y-5 text-center lg:text-left">
+              
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium border" style={{ backgroundColor: "#00a88415", color: "#00a884", borderColor: "#00a88440" }}>
                 <Flame className="h-4 w-4 flex-shrink-0" /> Free Fire Invisible Text Generator
               </div>
@@ -145,7 +176,7 @@ export default function FreeFire() {
                     <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
                       Step 1: Choose Mode &amp; Length
                     </p>
-                    <div className="rounded-xl border-2 border-dashed p-4 space-y-4" style={{ borderColor: "#00a88440" }}>
+                    <div className="rounded-xl border-2 border-solid p-4 space-y-4" style={{ borderColor: "#00a88440" }}>
                       {/* Mode Tabs */}
                       <Tabs value={mode} onValueChange={(v) => setMode(v as ModeKey)}>
                         <TabsList className="w-full grid grid-cols-3">
@@ -282,7 +313,85 @@ export default function FreeFire() {
 
           </div>
         </motion.div>
+        {/* Free Fire One-Click Cards */}
+        <motion.div variants={fadeIn} className="max-w-6xl mx-auto border-t border-border pt-10">
+          <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-2">
+            <Flame className="h-6 w-6" style={{ color: ACCENT }} />
+            Copy Your Free Fire Invisible Space — One Click
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {FF_CHARS.map((item) => (
+              <div key={item.code} className="rounded-xl border border-border bg-white p-4 flex flex-col gap-3 shadow-sm hover:shadow-md transition-shadow">
+                {/* Label row */}
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-bold uppercase tracking-wider" style={{ color: ACCENT }}>{item.label}</span>
+                  {item.badge && (
+                    <span className="text-xs font-bold px-2 py-0.5 rounded text-white" style={{ backgroundColor: ACCENT }}>{item.badge}</span>
+                  )}
+                </div>
+                {/* Preview box */}
+                <div className="rounded-lg border-2 border-dashed border-border bg-muted/30 px-4 py-3 text-center">
+                  <span className="text-sm text-muted-foreground italic">{item.hint}</span>
+                </div>
+                {/* Unicode info */}
+                <p className="text-xs text-muted-foreground">{item.code} — {item.name}</p>
+                {/* Copy button */}
+                <Button
+                  className="w-full text-white mt-auto"
+                  style={{ backgroundColor: copiedCard === item.code ? "#16a34a" : ACCENT }}
+                  onClick={() => handleCopyCard(item.char, item.code, item.name)}
+                >
+                  {copiedCard === item.code ? (
+                    <><Check className="mr-2 h-4 w-4" /> Copied!</>
+                  ) : (
+                    <>Copy {item.name}</>
+                  )}
+                </Button>
+              </div>
+            ))}
+          </div>
+        </motion.div>
 
+        {/* PUBG One-Click Cards */}
+        <motion.div variants={fadeIn} className="max-w-6xl mx-auto border-t border-border pt-10">
+          <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-2">
+            <Shield className="h-6 w-6" style={{ color: ACCENT }} />
+            Copy Your PUBG Invisible Space — One Click
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {PUBG_CHARS.map((item) => (
+              <div key={"pubg-" + item.code} className="rounded-xl border border-border bg-white p-4 flex flex-col gap-3 shadow-sm hover:shadow-md transition-shadow">
+                {/* Label row */}
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-bold uppercase tracking-wider" style={{ color: ACCENT }}>{item.label}</span>
+                  {item.badge && (
+                    <span className="text-xs font-bold px-2 py-0.5 rounded text-white" style={{ backgroundColor: ACCENT }}>{item.badge}</span>
+                  )}
+                </div>
+                {/* Preview box */}
+                <div className="rounded-lg border-2 border-dashed border-border bg-muted/30 px-4 py-3 text-center">
+                  <span className="text-sm text-muted-foreground italic">{item.hint}</span>
+                </div>
+                {/* Unicode info */}
+                <p className="text-xs text-muted-foreground">{item.code} — {item.name}</p>
+                {/* Copy button */}
+                <Button
+                  className="w-full text-white mt-auto"
+                  style={{ backgroundColor: copiedCard === "pubg-" + item.code ? "#16a34a" : ACCENT }}
+                  onClick={() => handleCopyCard(item.char, "pubg-" + item.code, item.name)}
+                >
+                  {copiedCard === "pubg-" + item.code ? (
+                    <><Check className="mr-2 h-4 w-4" /> Copied!</>
+                  ) : (
+                    <>Copy {item.name}</>
+                  )}
+                </Button>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div variants={fadeIn} className="max-w-4xl mx-auto border-t border-border pt-5 space-y-4"></motion.div>
         {/* Intro Content */}
         <motion.div variants={fadeIn} className="max-w-4xl mx-auto space-y-4 text-muted-foreground leading-relaxed">
           <p>
