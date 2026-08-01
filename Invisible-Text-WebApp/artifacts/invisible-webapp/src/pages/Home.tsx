@@ -167,9 +167,9 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
 
             {/* Left: Hero Text */}
-            <div className="space-y-5">
+            <div className="space-y-5 text-center lg:text-left">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium border border-primary/20">
-                <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: "currentColor" }}></span>
+                <EyeOff className="h-4 w-4 flex-shrink-0" />
                 The original invisible text tool. Works in your browser.
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight leading-tight">
