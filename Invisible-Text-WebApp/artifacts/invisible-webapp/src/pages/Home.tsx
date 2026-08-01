@@ -52,11 +52,63 @@ const homeFaqs = [
 ];
 
 export default function Home() {
+  const [testInput, setTestInput] = useState("");
   const { toast } = useToast();
   const generateMutation = useGenerateText();
   const [generatedText, setGeneratedText] = useState("");
   const [copied, setCopied] = useState(false);
+  const [copiedChar, setCopiedChar] = useState<string | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const INVISIBLE_CHARS = [
+    {
+      code: "U+3164",
+      char: "\u3164",
+      name: "Hangul Filler",
+      badge: "Gamers Favorite",
+      badgeColor: ACCENT,
+      description: "Highly requested for gaming names (Free Fire, BGMI, WhatsApp, Discord). Counts as a valid standard letter but renders fully invisible.",
+    },
+    {
+      code: "U+200B",
+      char: "\u200b",
+      name: "Zero Width Space",
+      badge: "Web/Devs Standard",
+      badgeColor: "#6366f1",
+      description: "Zero-width space. Invisible layout helper that sits between letters to break words, bypass message filters, or separate texts.",
+    },
+    {
+      code: "U+2800",
+      char: "\u2800",
+      name: "Braille Pattern Blank",
+      badge: "Social Blank",
+      badgeColor: ACCENT,
+      description: "Represents a completely empty Braille cell. Excellent for empty comment sections, social posts, and WhatsApp status spacing.",
+    },
+    {
+      code: "U+205F",
+      char: "\u205f",
+      name: "Mathematical Space",
+      badge: "Alternative Space",
+      badgeColor: "#6366f1",
+      description: "Medium mathematical space. A specialized blank character that works wonders when modern filter blockers scan zero-width codes.",
+    },
+    {
+      code: "U+1680",
+      char: "\u1680",
+      name: "Ogham Space Mark",
+      badge: "Glyph Space",
+      badgeColor: "#6366f1",
+      description: "Ogham glyph divider. In modern browsers, it behaves and renders as an invisible spacing divider suitable for name styling.",
+    },
+  ];
+
+  const handleCopyChar = (char: string, code: string) => {
+    navigator.clipboard.writeText(char);
+    setCopiedChar(code);
+    toast({ title: "Copied!", description: `${code} invisible character copied to clipboard.` });
+    setTimeout(() => setCopiedChar(null), 2000);
+  };
 
 
 
@@ -168,7 +220,7 @@ export default function Home() {
 
             {/* Left: Hero Text */}
             <div className="space-y-5 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium border border-primary/20">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium border border-primary/20 mx-auto lg:mx-0">
                 {/* <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: "currentColor" }}></span> */}
                 < EyeOff className="h-4 w-4" />
                 The original invisible text tool. Works in your browser.
@@ -177,7 +229,7 @@ export default function Home() {
                 Generate{" "}
                 <span className="text-gradient">Invisible Text</span> For Any Platform
               </h1>
-              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed mx-auto lg:mx-0 max-w-xl">
                 Create hidden Unicode characters instantly. Perfect for sending blank messages on WhatsApp,
                 adding space to Instagram bios, or hiding your username in games.
               </p>
@@ -322,8 +374,79 @@ export default function Home() {
 
           </div>
         </motion.div>
+        
+        {/* Ready-Made Invisible Text Cards */}
+        <motion.div variants={fadeIn} className="max-w-6xl mx-auto py-8 border-t border-border">
+          <h2 className="text-3xl font-display font-bold mb-2">Ready-Made Invisible Characters</h2>
+          <p className="text-muted-foreground mb-8 leading-relaxed">
+            Pick any invisible character below and copy it instantly — no generation needed.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {INVISIBLE_CHARS.map((item) => (
+              <div
+                key={item.code}
+                className="rounded-xl border border-border bg-white p-5 flex flex-col gap-3 shadow-sm hover:shadow-md transition-shadow"
+              >
+                {/* Top row: code + badge */}
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-muted-foreground font-mono">{item.code}</span>
+                  <span
+                    className="text-xs font-semibold px-2.5 py-0.5 rounded-full text-white"
+                    style={{ backgroundColor: item.badgeColor }}
+                  >
+                    {item.badge}
+                  </span>
+                </div>
+                {/* Name */}
+                <h3 className="text-lg font-bold text-foreground leading-tight">{item.name}</h3>
+                {/* Description */}
+                <p className="text-sm text-muted-foreground leading-relaxed flex-1">{item.description}</p>
+                {/* Copy row */}
+                <div className="flex items-center gap-2 mt-1">
+                  <div className="flex-1 rounded-md border border-border bg-muted/30 px-3 py-2 text-sm text-muted-foreground font-mono text-center select-none">
+                    [ Copy Space Invisible ]
+                  </div>
+                  <Button
+                    size="sm"
+                    className="text-white shrink-0 gap-1.5"
+                    style={{ backgroundColor: copiedChar === item.code ? "#16a34a" : ACCENT }}
+                    onClick={() => handleCopyChar(item.char, item.code)}
+                  >
+                    {copiedChar === item.code ? (
+                      <><Check className="h-3.5 w-3.5" /> Copied</>
+                    ) : (
+                      <><Copy className="h-3.5 w-3.5" /> Copy</>
+                    )}
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
 
+        {/* Test Area */}
+        <div className="max-w-4xl mx-auto py-8 border-t border-border">
+          <h2 className="text-3xl font-display font-bold mb-4">Blank Space Tester & Validator</h2>
+          <p className="text-muted-foreground mb-6 leading-relaxed">
+            Paste invisible text below to check how it appears. This helps you verify whether the text is truly hidden or still visible on your device.
+          </p>
 
+            <Card className="shadow-md border-2 border-{#00a884} bg-[rgb(191, 219, 254)]">
+
+            <CardContent className="p-6 space-y-4">
+              <Textarea
+                value={testInput}
+                onChange={(e) => setTestInput(e.target.value)}
+                placeholder="Paste invisible text here..."
+                className="min-h-[120px] font-mono resize-none"
+              />
+
+              <div className="text-sm text-muted-foreground">
+                Character count: <span className="font-semibold">{testInput.length}</span>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
 
         {/* What Is Invisible Text Section */}
         <motion.div variants={fadeIn} className="max-w-4xl mx-auto py-8 border-t border-border">
