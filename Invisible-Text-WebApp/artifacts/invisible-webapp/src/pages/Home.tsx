@@ -101,6 +101,14 @@ export default function Home() {
       badgeColor: "#6366f1",
       description: "Ogham glyph divider. In modern browsers, it behaves and renders as an invisible spacing divider suitable for name styling.",
     },
+    {
+      code: "U+200C",
+      char: "\u200c",
+      name: "Zero Width Non-Joiner",
+      badge: "Text Formatter",
+      badgeColor: "#f59e0b",
+      description: "Prevents two adjacent characters from forming a ligature or joining. Invisible yet effective for bypassing word-join detection in usernames and bios.",
+    },
   ];
 
   const handleCopyChar = (char: string, code: string) => {
