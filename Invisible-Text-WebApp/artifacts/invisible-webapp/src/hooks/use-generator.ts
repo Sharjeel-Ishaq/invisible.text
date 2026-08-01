@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { z } from "zod";
 
 const generateSchema = z.object({
-  length: z.coerce.number().min(1).max(1000).default(100),
+  length: z.coerce.number().min(1).max(5000).default(100),
 });
 
 type GenerateRequest = z.infer<typeof generateSchema>;

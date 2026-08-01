@@ -169,12 +169,13 @@ export default function Home() {
             {/* Left: Hero Text */}
             <div className="space-y-5 text-center lg:text-left">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium border border-primary/20">
-                <EyeOff className="h-4 w-4 flex-shrink-0" />
+                {/* <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: "currentColor" }}></span> */}
+                < EyeOff className="h-4 w-4" />
                 The original invisible text tool. Works in your browser.
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight leading-tight">
                 Generate{" "}
-                <span className="text-gradient">Invisible Text</span> for Any Platform
+                <span className="text-gradient">Invisible Text</span> For Any Platform
               </h1>
               <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
                 Create hidden Unicode characters instantly. Perfect for sending blank messages on WhatsApp,
