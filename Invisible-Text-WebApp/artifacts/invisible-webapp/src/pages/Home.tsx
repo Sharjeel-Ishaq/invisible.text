@@ -439,7 +439,7 @@ export default function Home() {
             Paste invisible text below to check how it appears. This helps you verify whether the text is truly hidden or still visible on your device.
           </p>
 
-            <Card className="shadow-md border-2 border-{#00a884} bg-[rgb(191, 219, 254)]">
+            <Card className="shadow-md border-1 border-[#bfdbfe] bg-[rgb(191, 219, 254)]">
 
             <CardContent className="p-6 space-y-4">
               <Textarea
