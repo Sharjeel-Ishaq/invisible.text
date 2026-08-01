@@ -20,7 +20,7 @@ import featuredImage from "@assets/image_1776348074881.png";
 import howToUseImage from "../../../../attached_assets/Invisible-Text.jpg";
 
 const generateSchema = z.object({
-  length: z.coerce.number().min(1).max(1000).default(100),
+  length: z.coerce.number().min(1).max(5000).default(100),
 });
 
 const ACCENT = "#00a884";
@@ -68,7 +68,7 @@ export default function Home() {
 
   const currentLength = Number(form.watch("length")) || 1;
 
-  const increment = () => form.setValue("length", Math.min(currentLength + 1, 1000), { shouldValidate: true });
+  const increment = () => form.setValue("length", Math.min(currentLength + 1, 5000), { shouldValidate: true });
   const decrement = () => form.setValue("length", Math.max(currentLength - 1, 1), { shouldValidate: true });
 
   const onSubmit = (data: z.infer<typeof generateSchema>) => {
@@ -121,7 +121,7 @@ export default function Home() {
     },
     {
       title: "Customizable Length",
-      description: "Generate anywhere from 1 to 1000 invisible characters to fit any need or platform limit.",
+      description: "Generate anywhere from 1 to 5000 invisible characters to fit any need or platform limit.",
       bg: "rgb(239, 246, 255)",
       border: "rgb(191, 219, 254)",
     },
@@ -169,7 +169,7 @@ export default function Home() {
             {/* Left: Hero Text */}
             <div className="space-y-5">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium border border-primary/20">
-                <EyeOff className="h-4 w-4 flex-shrink-0" />
+                <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: "currentColor" }}></span>
                 The original invisible text tool. Works in your browser.
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight leading-tight">
@@ -226,7 +226,7 @@ export default function Home() {
                             className="text-lg font-mono text-center flex-1"
                             style={{ borderColor: `${ACCENT}50` }}
                             min={1}
-                            max={1000}
+                            max={5000}
                           />
                           <Button
                             type="button"
@@ -241,7 +241,7 @@ export default function Home() {
                           </Button>
                         </div>
                         <p className="text-xs text-center text-muted-foreground">
-                          Choose 1–1000 invisible characters &nbsp;·&nbsp; Hangul Filler (U+3164)
+                          Choose 1–5000 invisible characters &nbsp;·&nbsp; Hangul Filler (U+3164)
                         </p>
                         {form.formState.errors.length && (
                           <p className="text-sm text-destructive text-center">{form.formState.errors.length.message}</p>
@@ -439,7 +439,7 @@ export default function Home() {
               <HowToStep
                 number={1}
                 title="Set Your Character Count"
-                description='Use the number input at the top of the generator to choose how many invisible characters you want. Click the "+" button to increase the count or the "−" button to decrease it. You can also type a number directly into the field. The minimum is 1 and the maximum is 1000 characters.'
+                description='Use the number input at the top of the generator to choose how many invisible characters you want. Click the "+" button to increase the count or the "−" button to decrease it. You can also type a number directly into the field. The minimum is 1 and the maximum is 5000 characters.'
               />
               <HowToStep
                 number={2}
