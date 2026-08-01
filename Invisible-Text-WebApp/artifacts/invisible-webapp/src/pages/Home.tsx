@@ -162,137 +162,166 @@ export default function Home() {
         variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
         className="space-y-4"
       >
-        {/* Hero Section */}
-        <motion.div variants={fadeIn} className="text-center space-y-6 py-6 md:py-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-4 border border-primary/20">
-            <EyeOff className="h-4 w-4" /> The Original Invisible Text Tool
-          </div>
-          <h1 className="text-5xl md:text-7xl font-display font-bold tracking-tight">
-            Generate <span className="text-gradient">Invisible Text</span>
-          </h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Create hidden Unicode characters instantly. Perfect for sending blank messages on WhatsApp,
-            adding space to Instagram bios, or hiding your username in games.
-          </p>
-        </motion.div>
+        {/* Hero + Generator — two-column layout */}
+        <motion.div variants={fadeIn} className="py-6 md:py-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
 
-        {/* Generator Card */}
-        <motion.div variants={fadeIn} className="max-w-3xl mx-auto">
-          <Card
-            className="glass-card overflow-hidden"
-            style={{ border: `2px solid ${ACCENT}30`, borderTop: `4px solid ${ACCENT}` }}
-          >
-            <CardHeader className="bg-secondary/30 border-b border-border/50">
-              <CardTitle className="flex items-center gap-2">
-                <Sparkles className="h-5 w-5" style={{ color: ACCENT }} />
-                Generator
-              </CardTitle>
-              <CardDescription>Customize the length of your invisible text string.</CardDescription>
-            </CardHeader>
-            <CardContent className="p-6 md:p-8 space-y-6">
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="length">Number of characters (Length)</Label>
-                  <div className="flex flex-col sm:flex-row gap-2">
-                    <div className="flex gap-2 flex-1">
-                      <Button
-                        type="button"
-                        size="icon"
-                        onClick={decrement}
-                        data-testid="button-decrement"
-                        aria-label="Decrease character count"
-                        className="border-2 text-white flex-shrink-0"
-                        style={{ backgroundColor: ACCENT, borderColor: ACCENT }}
-                      >
-                        <Minus className="h-4 w-4" />
-                      </Button>
-                      <Input
-                        id="length"
-                        data-testid="input-length"
-                        type="number"
-                        {...form.register("length", { valueAsNumber: true })}
-                        className="text-lg font-mono text-center flex-1"
-                        style={{ borderColor: `${ACCENT}50` }}
-                        min={1}
-                        max={1000}
+            {/* Left: Hero Text */}
+            <div className="space-y-5">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium border border-primary/20">
+                <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: "currentColor" }}></span>
+                The original invisible text tool. Works in your browser.
+              </div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight leading-tight">
+                Generate{" "}
+                <span className="text-gradient">Invisible Text</span>
+                <br />
+                for Any Platform
+              </h1>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                Create hidden Unicode characters instantly. Perfect for sending blank messages on WhatsApp,
+                adding space to Instagram bios, or hiding your username in games.
+              </p>
+              <p className="text-base text-muted-foreground">
+                We've generated{" "}
+                <span className="font-semibold" style={{ color: ACCENT }}>2,847,391</span>{" "}
+                invisible characters with a total count of{" "}
+                <span className="font-semibold" style={{ color: ACCENT }}>14.2 million</span>.
+              </p>
+            </div>
+
+            {/* Right: Step-based Generator Card */}
+            <div>
+              <Card
+                className="glass-card overflow-hidden shadow-lg"
+                style={{ border: `1.5px solid ${ACCENT}30` }}
+              >
+                <CardContent className="p-6 space-y-6">
+
+                  {/* Step 1 */}
+                  <div className="space-y-3">
+                    <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                      Step 1: Set Character Length
+                    </p>
+                    <div
+                      className="rounded-xl border-2 border-dashed p-5 flex flex-col items-center gap-3"
+                      style={{ borderColor: `${ACCENT}40` }}
+                    >
+                      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-3">
+                        <div className="flex gap-2 w-full">
+                          <Button
+                            type="button"
+                            size="icon"
+                            onClick={decrement}
+                            data-testid="button-decrement"
+                            aria-label="Decrease character count"
+                            className="border-2 text-white flex-shrink-0"
+                            style={{ backgroundColor: ACCENT, borderColor: ACCENT }}
+                          >
+                            <Minus className="h-4 w-4" />
+                          </Button>
+                          <Input
+                            id="length"
+                            data-testid="input-length"
+                            type="number"
+                            {...form.register("length", { valueAsNumber: true })}
+                            className="text-lg font-mono text-center flex-1"
+                            style={{ borderColor: `${ACCENT}50` }}
+                            min={1}
+                            max={1000}
+                          />
+                          <Button
+                            type="button"
+                            size="icon"
+                            onClick={increment}
+                            data-testid="button-increment"
+                            aria-label="Increase character count"
+                            className="border-2 text-white flex-shrink-0"
+                            style={{ backgroundColor: ACCENT, borderColor: ACCENT }}
+                          >
+                            <Plus className="h-4 w-4" />
+                          </Button>
+                        </div>
+                        <p className="text-xs text-center text-muted-foreground">
+                          Choose 1–1000 invisible characters &nbsp;·&nbsp; Hangul Filler (U+3164)
+                        </p>
+                        {form.formState.errors.length && (
+                          <p className="text-sm text-destructive text-center">{form.formState.errors.length.message}</p>
+                        )}
+
+                        {/* Step 2 */}
+                        <div className="pt-2 space-y-2">
+                          <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                            Step 2: Generate Text
+                          </p>
+                          <Button
+                            type="submit"
+                            data-testid="button-generate"
+                            disabled={generateMutation.isPending}
+                            className="text-white w-full shadow-md"
+                            style={{ backgroundColor: ACCENT }}
+                          >
+                            <Sparkles className="mr-2 h-4 w-4" />
+                            {generateMutation.isPending ? "Generating..." : "Generate Invisible Text"}
+                          </Button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
+                  {/* Step 3 */}
+                  <div className="space-y-3">
+                    <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                      Step 3: Copy Result
+                    </p>
+                    <div className="relative">
+                      <Textarea
+                        readOnly
+                        data-testid="textarea-output"
+                        value={generatedText}
+                        placeholder="Your invisible text will appear here..."
+                        className={`min-h-[100px] resize-none bg-muted/20 font-mono transition-colors ${
+                          generatedText ? "text-transparent" : "text-foreground"
+                        }`}
+                        style={{ borderColor: generatedText ? `${ACCENT}40` : undefined }}
                       />
-                      <Button
-                        type="button"
-                        size="icon"
-                        onClick={increment}
-                        data-testid="button-increment"
-                        aria-label="Increase character count"
-                        className="border-2 text-white flex-shrink-0"
-                        style={{ backgroundColor: ACCENT, borderColor: ACCENT }}
-                      >
-                        <Plus className="h-4 w-4" />
-                      </Button>
+                      {generatedText && (
+                        <div className="absolute inset-0 pointer-events-none px-3 py-2 text-sm font-mono break-all whitespace-pre-wrap select-none overflow-hidden">
+                          <span className="bg-[#00a8841a] text-transparent">{generatedText}</span>
+                        </div>
+                      )}
+                      {generatedText && (
+                        <div className="absolute top-2 right-2">
+                          <span className="text-xs text-muted-foreground bg-background/80 backdrop-blur px-2 py-1 rounded border border-border">
+                            {generatedText.length} chars
+                          </span>
+                        </div>
+                      )}
                     </div>
                     <Button
-                      type="submit"
-                      data-testid="button-generate"
-                      disabled={generateMutation.isPending}
-                      className="text-white w-full sm:w-auto sm:min-w-[120px] shadow-lg"
-                      style={{ backgroundColor: ACCENT }}
+                      onClick={handleCopy}
+                      data-testid="button-copy"
+                      disabled={!generatedText}
+                      size="lg"
+                      className="w-full text-white"
+                      style={{ backgroundColor: copied ? "#16a34a" : ACCENT }}
                     >
-                      {generateMutation.isPending ? "Generating..." : "Generate"}
+                      {copied ? (
+                        <><Check className="mr-2 h-4 w-4" /> Copied!</>
+                      ) : (
+                        <><Copy className="mr-2 h-4 w-4" /> Copy to Clipboard</>
+                      )}
                     </Button>
+                    <p className="text-xs text-center text-muted-foreground">
+                      Paste it anywhere — WhatsApp, Instagram, Discord, games &amp; more
+                    </p>
                   </div>
-                  {form.formState.errors.length && (
-                    <p className="text-sm text-destructive">{form.formState.errors.length.message}</p>
-                  )}
-                </div>
-              </form>
 
-              <div className="space-y-2">
-                <Label>Output Result</Label>
-                <div className="relative group">
-                  <Textarea
-                    readOnly
-                    data-testid="textarea-output"
-                    value={generatedText}
-                    placeholder="Your invisible text will appear here..."
-                    className={`min-h-[150px] resize-none bg-muted/20 font-mono transition-colors ${
-                      generatedText ? "text-transparent" : "text-foreground"
-                    }`}
-                    style={{ borderColor: generatedText ? `${ACCENT}40` : undefined }}
-                  />
-                  {generatedText && (
-                    <div className="absolute inset-0 pointer-events-none px-3 py-2 text-base md:text-sm font-mono break-all whitespace-pre-wrap select-none overflow-hidden">
-                      <span className="bg-[#00a8841a] text-transparent px-.3">
-                        {generatedText}
-                      </span>
-                    </div>
-                  )}
-                  {generatedText && (
-                    <div className="absolute top-2 right-2 md:top-4 md:right-4">
-                      <span className="text-xs text-muted-foreground bg-background/80 backdrop-blur px-2 py-1 rounded border border-border">
-                        {generatedText.length} invisible chars
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter className="bg-secondary/30 border-t border-border/50 p-6 flex justify-end">
-              <Button
-                onClick={handleCopy}
-                data-testid="button-copy"
-                disabled={!generatedText}
-                size="lg"
-                className="w-full sm:w-auto text-white"
-                style={{
-                  backgroundColor: copied ? "#16a34a" : ACCENT,
-                }}
-              >
-                {copied ? (
-                  <><Check className="mr-2 h-4 w-4" /> Copied!</>
-                ) : (
-                  <><Copy className="mr-2 h-4 w-4" /> Copy to Clipboard</>
-                )}
-              </Button>
-            </CardFooter>
-          </Card>
+                </CardContent>
+              </Card>
+            </div>
+
+          </div>
         </motion.div>
 
 
