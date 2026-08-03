@@ -150,7 +150,7 @@ export default function FreeFire() {
                 <Flame className="h-4 w-4 flex-shrink-0" /> Free Fire Invisible Text Generator
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight leading-tight">
-                Free Fire <span className="text-gradient">Invisible Name</span> Generator
+                Free Fire <span className="text-gradient">Invisible Name Text</span> Generator
               </h1>
               <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
                 Create blank nicknames for Free Fire using Unicode{" "}

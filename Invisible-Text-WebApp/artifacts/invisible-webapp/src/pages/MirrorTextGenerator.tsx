@@ -230,207 +230,141 @@ export default function MirrorTextGenerator() {
                 }}
                 className="space-y-4"
             >
-                <motion.div
-                    variants={fadeIn}
-                    className="text-center space-y-6 py-6 md:py-10"
-                >
-                    <div
-                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold mb-4 border"
-                        style={{
-                            backgroundColor: `${ACCENT}15`,
-                            color: ACCENT,
-                            borderColor: `${ACCENT}25`,
-                        }}
-                    >
-                        <RefreshCw className="h-4 w-4" /> Mirror Text Generator
-                    </div>
-                    <h1 className="text-4xl md:text-6xl font-display font-bold tracking-tight">
-                        Mirror Text{" "}
-                        <span style={{ color: ACCENT }}>Generator</span>
-                    </h1>
-                    <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                        Convert normal text into a flipped and mirrored version
-                        using special Unicode characters. Perfect for creative
-                        posts and stylish usernames.
-                    </p>
-                </motion.div>
-                <motion.div variants={fadeIn} className="max-w-3xl mx-auto">
-                    <div
-                        className="rounded-2xl bg-white shadow-md overflow-hidden"
-                        style={{
-                            border: `2px solid ${ACCENT}20`,
-                            borderTop: `6px solid ${ACCENT}`,
-                        }}
-                    >
-                        <div className="p-6 md:p-8 space-y-5">
-                            <div className="space-y-2">
-                                <Label htmlFor="mtg-input">Input Text</Label>
-                                <Textarea
-                                    id="mtg-input"
-                                    value={input}
-                                    onChange={(e) => setInput(e.target.value)}
-                                    placeholder="Type or paste text here..."
-                                    className="min-h-[140px] resize-none text-sm focus-visible:ring-0"
-                                    style={{ borderColor: "#e5e5e5" }}
-                                    onFocus={(e) =>
-                                        (e.target.style.borderColor = ACCENT)
-                                    }
-                                    onBlur={(e) =>
-                                        (e.target.style.borderColor = "#e5e5e5")
-                                    }
-                                />
-                                <p className="text-xs text-muted-foreground">
-                                    Characters: <strong>{charCount}</strong>
-                                </p>
-                            </div>
+                {/* Hero + Tool — two-column layout */}
+                <motion.div variants={fadeIn} className="py-6 md:py-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
 
-                            <div className="flex flex-col sm:flex-row items-center gap-3">
-                                <Button
-                                    onClick={generate}
-                                    className="w-full md:w-auto text-white text-xs sm:text-sm"
-                                    style={{ backgroundColor: ACCENT }}
-                                    onMouseEnter={(e) =>
-                                        (e.currentTarget.style.backgroundColor =
-                                            "#008f6f")
-                                    }
-                                    onMouseLeave={(e) =>
-                                        (e.currentTarget.style.backgroundColor =
-                                            ACCENT)
-                                    }
-                                >
-                                    Generate Mirror Text
-                                </Button>
-                                <Button
-                                    onClick={generateMirrorWords}
-                                    className="w-full md:w-auto text-white text-xs sm:text-sm"
-                                    style={{
-                                        backgroundColor: ACCENT,
-                                        color: "#ffffff",
-                                    }}
-                                    onMouseEnter={(e) =>
-                                        (e.currentTarget.style.backgroundColor =
-                                            "#008f6f")
-                                    }
-                                    onMouseLeave={(e) =>
-                                        (e.currentTarget.style.backgroundColor =
-                                            ACCENT)
-                                    }
-                                >
-                                    Generate Mirror Words
-                                </Button>
-                                <Button
-                                    variant="outline"
-                                    onClick={() => setReverseOrder((s) => !s)}
-                                    className="w-full md:w-auto text-xs"
-                                    style={{ borderColor: "#e5e5e5" }}
-                                    onMouseEnter={(e) => {
-                                        e.currentTarget.style.borderColor =
-                                            ACCENT;
-                                        e.currentTarget.style.backgroundColor = `${ACCENT}15`;
-                                        e.currentTarget.style.color = ACCENT;
-                                    }}
-                                    onMouseLeave={(e) => {
-                                        e.currentTarget.style.borderColor =
-                                            "#e5e5e5";
-                                        e.currentTarget.style.backgroundColor =
-                                            "transparent";
-                                        e.currentTarget.style.color = "inherit";
-                                    }}
-                                >
-                                    {reverseOrder
-                                        ? "Reverse order: ON"
-                                        : "Reverse order: OFF"}
-                                </Button>
-                                <Button
-                                    variant="outline"
-                                    onClick={clear}
-                                    className="w-full md:w-auto text-xs"
-                                    style={{ borderColor: "#e5e5e5" }}
-                                    onMouseEnter={(e) => {
-                                        e.currentTarget.style.borderColor =
-                                            ACCENT;
-                                        e.currentTarget.style.backgroundColor = `${ACCENT}15`;
-                                        e.currentTarget.style.color = ACCENT;
-                                    }}
-                                    onMouseLeave={(e) => {
-                                        e.currentTarget.style.borderColor =
-                                            "#e5e5e5";
-                                        e.currentTarget.style.backgroundColor =
-                                            "transparent";
-                                        e.currentTarget.style.color = "inherit";
-                                    }}
-                                >
-                                    <Trash2 className="h-4 w-4 mr-2" /> Clear
-                                </Button>
+                        {/* Left: Hero Text */}
+                        <div className="space-y-5 text-center lg:text-left">
+                            <div
+                                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium border"
+                                style={{ backgroundColor: `${ACCENT}15`, color: ACCENT, borderColor: `${ACCENT}25` }}
+                            >
+                                <RefreshCw className="h-4 w-4 flex-shrink-0" /> Mirror Text Generator
                             </div>
+                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight leading-tight">
+                                Mirror Text{" "}
+                                <span style={{ color: ACCENT }}>Generator</span>
+                            </h1>
+                            <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                                Convert normal text into a flipped and mirrored version using special Unicode characters. Perfect for creative posts and stylish usernames.
+                            </p>
+                            <p className="text-base text-muted-foreground">
+                                Over{" "}
+                                <span className="font-semibold" style={{ color: ACCENT }}>850,000</span>{" "}
+                                mirror texts created with a total of{" "}
+                                <span className="font-semibold" style={{ color: ACCENT }}>3.2 million</span>{" "}
+                                characters transformed.
+                            </p>
+                        </div>
 
-                            <div className="space-y-2">
-                                <Label htmlFor="mtg-output">
-                                    Output Result
-                                </Label>
-                                <Textarea
-                                    id="mtg-output"
-                                    readOnly
-                                    value={output}
-                                    placeholder="Mirrored text will appear here..."
-                                    className="min-h-[140px] resize-none text-sm bg-muted/20"
-                                />
-                            </div>
+                        {/* Right: Step-based Tool Card */}
+                        <div>
+                            <div
+                                className="rounded-2xl bg-white shadow-lg overflow-hidden"
+                                style={{ border: `1.5px solid ${ACCENT}30` }}
+                            >
+                                <div className="p-6 space-y-5">
 
-                            {/* Mobile: single full-width copy button */}
-                            <div className="md:hidden">
-                                <Button
-                                    onClick={handleCopy}
-                                    disabled={!output}
-                                    className="w-full text-white"
-                                    size="lg"
-                                    style={{
-                                        backgroundColor: copied
-                                            ? "#16a34a"
-                                            : ACCENT,
-                                    }}
-                                >
-                                    {copied ? (
-                                        <>
-                                            <Check className="mr-2 h-4 w-4" />{" "}
-                                            Copied!
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Copy className="mr-2 h-4 w-4" />{" "}
-                                            Copy
-                                        </>
-                                    )}
-                                </Button>
-                            </div>
+                                    {/* Step 1 */}
+                                    <div className="space-y-2">
+                                        <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                                            Step 1: Enter Your Text
+                                        </p>
+                                        <div
+                                            className="rounded-xl border-2 border-dashed p-3"
+                                            style={{ borderColor: `${ACCENT}40` }}
+                                        >
+                                            <Textarea
+                                                id="mtg-input"
+                                                value={input}
+                                                onChange={(e) => setInput(e.target.value)}
+                                                placeholder="Type or paste text here..."
+                                                className="min-h-[110px] resize-none text-sm focus-visible:ring-0 border-0 bg-transparent p-0"
+                                            />
+                                            <p className="text-xs text-muted-foreground mt-1">
+                                                Characters: <strong>{charCount}</strong>
+                                            </p>
+                                        </div>
+                                    </div>
 
-                            {/* Desktop / default full-width copy button */}
-                            <div className="hidden md:block">
-                                <Button
-                                    onClick={handleCopy}
-                                    disabled={!output}
-                                    className="w-full text-white"
-                                    size="lg"
-                                    style={{
-                                        backgroundColor: copied
-                                            ? "#16a34a"
-                                            : ACCENT,
-                                    }}
-                                >
-                                    {copied ? (
-                                        <>
-                                            <Check className="mr-2 h-4 w-4" />{" "}
-                                            Copied!
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Copy className="mr-2 h-4 w-4" />{" "}
-                                            Copy to Clipboard
-                                        </>
-                                    )}
-                                </Button>
+                                    {/* Step 2 */}
+                                    <div className="space-y-2">
+                                        <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                                            Step 2: Generate
+                                        </p>
+                                        <div className="grid grid-cols-2 gap-2">
+                                            <Button
+                                                onClick={generate}
+                                                className="text-white text-xs"
+                                                style={{ backgroundColor: ACCENT }}
+                                            >
+                                                <RefreshCw className="mr-1.5 h-3.5 w-3.5" /> Mirror Text
+                                            </Button>
+                                            <Button
+                                                onClick={generateMirrorWords}
+                                                className="text-white text-xs"
+                                                style={{ backgroundColor: ACCENT }}
+                                            >
+                                                <RefreshCw className="mr-1.5 h-3.5 w-3.5" /> Mirror Words
+                                            </Button>
+                                        </div>
+                                        <div className="flex gap-2">
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                onClick={() => setReverseOrder((s) => !s)}
+                                                className="flex-1 text-xs"
+                                                style={{ borderColor: `${ACCENT}50`, color: ACCENT }}
+                                            >
+                                                Reverse: {reverseOrder ? "ON" : "OFF"}
+                                            </Button>
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                onClick={clear}
+                                                className="text-xs"
+                                                style={{ borderColor: "#e5e5e5" }}
+                                            >
+                                                <Trash2 className="h-3.5 w-3.5 mr-1" /> Clear
+                                            </Button>
+                                        </div>
+                                    </div>
+
+                                    {/* Step 3 */}
+                                    <div className="space-y-2">
+                                        <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                                            Step 3: Copy Result
+                                        </p>
+                                        <Textarea
+                                            id="mtg-output"
+                                            readOnly
+                                            value={output}
+                                            placeholder="Mirrored text will appear here..."
+                                            className="min-h-[90px] resize-none text-sm bg-muted/20"
+                                        />
+                                        <Button
+                                            onClick={handleCopy}
+                                            disabled={!output}
+                                            size="lg"
+                                            className="w-full text-white"
+                                            style={{ backgroundColor: copied ? "#16a34a" : ACCENT }}
+                                        >
+                                            {copied ? (
+                                                <><Check className="mr-2 h-4 w-4" /> Copied!</>
+                                            ) : (
+                                                <><Copy className="mr-2 h-4 w-4" /> Copy to Clipboard</>
+                                            )}
+                                        </Button>
+                                        <p className="text-xs text-center text-muted-foreground">
+                                            Paste anywhere — Instagram, Twitter/X, Discord &amp; more
+                                        </p>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
+
                     </div>
                 </motion.div>
 
