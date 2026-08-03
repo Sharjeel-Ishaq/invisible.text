@@ -237,198 +237,207 @@ export default function TextSpacer() {
         variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
         className="space-y-4"
       >
-        {/* Hero */}
-        <motion.div variants={fadeIn} className="text-center space-y-6 py-6 md:py-10">
-          <div
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold mb-4 border"
-            style={{ backgroundColor: `${ACCENT}15`, color: ACCENT, borderColor: `${ACCENT}30` }}
-          >
-            <AlignVerticalSpaceAround className="h-4 w-4" /> Instagram Line Break Generator
-          </div>
-          <h1 className="text-4xl md:text-6xl font-display font-bold tracking-tight">
-            Text Spacer — Add{" "}
-            <span style={{ color: ACCENT }}>Line Breaks &amp; Spaces</span>{" "}
-            for Instagram
-          </h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Create perfect line breaks for Instagram captions, bios, and comments. Fix spacing issues
-            instantly using our TextSpacer tool. Paste your text below and generate formatted spacing.
-            Pair this with <a href="/mirror-text-generator" className="text-primary hover:text-primary/80 transition-colors">Mirror Text</a> to create flipped or mirrored paragraph styles when you want a reflective effect.
-          </p>
-        </motion.div>
+        {/* Hero + Tool — two-column layout */}
+        <motion.div variants={fadeIn} className="py-6 md:py-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start">
 
-
-        {/* Tool Card */}
-        <motion.div variants={fadeIn} className="max-w-3xl mx-auto">
-          <div
-            className="rounded-2xl bg-white shadow-md overflow-hidden"
-            style={{ border: `2px solid ${ACCENT}30`, borderTop: `6px solid ${ACCENT}` }}
-          >
-            <div className="p-6 md:p-8 space-y-5">
-              <div className="space-y-2">
-                <Label htmlFor="ts-input">Paste Your Text</Label>
-                <Textarea
-                  id="ts-input"
-                  data-testid="textarea-ts-input"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Paste or type your caption here..."
-                  className="min-h-[160px] resize-none text-sm"
-                  style={{ borderColor: "#e5e5e5" }}
-                  onFocus={(e) => (e.target.style.borderColor = ACCENT)}
-                  onBlur={(e) => (e.target.style.borderColor = "#e5e5e5")}
-                />
-                <p className="text-xs text-muted-foreground">
-                  Characters: <strong>{charCount}</strong>
-                </p>
-              </div>
-
-              {/* Font Style Picker */}
-              <div className="space-y-2">
-                <Label>Font Style</Label>
-                <div className="grid grid-cols-4 sm:grid-cols-8 gap-1.5">
-                  {STYLE_OPTIONS.map((opt) => {
-                    const active = style === opt.key;
-                    return (
-                      <button
-                        key={opt.key}
-                        type="button"
-                        onClick={() => setStyle(opt.key)}
-                        data-testid={`style-${opt.key}`}
-                        className="flex flex-col items-center gap-0.5 px-2 py-2 rounded-lg border text-xs font-medium transition-all"
-                        style={{
-                          backgroundColor: active ? ACCENT : "#fff",
-                          color: active ? "#fff" : "#374151",
-                          borderColor: active ? ACCENT : "#e5e7eb",
-                        }}
-                      >
-                        <span className="text-base leading-none">{opt.preview}</span>
-                        <span className="text-[10px] uppercase tracking-wide">{opt.label}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-                <p className="text-[11px] text-muted-foreground">
-                  Pick a style to convert your text into stylish Unicode letters. Switch at any time — the output updates automatically.
-                </p>
-              </div>
-
-              {/* Character Spacing Picker */}
-              <div className="space-y-2">
-                <Label>Character Spacing</Label>
-                <div className="grid grid-cols-3 sm:grid-cols-5 gap-1.5">
-                  {SPACING_OPTIONS.map((opt) => {
-                    const active = spacing === opt.key;
-                    return (
-                      <button
-                        key={opt.key}
-                        type="button"
-                        onClick={() => setSpacing(opt.key)}
-                        data-testid={`spacing-${opt.key}`}
-                        className="flex flex-col items-center gap-0.5 px-2 py-2 rounded-lg border text-[11px] font-medium transition-all"
-                        style={{
-                          backgroundColor: active ? ACCENT : "#fff",
-                          color: active ? "#fff" : "#374151",
-                          borderColor: active ? ACCENT : "#e5e7eb",
-                        }}
-                      >
-                        {opt.label}
-                      </button>
-                    );
-                  })}
-                </div>
-                <p className="text-[11px] text-muted-foreground">
-                  Add extra space or dots between each character for a unique aesthetic look.
-                </p>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <Button
-                  data-testid="button-ts-generate"
-                  onClick={generate}
-                  className="text-white"
-                  style={{ backgroundColor: ACCENT }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#019270")}
-                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = ACCENT)}
-                >
-                  <Sparkles className="mr-2 h-4 w-4" /> Generate Spaced Text
-                </Button>
-                <Button
-                  data-testid="button-ts-clear"
-                  onClick={clear}
-                  variant="outline"
-                  style={{ borderColor: "#e5e5e5" }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = ACCENT;
-                    e.currentTarget.style.backgroundColor = `${ACCENT}15`;
-                    e.currentTarget.style.color = ACCENT;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = "#e5e5e5";
-                    e.currentTarget.style.backgroundColor = "transparent";
-                    e.currentTarget.style.color = "inherit";
-                  }}
-                >
-                  <Trash2 className="mr-2 h-4 w-4" /> Clear
-                </Button>
-              </div>
-
-              {/* Output */}
-              <div className="space-y-2">
-                <Label htmlFor="ts-output">Spaced Output (Ready to Paste)</Label>
-                <Textarea
-                  id="ts-output"
-                  data-testid="textarea-ts-output"
-                  readOnly
-                  value={output}
-                  placeholder='Click "Generate Spaced Text" to create properly spaced output...'
-                  className="min-h-[160px] resize-none text-sm bg-muted/20"
-                />
-                <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-                  <span className="text-muted-foreground">
-                    Output Characters: <strong>{outputCharCount}</strong> / {INSTAGRAM_LIMIT} (Instagram limit)
-                  </span>
-                  <span
-                    className="font-semibold"
-                    style={{ color: overLimit ? "#dc2626" : ACCENT }}
-                  >
-                    {overLimit ? `Over by ${Math.abs(remaining)}` : `${remaining} remaining`}
-                  </span>
-                </div>
-              </div>
-
-              {/* Copy Button */}
-              <Button
-                data-testid="button-ts-copy"
-                onClick={handleCopy}
-                disabled={!output}
-                className="w-full text-white"
-                size="lg"
-                style={{ backgroundColor: copied ? "#16a34a" : ACCENT }}
-                onMouseEnter={(e) => { if (!copied) e.currentTarget.style.backgroundColor = "#019270"; }}
-                onMouseLeave={(e) => { if (!copied) e.currentTarget.style.backgroundColor = ACCENT; }}
+            {/* Left: Hero Text */}
+            <div className="space-y-5 text-center lg:text-left lg:pt-4">
+              <div
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium border"
+                style={{ backgroundColor: `${ACCENT}15`, color: ACCENT, borderColor: `${ACCENT}30` }}
               >
-                {copied ? (
-                  <><Check className="mr-2 h-4 w-4" /> Copied!</>
-                ) : (
-                  <><Copy className="mr-2 h-4 w-4" /> Copy to Clipboard</>
-                )}
-              </Button>
-
-              {/* Live Preview */}
-              {output && (
-                <div className="space-y-2">
-                  <Label>Live Preview</Label>
-                  <div
-                    className="rounded-xl p-4 border bg-white text-sm whitespace-pre-wrap leading-relaxed"
-                    style={{ borderColor: `${ACCENT}30` }}
-                  >
-                    {output}
-                  </div>
-                </div>
-              )}
+                <AlignVerticalSpaceAround className="h-4 w-4" /> Instagram Line Breaker
+              </div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight leading-tight">
+                Text Spacer —{" "}
+                <span style={{ color: ACCENT }}>Line Breaks &amp; Spaces</span>{" "}
+                for Instagram
+              </h1>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                Create perfect line breaks for Instagram captions, bios, and comments. Fix spacing issues
+                instantly — paste your text, pick a font style, and generate properly spaced output ready
+                to paste anywhere.
+              </p>
+              <p className="text-base text-muted-foreground">
+                Trusted by{" "}
+                <span className="font-semibold" style={{ color: ACCENT }}>500,000+</span>{" "}
+                creators across{" "}
+                <span className="font-semibold" style={{ color: ACCENT }}>8 font styles</span>.
+              </p>
             </div>
+
+            {/* Right: Tool Card */}
+            <div>
+              <div
+                className="rounded-2xl bg-white shadow-lg overflow-hidden"
+                style={{ border: `1.5px solid ${ACCENT}30` }}
+              >
+                <div className="p-6 space-y-5">
+
+                  {/* Step 1: Input */}
+                  <div className="space-y-2">
+                    <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                      Step 1: Paste Your Text
+                    </p>
+                    <div
+                      className="rounded-xl border-2 border-dashed p-3"
+                      style={{ borderColor: `${ACCENT}40` }}
+                    >
+                      <Textarea
+                        id="ts-input"
+                        data-testid="textarea-ts-input"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        placeholder="Paste or type your caption here..."
+                        className="min-h-[120px] resize-none text-sm focus-visible:ring-0 border-0 bg-transparent p-0"
+                      />
+                      <p className="text-xs text-muted-foreground mt-1">{charCount} characters</p>
+                    </div>
+                  </div>
+
+                  {/* Step 2: Font Style + Spacing */}
+                  <div className="space-y-3">
+                    <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                      Step 2: Style &amp; Spacing (Optional)
+                    </p>
+                    <div className="grid grid-cols-4 sm:grid-cols-8 gap-1.5">
+                      {STYLE_OPTIONS.map((opt) => {
+                        const active = style === opt.key;
+                        return (
+                          <button
+                            key={opt.key}
+                            type="button"
+                            onClick={() => setStyle(opt.key)}
+                            data-testid={`style-${opt.key}`}
+                            className="flex flex-col items-center gap-0.5 px-2 py-2 rounded-lg border text-xs font-medium transition-all"
+                            style={{
+                              backgroundColor: active ? ACCENT : "#fff",
+                              color: active ? "#fff" : "#374151",
+                              borderColor: active ? ACCENT : "#e5e7eb",
+                            }}
+                          >
+                            <span className="text-base leading-none">{opt.preview}</span>
+                            <span className="text-[10px] uppercase tracking-wide">{opt.label}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <div className="grid grid-cols-3 sm:grid-cols-5 gap-1.5">
+                      {SPACING_OPTIONS.map((opt) => {
+                        const active = spacing === opt.key;
+                        return (
+                          <button
+                            key={opt.key}
+                            type="button"
+                            onClick={() => setSpacing(opt.key)}
+                            data-testid={`spacing-${opt.key}`}
+                            className="flex flex-col items-center gap-0.5 px-2 py-2 rounded-lg border text-[11px] font-medium transition-all"
+                            style={{
+                              backgroundColor: active ? ACCENT : "#fff",
+                              color: active ? "#fff" : "#374151",
+                              borderColor: active ? ACCENT : "#e5e7eb",
+                            }}
+                          >
+                            {opt.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Step 3: Generate + Clear */}
+                  <div className="space-y-2">
+                    <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                      Step 3: Generate &amp; Copy
+                    </p>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Button
+                        data-testid="button-ts-generate"
+                        onClick={generate}
+                        className="text-white"
+                        style={{ backgroundColor: ACCENT }}
+                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#019270")}
+                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = ACCENT)}
+                      >
+                        <Sparkles className="mr-2 h-4 w-4" /> Generate
+                      </Button>
+                      <Button
+                        data-testid="button-ts-clear"
+                        onClick={clear}
+                        variant="outline"
+                        style={{ borderColor: "#e5e5e5" }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.borderColor = ACCENT;
+                          e.currentTarget.style.backgroundColor = `${ACCENT}15`;
+                          e.currentTarget.style.color = ACCENT;
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.borderColor = "#e5e5e5";
+                          e.currentTarget.style.backgroundColor = "transparent";
+                          e.currentTarget.style.color = "inherit";
+                        }}
+                      >
+                        <Trash2 className="mr-2 h-4 w-4" /> Clear
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Output */}
+                  <div className="space-y-2">
+                    <Textarea
+                      id="ts-output"
+                      data-testid="textarea-ts-output"
+                      readOnly
+                      value={output}
+                      placeholder='Output appears here — ready to paste into Instagram…'
+                      className="min-h-[120px] resize-none text-sm bg-muted/20"
+                    />
+                    <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+                      <span className="text-muted-foreground">
+                        <strong>{outputCharCount}</strong> / {INSTAGRAM_LIMIT} chars
+                      </span>
+                      <span className="font-semibold" style={{ color: overLimit ? "#dc2626" : ACCENT }}>
+                        {overLimit ? `Over by ${Math.abs(remaining)}` : `${remaining} remaining`}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Copy */}
+                  <Button
+                    data-testid="button-ts-copy"
+                    onClick={handleCopy}
+                    disabled={!output}
+                    className="w-full text-white"
+                    size="lg"
+                    style={{ backgroundColor: copied ? "#16a34a" : ACCENT }}
+                    onMouseEnter={(e) => { if (!copied) e.currentTarget.style.backgroundColor = "#019270"; }}
+                    onMouseLeave={(e) => { if (!copied) e.currentTarget.style.backgroundColor = ACCENT; }}
+                  >
+                    {copied ? (
+                      <><Check className="mr-2 h-4 w-4" /> Copied!</>
+                    ) : (
+                      <><Copy className="mr-2 h-4 w-4" /> Copy to Clipboard</>
+                    )}
+                  </Button>
+
+                  {/* Live Preview */}
+                  {output && (
+                    <div className="space-y-1">
+                      <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Live Preview</p>
+                      <div
+                        className="rounded-xl p-4 border bg-white text-sm whitespace-pre-wrap leading-relaxed"
+                        style={{ borderColor: `${ACCENT}30` }}
+                      >
+                        {output}
+                      </div>
+                    </div>
+                  )}
+
+                </div>
+              </div>
+            </div>
+
           </div>
         </motion.div>
 

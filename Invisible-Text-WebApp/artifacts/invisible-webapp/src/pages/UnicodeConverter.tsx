@@ -226,7 +226,7 @@ export default function UnicodeConverter() {
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight leading-tight">
                 Unicode Text{" "}
-                <span style={{ color: ACCENT }}>Converter</span>
+                <span style={{ color: ACCENT }}>Converter</span> Copy & Paste
               </h1>
               <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
                 Convert normal text into stylish Unicode fonts instantly. Perfect for social media bios,
@@ -251,7 +251,7 @@ export default function UnicodeConverter() {
                     Step 1: Enter Your Text
                   </p>
                   <div
-                    className="rounded-xl border-2 border-dashed p-3"
+                    className="rounded-xl border-2 border-solid p-3"
                     style={{ borderColor: `${ACCENT}40` }}
                   >
                     <Textarea
@@ -260,14 +260,14 @@ export default function UnicodeConverter() {
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
                       placeholder="Type your text here — all font styles update instantly…"
-                      className="min-h-[130px] resize-none text-sm focus-visible:ring-0 border-0 bg-transparent p-0"
+                      className="min-h-[130px] resize-none text-sm focus-visible:ring-0 border-0 bg-transparent p-[6px]"
                     />
                     <div className="flex items-center justify-between mt-1">
                       <span className="text-xs text-muted-foreground">{input.length} characters</span>
-                      <Button
+                      <Button 
                         variant="ghost"
                         size="sm"
-                        className="h-6 px-2 text-xs"
+                        className="h-6 px-2 m-[4px] border-1 border-neutral-200 text-xs hover:bg-destructive/10 hover:text-destructive"
                         onClick={() => setInput("")}
                         data-testid="button-uc-clear"
                       >
