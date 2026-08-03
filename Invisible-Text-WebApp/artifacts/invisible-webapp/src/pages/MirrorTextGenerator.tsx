@@ -247,7 +247,7 @@ export default function MirrorTextGenerator() {
                                 Mirror Text Generator
                             </div>
                             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight leading-tight">
-                                Mirror Text{" "}
+                                Instant Mirror Text Converter And{" "}
                                 <span style={{ color: ACCENT }}>Generator</span>
                             </h1>
                             <p className="text-base md:text-lg text-muted-foreground leading-relaxed">

@@ -104,7 +104,7 @@ export default function ReverseText() {
                 <ArrowLeftRight className="h-4 w-4 flex-shrink-0" /> Online Reverse Text Generator
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight leading-tight">
-                Reverse Text{" "}
+                Backwards & Reverse Text{" "}
                 <span style={{ color: ACCENT }}>Generator</span>
               </h1>
               <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
@@ -134,7 +134,7 @@ export default function ReverseText() {
                       Step 1: Enter Your Text
                     </p>
                     <div
-                      className="rounded-xl border-2 border-dashed p-3"
+                      className="rounded-xl border-2 border-solid p-3"
                       style={{ borderColor: `${ACCENT}40` }}
                     >
                       <Textarea
@@ -143,7 +143,7 @@ export default function ReverseText() {
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         placeholder="Type or paste text here..."
-                        className="min-h-[110px] resize-none text-sm focus-visible:ring-0 border-0 bg-transparent p-0"
+                        className="min-h-[110px] resize-none text-sm focus-visible:ring-0 border-0 bg-transparent p-[6px]"
                       />
                       <p className="text-xs text-muted-foreground mt-1">
                         Characters: <strong>{charCount}</strong> &nbsp;|&nbsp; Words: <strong>{wordCount}</strong>
@@ -187,7 +187,7 @@ export default function ReverseText() {
                       onClick={clear}
                       variant="outline"
                       size="sm"
-                      className="w-full text-xs"
+                      className="w-full text-xs hover:bg-destructive/10 hover:text-destructive"
                       style={{ borderColor: "#e5e5e5" }}
                     >
                       <Trash2 className="h-3.5 w-3.5 mr-1.5" /> Clear

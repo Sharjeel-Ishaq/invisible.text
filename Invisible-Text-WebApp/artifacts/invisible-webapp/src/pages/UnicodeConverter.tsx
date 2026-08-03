@@ -5,7 +5,6 @@ import { SeoHead } from "@/components/SeoHead";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { Copy, Check, Trash2, ChevronDown, ChevronUp } from "lucide-react";
 import { motion } from "framer-motion";
@@ -213,99 +212,108 @@ export default function UnicodeConverter() {
         variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
         className="space-y-4"
       >
-        {/* Hero */}
-        <motion.div variants={fadeIn} className="text-center space-y-6 py-6 md:py-10">
-          <div
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold mb-4 border"
-            style={{ backgroundColor: `${ACCENT}15`, color: ACCENT, borderColor: `${ACCENT}30` }}
-          >
-            ✦ Unicode Text Converter
-          </div>
-          <h1 className="text-4xl md:text-6xl font-display font-bold tracking-tight">
-            Unicode Text{" "}
-            <span style={{ color: ACCENT }}>Converter</span>
-          </h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Convert normal text into stylish Unicode fonts instantly. Perfect for social media bios,
-            YouTube titles, gaming names, and more — no font installation needed.
-          </p>
-        </motion.div>
+        {/* Hero + Input — two-column layout */}
+        <motion.div variants={fadeIn} className="py-6 md:py-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
 
-        {/* Converter Tool */}
-        <motion.div variants={fadeIn} className="max-w-4xl mx-auto">
-          <div
-            className="rounded-2xl bg-white shadow-md overflow-hidden"
-            style={{ border: `2px solid ${ACCENT}30`, borderTop: `6px solid ${ACCENT}` }}
-          >
-            <div className="p-6 md:p-8 space-y-6">
-              {/* Input */}
-              <div className="space-y-2">
-                <Label htmlFor="uc-input">Type your text here…</Label>
-                <Textarea
-                  id="uc-input"
-                  data-testid="textarea-uc-input"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Type your text here…"
-                  className="min-h-[100px] resize-none text-sm"
-                />
-                <div className="flex items-center justify-between text-xs text-muted-foreground">
-                  <span>{input.length} chars</span>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-6 px-2 text-xs"
-                    onClick={() => setInput("")}
-                    data-testid="button-uc-clear"
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = ACCENT;
-                      e.currentTarget.style.backgroundColor = `${ACCENT}10`;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = "inherit";
-                      e.currentTarget.style.backgroundColor = "transparent";
-                    }}
+            {/* Left: Hero Text */}
+            <div className="space-y-5 text-center lg:text-left">
+              <div
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium border"
+                style={{ backgroundColor: `${ACCENT}15`, color: ACCENT, borderColor: `${ACCENT}30` }}
+              >
+                ✦ Unicode Text Converter
+              </div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight leading-tight">
+                Unicode Text{" "}
+                <span style={{ color: ACCENT }}>Converter</span>
+              </h1>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                Convert normal text into stylish Unicode fonts instantly. Perfect for social media bios,
+                YouTube titles, gaming names, and more — no font installation needed.
+              </p>
+              <p className="text-base text-muted-foreground">
+                Over{" "}
+                <span className="font-semibold" style={{ color: ACCENT }}>1,400,000</span>{" "}
+                texts converted across{" "}
+                <span className="font-semibold" style={{ color: ACCENT }}>25 font styles</span>.
+              </p>
+            </div>
+
+            {/* Right: Input Card */}
+            <div>
+              <div
+                className="rounded-2xl bg-white shadow-lg overflow-hidden"
+                style={{ border: `1.5px solid ${ACCENT}30` }}
+              >
+                <div className="p-6 space-y-4">
+                  <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                    Step 1: Enter Your Text
+                  </p>
+                  <div
+                    className="rounded-xl border-2 border-dashed p-3"
+                    style={{ borderColor: `${ACCENT}40` }}
                   >
-                    <Trash2 className="h-3 w-3 mr-1" /> Clear
-                  </Button>
+                    <Textarea
+                      id="uc-input"
+                      data-testid="textarea-uc-input"
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      placeholder="Type your text here — all font styles update instantly…"
+                      className="min-h-[130px] resize-none text-sm focus-visible:ring-0 border-0 bg-transparent p-0"
+                    />
+                    <div className="flex items-center justify-between mt-1">
+                      <span className="text-xs text-muted-foreground">{input.length} characters</span>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 px-2 text-xs"
+                        onClick={() => setInput("")}
+                        data-testid="button-uc-clear"
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" /> Clear
+                      </Button>
+                    </div>
+                  </div>
+                  <p className="text-xs text-center text-muted-foreground">
+                    All {[...STYLISH_STYLES, ...FANCY_STYLES, ...CASE_STYLES, ...ENCODE_STYLES].length} font styles update as you type ↓
+                  </p>
                 </div>
               </div>
-
-              {/* Tabs */}
-              <Tabs defaultValue="stylish">
-                <TabsList className="w-full grid grid-cols-4 mb-4">
-                  <TabsTrigger value="stylish">Stylish</TabsTrigger>
-                  <TabsTrigger value="fancy">Fancy</TabsTrigger>
-                  <TabsTrigger value="case">Case</TabsTrigger>
-                  <TabsTrigger value="encode">Encode</TabsTrigger>
-                </TabsList>
-
-                {[
-                  { key: "stylish", styles: STYLISH_STYLES },
-                  { key: "fancy", styles: FANCY_STYLES },
-                  { key: "case", styles: CASE_STYLES },
-                  { key: "encode", styles: ENCODE_STYLES },
-                ].map(({ key, styles }) => (
-                  <TabsContent key={key} value={key} className="space-y-3">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {styles.map(s => (
-                        <StyleCard key={s.label} label={s.label} value={input ? s.fn(input) : ""} />
-                      ))}
-                    </div>
-                    <Button
-                      className="w-full text-white mt-2"
-                      style={{ backgroundColor: ACCENT }}
-                      onClick={() => handleCopyAll(styles)}
-                      disabled={!input}
-                      data-testid={`button-copy-all-${key}`}
-                    >
-                      <Copy className="mr-2 h-4 w-4" /> Copy All {key.charAt(0).toUpperCase() + key.slice(1)} Styles
-                    </Button>
-                  </TabsContent>
-                ))}
-              </Tabs>
             </div>
+
           </div>
+        </motion.div>
+
+        {/* All Font Styles — auto-updates as user types */}
+        <motion.div variants={fadeIn} className="max-w-6xl mx-auto border-t border-border pt-8">
+          {[
+            { group: "Stylish Fonts", styles: STYLISH_STYLES },
+            { group: "Fancy Styles", styles: FANCY_STYLES },
+            { group: "Case Styles", styles: CASE_STYLES },
+            { group: "Encode / Transform", styles: ENCODE_STYLES },
+          ].map(({ group, styles }) => (
+            <div key={group} className="mb-8">
+              <div className="flex items-center justify-between mb-3">
+                <h2 className="text-sm font-bold uppercase tracking-widest" style={{ color: ACCENT }}>{group}</h2>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="text-xs h-7 px-3"
+                  style={{ borderColor: `${ACCENT}40`, color: ACCENT }}
+                  onClick={() => handleCopyAll(styles)}
+                  disabled={!input}
+                >
+                  <Copy className="h-3 w-3 mr-1" /> Copy All
+                </Button>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {styles.map(s => (
+                  <StyleCard key={s.label} label={s.label} value={input ? s.fn(input) : ""} />
+                ))}
+              </div>
+            </div>
+          ))}
         </motion.div>
 
         {/* What is Unicode Converter */}
