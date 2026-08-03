@@ -255,9 +255,9 @@ export default function TextSpacer() {
                 for Instagram
               </h1>
               <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                Create perfect line breaks for Instagram captions, bios, and comments. Fix spacing issues
-                instantly — paste your text, pick a font style, and generate properly spaced output ready
-                to paste anywhere.
+                Create perfect line breaks for Instagram captions, bios, and comments. Fix spacing
+                issues instantly — paste your text, pick a font style, and generate properly spaced
+                output ready to paste anywhere.
               </p>
               <p className="text-base text-muted-foreground">
                 Trusted by{" "}
@@ -275,7 +275,7 @@ export default function TextSpacer() {
               >
                 <div className="p-6 space-y-5">
 
-                  {/* Step 1: Input */}
+                  {/* Step 1 */}
                   <div className="space-y-2">
                     <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
                       Step 1: Paste Your Text
@@ -296,7 +296,7 @@ export default function TextSpacer() {
                     </div>
                   </div>
 
-                  {/* Step 2: Font Style + Spacing */}
+                  {/* Step 2 */}
                   <div className="space-y-3">
                     <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
                       Step 2: Style &amp; Spacing (Optional)
@@ -346,7 +346,7 @@ export default function TextSpacer() {
                     </div>
                   </div>
 
-                  {/* Step 3: Generate + Clear */}
+                  {/* Step 3 */}
                   <div className="space-y-2">
                     <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
                       Step 3: Generate &amp; Copy
@@ -381,17 +381,13 @@ export default function TextSpacer() {
                         <Trash2 className="mr-2 h-4 w-4" /> Clear
                       </Button>
                     </div>
-                  </div>
-
-                  {/* Output */}
-                  <div className="space-y-2">
                     <Textarea
                       id="ts-output"
                       data-testid="textarea-ts-output"
                       readOnly
                       value={output}
                       placeholder='Output appears here — ready to paste into Instagram…'
-                      className="min-h-[120px] resize-none text-sm bg-muted/20"
+                      className="min-h-[100px] resize-none text-sm bg-muted/20"
                     />
                     <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
                       <span className="text-muted-foreground">
@@ -401,38 +397,31 @@ export default function TextSpacer() {
                         {overLimit ? `Over by ${Math.abs(remaining)}` : `${remaining} remaining`}
                       </span>
                     </div>
-                  </div>
-
-                  {/* Copy */}
-                  <Button
-                    data-testid="button-ts-copy"
-                    onClick={handleCopy}
-                    disabled={!output}
-                    className="w-full text-white"
-                    size="lg"
-                    style={{ backgroundColor: copied ? "#16a34a" : ACCENT }}
-                    onMouseEnter={(e) => { if (!copied) e.currentTarget.style.backgroundColor = "#019270"; }}
-                    onMouseLeave={(e) => { if (!copied) e.currentTarget.style.backgroundColor = ACCENT; }}
-                  >
-                    {copied ? (
-                      <><Check className="mr-2 h-4 w-4" /> Copied!</>
-                    ) : (
-                      <><Copy className="mr-2 h-4 w-4" /> Copy to Clipboard</>
-                    )}
-                  </Button>
-
-                  {/* Live Preview */}
-                  {output && (
-                    <div className="space-y-1">
-                      <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Live Preview</p>
+                    <Button
+                      data-testid="button-ts-copy"
+                      onClick={handleCopy}
+                      disabled={!output}
+                      className="w-full text-white"
+                      size="lg"
+                      style={{ backgroundColor: copied ? "#16a34a" : ACCENT }}
+                      onMouseEnter={(e) => { if (!copied) e.currentTarget.style.backgroundColor = "#019270"; }}
+                      onMouseLeave={(e) => { if (!copied) e.currentTarget.style.backgroundColor = ACCENT; }}
+                    >
+                      {copied ? (
+                        <><Check className="mr-2 h-4 w-4" /> Copied!</>
+                      ) : (
+                        <><Copy className="mr-2 h-4 w-4" /> Copy to Clipboard</>
+                      )}
+                    </Button>
+                    {output && (
                       <div
                         className="rounded-xl p-4 border bg-white text-sm whitespace-pre-wrap leading-relaxed"
                         style={{ borderColor: `${ACCENT}30` }}
                       >
                         {output}
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
 
                 </div>
               </div>
