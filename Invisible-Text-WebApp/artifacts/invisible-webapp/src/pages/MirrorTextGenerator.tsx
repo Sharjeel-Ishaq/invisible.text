@@ -233,27 +233,44 @@ export default function MirrorTextGenerator() {
                 {/* Hero + Tool — two-column layout */}
                 <motion.div variants={fadeIn} className="py-6 md:py-10">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
-
                         {/* Left: Hero Text */}
-                        <div className="space-y-5 text-center lg:text-left">
+                        <div className="space-y-6 text-center lg:text-left">
                             <div
                                 className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium border"
-                                style={{ backgroundColor: `${ACCENT}15`, color: ACCENT, borderColor: `${ACCENT}25` }}
+                                style={{
+                                    backgroundColor: `${ACCENT}15`,
+                                    color: ACCENT,
+                                    borderColor: `${ACCENT}25`,
+                                }}
                             >
-                                <RefreshCw className="h-4 w-4 flex-shrink-0" /> Mirror Text Generator
+                                <RefreshCw className="h-4 w-4 flex-shrink-0" />{" "}
+                                Mirror Text Generator
                             </div>
                             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight leading-tight">
                                 Mirror Text{" "}
                                 <span style={{ color: ACCENT }}>Generator</span>
                             </h1>
                             <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                                Convert normal text into a flipped and mirrored version using special Unicode characters. Perfect for creative posts and stylish usernames.
+                                Convert normal text into a flipped and mirrored
+                                version using special Unicode characters.
+                                Perfect for creative posts and stylish
+                                usernames.
                             </p>
                             <p className="text-base text-muted-foreground">
                                 Over{" "}
-                                <span className="font-semibold" style={{ color: ACCENT }}>850,000</span>{" "}
+                                <span
+                                    className="font-semibold"
+                                    style={{ color: ACCENT }}
+                                >
+                                    850,000
+                                </span>{" "}
                                 mirror texts created with a total of{" "}
-                                <span className="font-semibold" style={{ color: ACCENT }}>3.2 million</span>{" "}
+                                <span
+                                    className="font-semibold"
+                                    style={{ color: ACCENT }}
+                                >
+                                    3.2 million
+                                </span>{" "}
                                 characters transformed.
                             </p>
                         </div>
@@ -265,25 +282,29 @@ export default function MirrorTextGenerator() {
                                 style={{ border: `1.5px solid ${ACCENT}30` }}
                             >
                                 <div className="p-6 space-y-5">
-
                                     {/* Step 1 */}
                                     <div className="space-y-2">
                                         <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
                                             Step 1: Enter Your Text
                                         </p>
                                         <div
-                                            className="rounded-xl border-2 border-dashed p-3"
-                                            style={{ borderColor: `${ACCENT}40` }}
+                                            className="rounded-xl border-2 border-solid p-3"
+                                            style={{
+                                                borderColor: `${ACCENT}40`,
+                                            }}
                                         >
                                             <Textarea
                                                 id="mtg-input"
                                                 value={input}
-                                                onChange={(e) => setInput(e.target.value)}
+                                                onChange={(e) =>
+                                                    setInput(e.target.value)
+                                                }
                                                 placeholder="Type or paste text here..."
-                                                className="min-h-[110px] resize-none text-sm focus-visible:ring-0 border-0 bg-transparent p-0"
+                                                className="min-h-[110px] resize-none text-sm focus-visible:ring-0 border-0 bg-transparent p-[7px]"
                                             />
                                             <p className="text-xs text-muted-foreground mt-1">
-                                                Characters: <strong>{charCount}</strong>
+                                                Characters:{" "}
+                                                <strong>{charCount}</strong>
                                             </p>
                                         </div>
                                     </div>
@@ -297,36 +318,51 @@ export default function MirrorTextGenerator() {
                                             <Button
                                                 onClick={generate}
                                                 className="text-white text-xs"
-                                                style={{ backgroundColor: ACCENT }}
+                                                style={{
+                                                    backgroundColor: ACCENT,
+                                                }}
                                             >
-                                                <RefreshCw className="mr-1.5 h-3.5 w-3.5" /> Mirror Text
+                                                <RefreshCw className="mr-1.5 h-3.5 w-3.5" />{" "}
+                                                Mirror Text
                                             </Button>
                                             <Button
                                                 onClick={generateMirrorWords}
                                                 className="text-white text-xs"
-                                                style={{ backgroundColor: ACCENT }}
+                                                style={{
+                                                    backgroundColor: ACCENT,
+                                                }}
                                             >
-                                                <RefreshCw className="mr-1.5 h-3.5 w-3.5" /> Mirror Words
+                                                <RefreshCw className="mr-1.5 h-3.5 w-3.5" />{" "}
+                                                Mirror Words
                                             </Button>
                                         </div>
                                         <div className="flex gap-2">
                                             <Button
                                                 variant="outline"
                                                 size="sm"
-                                                onClick={() => setReverseOrder((s) => !s)}
-                                                className="flex-1 text-xs"
-                                                style={{ borderColor: `${ACCENT}50`, color: ACCENT }}
+                                                onClick={() =>
+                                                    setReverseOrder((s) => !s)
+                                                }
+                                                className="flex-1 text-xs hover:bg-primary/10 hover:text-primary"
+                                                style={{
+                                                    borderColor: `${ACCENT}50`,
+                                                    color: ACCENT,
+                                                }}
                                             >
-                                                Reverse: {reverseOrder ? "ON" : "OFF"}
+                                                Reverse:{" "}
+                                                {reverseOrder ? "ON" : "OFF"}
                                             </Button>
                                             <Button
                                                 variant="outline"
                                                 size="sm"
                                                 onClick={clear}
-                                                className="text-xs"
-                                                style={{ borderColor: "#e5e5e5" }}
+                                                className="text-xs hover:bg-destructive/10 hover:text-destructive"
+                                                style={{
+                                                    borderColor: "#e5e5e5",
+                                                }}
                                             >
-                                                <Trash2 className="h-3.5 w-3.5 mr-1" /> Clear
+                                                <Trash2 className="h-3.5 w-3.5 mr-1" />{" "}
+                                                Clear
                                             </Button>
                                         </div>
                                     </div>
@@ -348,23 +384,32 @@ export default function MirrorTextGenerator() {
                                             disabled={!output}
                                             size="lg"
                                             className="w-full text-white"
-                                            style={{ backgroundColor: copied ? "#16a34a" : ACCENT }}
+                                            style={{
+                                                backgroundColor: copied
+                                                    ? "#16a34a"
+                                                    : ACCENT,
+                                            }}
                                         >
                                             {copied ? (
-                                                <><Check className="mr-2 h-4 w-4" /> Copied!</>
+                                                <>
+                                                    <Check className="mr-2 h-4 w-4" />{" "}
+                                                    Copied!
+                                                </>
                                             ) : (
-                                                <><Copy className="mr-2 h-4 w-4" /> Copy to Clipboard</>
+                                                <>
+                                                    <Copy className="mr-2 h-4 w-4" />{" "}
+                                                    Copy to Clipboard
+                                                </>
                                             )}
                                         </Button>
                                         <p className="text-xs text-center text-muted-foreground">
-                                            Paste anywhere — Instagram, Twitter/X, Discord &amp; more
+                                            Paste anywhere — Instagram,
+                                            Twitter/X, Discord &amp; more
                                         </p>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </motion.div>
 

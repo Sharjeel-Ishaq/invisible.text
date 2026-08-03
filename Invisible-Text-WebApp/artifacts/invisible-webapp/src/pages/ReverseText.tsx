@@ -91,140 +91,145 @@ export default function ReverseText() {
         variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
         className="space-y-4"
       >
-        {/* Hero */}
-        <motion.div variants={fadeIn} className="text-center space-y-6 py-6 md:py-10">
-          <div
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold mb-4 border"
-            style={{ backgroundColor: `${ACCENT}15`, color: ACCENT, borderColor: `${ACCENT}30` }}
-          >
-            <ArrowLeftRight className="h-4 w-4" /> Online Reverse Text Generator
-          </div>
-          <h1 className="text-4xl md:text-6xl font-display font-bold tracking-tight">
-            Reverse Text{" "}
-            <span style={{ color: ACCENT }}>Generator</span>
-          </h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Backwards text in one click. Reverse full sentences, flip word order, or reverse each word's
-            letters — instantly, free, and without any signup.
-          </p>
-        </motion.div>
+        {/* Hero + Tool — two-column layout */}
+        <motion.div variants={fadeIn} className="py-6 md:py-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
 
-        {/* Tool Card */}
-        <motion.div variants={fadeIn} className="max-w-3xl mx-auto">
-          <div
-            className="rounded-2xl bg-white shadow-md overflow-hidden"
-            style={{ border: `2px solid ${ACCENT}30`, borderTop: `6px solid ${ACCENT}` }}
-          >
-            <div className="p-6 md:p-8 space-y-5">
-              {/* Input */}
-              <div className="space-y-2">
-                <Label htmlFor="rtg-input">Input Text</Label>
-                <Textarea
-                  id="rtg-input"
-                  data-testid="textarea-rtg-input"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Type or paste text here..."
-                  className="min-h-[140px] resize-none text-sm focus-visible:ring-0"
-                  style={{ borderColor: "#e5e5e5" }}
-                  onFocus={(e) => (e.target.style.borderColor = ACCENT)}
-                  onBlur={(e) => (e.target.style.borderColor = "#e5e5e5")}
-                />
-                <p className="text-xs text-muted-foreground">
-                  Characters: <strong>{charCount}</strong> &nbsp;|&nbsp; Words: <strong>{wordCount}</strong>
-                </p>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                <Button
-                  data-testid="button-reverse-text"
-                  onClick={reverseText}
-                  className="text-white text-xs sm:text-sm"
-                  style={{ backgroundColor: ACCENT }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#019270")}
-                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = ACCENT)}
-                >
-                  Reverse Text
-                </Button>
-                <Button
-                  data-testid="button-reverse-words"
-                  onClick={reverseWords}
-                  className="text-white text-xs sm:text-sm"
-                  style={{ backgroundColor: ACCENT }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#019270")}
-                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = ACCENT)}
-                >
-                  Reverse Words
-                </Button>
-                <Button
-                  data-testid="button-reverse-each"
-                  onClick={reverseEach}
-                  className="text-white text-xs sm:text-sm"
-                  style={{ backgroundColor: ACCENT }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#019270")}
-                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = ACCENT)}
-                >
-                  Reverse Each Word
-                </Button>
-                <Button
-                  data-testid="button-rtg-clear"
-                  onClick={clear}
-                  variant="outline"
-                  className="text-xs sm:text-sm hover:text-white"
-                  style={{ borderColor: "#e5e5e5" }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = ACCENT;
-                    e.currentTarget.style.backgroundColor = `${ACCENT}15`;
-                    e.currentTarget.style.color = ACCENT;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = "#e5e5e5";
-                    e.currentTarget.style.backgroundColor = "transparent";
-                    e.currentTarget.style.color = "inherit";
-                  }}
-                >
-                  <Trash2 className="h-3.5 w-3.5 mr-1.5" /> Clear
-                </Button>
-              </div>
-
-              {/* Output */}
-              <div className="space-y-2">
-                <Label htmlFor="rtg-output">Output Result</Label>
-                <Textarea
-                  id="rtg-output"
-                  data-testid="textarea-rtg-output"
-                  readOnly
-                  value={output}
-                  placeholder="Output will appear here after clicking a reverse option..."
-                  className="min-h-[140px] resize-none text-sm bg-muted/20"
-                />
-              </div>
-
-              {/* Copy Button */}
-              <Button
-                data-testid="button-rtg-copy"
-                onClick={handleCopy}
-                disabled={!output}
-                className="w-full text-white"
-                size="lg"
-                style={{
-                  backgroundColor: copied ? "#16a34a" : ACCENT,
-                }}
-                onMouseEnter={(e) => {
-                  if (!copied) e.currentTarget.style.backgroundColor = "#019270";
-                }}
-                onMouseLeave={(e) => {
-                  if (!copied) e.currentTarget.style.backgroundColor = ACCENT;
-                }}
+            {/* Left: Hero Text */}
+            <div className="space-y-5 text-center lg:text-left">
+              <div
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium border"
+                style={{ backgroundColor: `${ACCENT}15`, color: ACCENT, borderColor: `${ACCENT}30` }}
               >
-                {copied ? (
-                  <><Check className="mr-2 h-4 w-4" /> Copied!</>
-                ) : (
-                  <><Copy className="mr-2 h-4 w-4" /> Copy to Clipboard</>
-                )}
-              </Button>
+                <ArrowLeftRight className="h-4 w-4 flex-shrink-0" /> Online Reverse Text Generator
+              </div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight leading-tight">
+                Reverse Text{" "}
+                <span style={{ color: ACCENT }}>Generator</span>
+              </h1>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                Backwards text in one click. Reverse full sentences, flip word order, or reverse each word's
+                letters — instantly, free, and without any signup.
+              </p>
+              <p className="text-base text-muted-foreground">
+                Over{" "}
+                <span className="font-semibold" style={{ color: ACCENT }}>620,000</span>{" "}
+                texts reversed with a total of{" "}
+                <span className="font-semibold" style={{ color: ACCENT }}>2.1 million</span>{" "}
+                characters flipped.
+              </p>
             </div>
+
+            {/* Right: Step-based Tool Card */}
+            <div>
+              <div
+                className="rounded-2xl bg-white shadow-lg overflow-hidden"
+                style={{ border: `1.5px solid ${ACCENT}30` }}
+              >
+                <div className="p-6 space-y-5">
+
+                  {/* Step 1 */}
+                  <div className="space-y-2">
+                    <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                      Step 1: Enter Your Text
+                    </p>
+                    <div
+                      className="rounded-xl border-2 border-dashed p-3"
+                      style={{ borderColor: `${ACCENT}40` }}
+                    >
+                      <Textarea
+                        id="rtg-input"
+                        data-testid="textarea-rtg-input"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        placeholder="Type or paste text here..."
+                        className="min-h-[110px] resize-none text-sm focus-visible:ring-0 border-0 bg-transparent p-0"
+                      />
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Characters: <strong>{charCount}</strong> &nbsp;|&nbsp; Words: <strong>{wordCount}</strong>
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Step 2 */}
+                  <div className="space-y-2">
+                    <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                      Step 2: Choose Reverse Mode
+                    </p>
+                    <div className="grid grid-cols-3 gap-2">
+                      <Button
+                        data-testid="button-reverse-text"
+                        onClick={reverseText}
+                        className="text-white text-xs"
+                        style={{ backgroundColor: ACCENT }}
+                      >
+                        Reverse Text
+                      </Button>
+                      <Button
+                        data-testid="button-reverse-words"
+                        onClick={reverseWords}
+                        className="text-white text-xs"
+                        style={{ backgroundColor: ACCENT }}
+                      >
+                        Reverse Words
+                      </Button>
+                      <Button
+                        data-testid="button-reverse-each"
+                        onClick={reverseEach}
+                        className="text-white text-xs"
+                        style={{ backgroundColor: ACCENT }}
+                      >
+                        Each Word
+                      </Button>
+                    </div>
+                    <Button
+                      data-testid="button-rtg-clear"
+                      onClick={clear}
+                      variant="outline"
+                      size="sm"
+                      className="w-full text-xs"
+                      style={{ borderColor: "#e5e5e5" }}
+                    >
+                      <Trash2 className="h-3.5 w-3.5 mr-1.5" /> Clear
+                    </Button>
+                  </div>
+
+                  {/* Step 3 */}
+                  <div className="space-y-2">
+                    <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                      Step 3: Copy Result
+                    </p>
+                    <Textarea
+                      id="rtg-output"
+                      data-testid="textarea-rtg-output"
+                      readOnly
+                      value={output}
+                      placeholder="Output will appear here after clicking a reverse option..."
+                      className="min-h-[90px] resize-none text-sm bg-muted/20"
+                    />
+                    <Button
+                      data-testid="button-rtg-copy"
+                      onClick={handleCopy}
+                      disabled={!output}
+                      className="w-full text-white"
+                      size="lg"
+                      style={{ backgroundColor: copied ? "#16a34a" : ACCENT }}
+                    >
+                      {copied ? (
+                        <><Check className="mr-2 h-4 w-4" /> Copied!</>
+                      ) : (
+                        <><Copy className="mr-2 h-4 w-4" /> Copy to Clipboard</>
+                      )}
+                    </Button>
+                    <p className="text-xs text-center text-muted-foreground">
+                      Paste anywhere — social media, games, messages &amp; more
+                    </p>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
           </div>
         </motion.div>
 
