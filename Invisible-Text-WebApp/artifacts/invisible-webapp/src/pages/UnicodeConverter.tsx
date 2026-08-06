@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link } from "wouter";
 import { Layout } from "@/components/Layout";
 import { SeoHead } from "@/components/SeoHead";
@@ -182,6 +182,22 @@ export default function UnicodeConverter() {
   const { toast } = useToast();
   const [input, setInput] = useState("");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [openGroups, setOpenGroups] = useState<Set<string>>(new Set());
+  const stylesRef = useRef<HTMLDivElement>(null);
+
+  const toggleGroup = (group: string) => {
+    setOpenGroups(prev => {
+      const next = new Set(prev);
+      if (next.has(group)) {
+        next.delete(group);
+      } else {
+        next.add(group);
+        // Scroll to styles section on first open
+        setTimeout(() => stylesRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+      }
+      return next;
+    });
+  };
 
   const handleCopyAll = (styles: { label: string; fn: (t: string) => string }[]) => {
     const allText = styles
@@ -285,35 +301,65 @@ export default function UnicodeConverter() {
           </div>
         </motion.div>
 
-        {/* All Font Styles — auto-updates as user types */}
-        <motion.div variants={fadeIn} className="max-w-6xl mx-auto border-t border-border pt-8">
+        {/* Font Style Category Pills + Collapsible Grids */}
+        <motion.div variants={fadeIn} className="max-w-6xl mx-auto border-t border-border pt-8" ref={stylesRef}>
+          {/* Pill Buttons Row */}
+          <div className="flex flex-wrap justify-center gap-3 mb-8">
+            {[
+              { group: "Stylish Fonts", styles: STYLISH_STYLES },
+              { group: "Fancy Styles", styles: FANCY_STYLES },
+              { group: "Case Styles", styles: CASE_STYLES },
+              { group: "Encode / Transform", styles: ENCODE_STYLES },
+            ].map(({ group }) => {
+              const isOpen = openGroups.has(group);
+              return (
+                <button
+                  key={group}
+                  onClick={() => toggleGroup(group)}
+                  className="px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 shadow-sm hover:shadow-md active:scale-95"
+                  style={{
+                    backgroundColor: isOpen ? "#019270" : ACCENT,
+                    color: "#fff",
+                  }}
+                >
+                  {group}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Collapsible Card Grids */}
           {[
             { group: "Stylish Fonts", styles: STYLISH_STYLES },
             { group: "Fancy Styles", styles: FANCY_STYLES },
             { group: "Case Styles", styles: CASE_STYLES },
             { group: "Encode / Transform", styles: ENCODE_STYLES },
-          ].map(({ group, styles }) => (
-            <div key={group} className="mb-8">
-              <div className="flex items-center justify-between mb-3">
-                <h2 className="text-sm font-bold uppercase tracking-widest" style={{ color: ACCENT }}>{group}</h2>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="text-xs h-7 px-3"
-                  style={{ borderColor: `${ACCENT}40`, color: ACCENT }}
-                  onClick={() => handleCopyAll(styles)}
-                  disabled={!input}
-                >
-                  <Copy className="h-3 w-3 mr-1" /> Copy All
-                </Button>
+          ].map(({ group, styles }) => {
+            const isOpen = openGroups.has(group);
+            if (!isOpen) return null;
+            return (
+              <div key={group} className="mb-8 animate-in fade-in slide-in-from-top-2 duration-300">
+                <div className="flex items-center justify-between mb-3">
+                  <h2 className="text-sm font-bold uppercase tracking-widest" style={{ color: ACCENT }}>{group}</h2>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="text-xs h-7 px-3"
+                    style={{ borderColor: `${ACCENT}40`, color: ACCENT }}
+                    onClick={() => handleCopyAll(styles)}
+                    disabled={!input}
+                  >
+                    <Copy className="h-3 w-3 mr-1" /> Copy All
+                  </Button>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                  {styles.map(s => (
+                    <StyleCard key={s.label} label={s.label} value={input ? s.fn(input) : ""} />
+                  ))}
+                </div>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {styles.map(s => (
-                  <StyleCard key={s.label} label={s.label} value={input ? s.fn(input) : ""} />
-                ))}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </motion.div>
 
         {/* What is Unicode Converter */}
