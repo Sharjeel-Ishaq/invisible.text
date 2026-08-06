@@ -54,6 +54,15 @@ export default function FreeFire() {
   const [copied, setCopied] = useState(false);
   const [copiedCard, setCopiedCard] = useState<string | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [openGameSection, setOpenGameSection] = useState<Set<string>>(new Set());
+
+  const toggleGameSection = (game: string) => {
+    setOpenGameSection(prev => {
+      const next = new Set(prev);
+      if (next.has(game)) { next.delete(game); } else { next.add(game); }
+      return next;
+    });
+  };
 
   const ACCENT = "#00a884";
 
@@ -313,82 +322,101 @@ export default function FreeFire() {
 
           </div>
         </motion.div>
-        {/* Free Fire One-Click Cards */}
+        {/* Game Section Pills + Collapsible Cards */}
         <motion.div variants={fadeIn} className="max-w-6xl mx-auto border-t border-border pt-10">
-          <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-2">
-            <Flame className="h-6 w-6" style={{ color: ACCENT }} />
-            Copy Your Free Fire Invisible Space — One Click
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {FF_CHARS.map((item) => (
-              <div key={item.code} className="rounded-xl border border-border bg-white p-4 flex flex-col gap-3 shadow-sm hover:shadow-md transition-shadow">
-                {/* Label row */}
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold uppercase tracking-wider" style={{ color: ACCENT }}>{item.label}</span>
-                  {item.badge && (
-                    <span className="text-xs font-bold px-2 py-0.5 rounded text-white" style={{ backgroundColor: ACCENT }}>{item.badge}</span>
-                  )}
-                </div>
-                {/* Preview box */}
-                <div className="rounded-lg border-2 border-dashed border-border bg-muted/30 px-4 py-3 text-center">
-                  <span className="text-sm text-muted-foreground italic">{item.hint}</span>
-                </div>
-                {/* Unicode info */}
-                <p className="text-xs text-muted-foreground">{item.code} — {item.name}</p>
-                {/* Copy button */}
-                <Button
-                  className="w-full text-white mt-auto"
-                  style={{ backgroundColor: copiedCard === item.code ? "#16a34a" : ACCENT }}
-                  onClick={() => handleCopyCard(item.char, item.code, item.name)}
+          {/* Pill Buttons */}
+          <div className="flex flex-wrap justify-center gap-3 mb-6">
+            {[
+              { key: "ff", label: "Free Fire", icon: <Flame className="h-4 w-4" /> },
+              { key: "pubg", label: "PUBG", icon: <Shield className="h-4 w-4" /> },
+            ].map(({ key, label, icon }) => {
+              const isOpen = openGameSection.has(key);
+              return (
+                <button
+                  key={key}
+                  onClick={() => toggleGameSection(key)}
+                  className="inline-flex items-center gap-2 px-7 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 shadow-sm hover:shadow-md active:scale-95"
+                  style={{ backgroundColor: isOpen ? "#019270" : ACCENT, color: "#fff" }}
                 >
-                  {copiedCard === item.code ? (
-                    <><Check className="mr-2 h-4 w-4" /> Copied!</>
-                  ) : (
-                    <>Copy {item.name}</>
-                  )}
-                </Button>
-              </div>
-            ))}
+                  {icon} {label}
+                </button>
+              );
+            })}
           </div>
-        </motion.div>
 
-        {/* PUBG One-Click Cards */}
-        <motion.div variants={fadeIn} className="max-w-6xl mx-auto border-t border-border pt-10">
-          <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-2">
-            <Shield className="h-6 w-6" style={{ color: ACCENT }} />
-            Copy Your PUBG Invisible Space — One Click
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {PUBG_CHARS.map((item) => (
-              <div key={"pubg-" + item.code} className="rounded-xl border border-border bg-white p-4 flex flex-col gap-3 shadow-sm hover:shadow-md transition-shadow">
-                {/* Label row */}
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold uppercase tracking-wider" style={{ color: ACCENT }}>{item.label}</span>
-                  {item.badge && (
-                    <span className="text-xs font-bold px-2 py-0.5 rounded text-white" style={{ backgroundColor: ACCENT }}>{item.badge}</span>
-                  )}
-                </div>
-                {/* Preview box */}
-                <div className="rounded-lg border-2 border-dashed border-border bg-muted/30 px-4 py-3 text-center">
-                  <span className="text-sm text-muted-foreground italic">{item.hint}</span>
-                </div>
-                {/* Unicode info */}
-                <p className="text-xs text-muted-foreground">{item.code} — {item.name}</p>
-                {/* Copy button */}
-                <Button
-                  className="w-full text-white mt-auto"
-                  style={{ backgroundColor: copiedCard === "pubg-" + item.code ? "#16a34a" : ACCENT }}
-                  onClick={() => handleCopyCard(item.char, "pubg-" + item.code, item.name)}
-                >
-                  {copiedCard === "pubg-" + item.code ? (
-                    <><Check className="mr-2 h-4 w-4" /> Copied!</>
-                  ) : (
-                    <>Copy {item.name}</>
-                  )}
-                </Button>
+          {/* Free Fire Cards */}
+          {openGameSection.has("ff") && (
+            <div className="mb-8 animate-in fade-in slide-in-from-top-2 duration-300">
+              <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-2">
+                <Flame className="h-6 w-6" style={{ color: ACCENT }} />
+                Free Fire Invisible Space — One Click Copy
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {FF_CHARS.map((item) => (
+                  <div key={item.code} className="rounded-xl border border-border bg-white p-4 flex flex-col gap-3 shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold uppercase tracking-wider" style={{ color: ACCENT }}>{item.label}</span>
+                      {item.badge && (
+                        <span className="text-xs font-bold px-2 py-0.5 rounded text-white" style={{ backgroundColor: ACCENT }}>{item.badge}</span>
+                      )}
+                    </div>
+                    <div className="rounded-lg border-2 border-dashed border-border bg-muted/30 px-4 py-3 text-center">
+                      <span className="text-sm text-muted-foreground italic">{item.hint}</span>
+                    </div>
+                    <p className="text-xs text-muted-foreground">{item.code} — {item.name}</p>
+                    <Button
+                      className="w-full text-white mt-auto"
+                      style={{ backgroundColor: copiedCard === item.code ? "#16a34a" : ACCENT }}
+                      onClick={() => handleCopyCard(item.char, item.code, item.name)}
+                    >
+                      {copiedCard === item.code ? (
+                        <><Check className="mr-2 h-4 w-4" /> Copied!</>
+                      ) : (
+                        <>Copy {item.name}</>
+                      )}
+                    </Button>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          )}
+
+          {/* PUBG Cards */}
+          {openGameSection.has("pubg") && (
+            <div className="mb-8 animate-in fade-in slide-in-from-top-2 duration-300">
+              <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-2">
+                <Shield className="h-6 w-6" style={{ color: ACCENT }} />
+                PUBG Invisible Space — One Click Copy
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {PUBG_CHARS.map((item) => (
+                  <div key={"pubg-" + item.code} className="rounded-xl border border-border bg-white p-4 flex flex-col gap-3 shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold uppercase tracking-wider" style={{ color: ACCENT }}>{item.label}</span>
+                      {item.badge && (
+                        <span className="text-xs font-bold px-2 py-0.5 rounded text-white" style={{ backgroundColor: ACCENT }}>{item.badge}</span>
+                      )}
+                    </div>
+                    <div className="rounded-lg border-2 border-dashed border-border bg-muted/30 px-4 py-3 text-center">
+                      <span className="text-sm text-muted-foreground italic">{item.hint}</span>
+                    </div>
+                    <p className="text-xs text-muted-foreground">{item.code} — {item.name}</p>
+                    <Button
+                      className="w-full text-white mt-auto"
+                      style={{ backgroundColor: copiedCard === "pubg-" + item.code ? "#16a34a" : ACCENT }}
+                      onClick={() => handleCopyCard(item.char, "pubg-" + item.code, item.name)}
+                    >
+                      {copiedCard === "pubg-" + item.code ? (
+                        <><Check className="mr-2 h-4 w-4" /> Copied!</>
+                      ) : (
+                        <>Copy {item.name}</>
+                      )}
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </motion.div>
 
         <motion.div variants={fadeIn} className="max-w-4xl mx-auto border-t border-border pt-5 space-y-4"></motion.div>

@@ -250,7 +250,7 @@ export default function TextSpacer() {
             <span style={{ color: ACCENT }}>Line Breaks &amp; Spaces</span>{" "}
             For Instagram
           </h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg md:1text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Create perfect line breaks for Instagram captions, bios, and comments. Fix spacing issues
             instantly using our Text Spacer tool. Paste your text below and generate formatted spacing.
             Pair this with <a href="/mirror-text-generator" className="text-primary hover:text-primary/80 transition-colors">Mirror Text</a> to create flipped or mirrored paragraph styles when you want a reflective effect. 
