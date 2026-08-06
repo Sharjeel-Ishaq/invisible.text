@@ -258,177 +258,120 @@ export default function TextSpacer() {
         </motion.div>
 
 
-        {/* Tool Card */}
-        <motion.div variants={fadeIn} className="max-w-3xl mx-auto">
-          <div
-            className="rounded-2xl bg-white shadow-md overflow-hidden"
-            style={{ border: `2px solid ${ACCENT}30`, borderTop: `6px solid ${ACCENT}` }}
-          >
-            <div className="p-6 md:p-8 space-y-5">
-              <div className="space-y-2">
-                <Label htmlFor="ts-input">Paste Your Text</Label>
-                <Textarea
-                  id="ts-input"
-                  data-testid="textarea-ts-input"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Paste or type your caption here..."
-                  className="min-h-[160px] resize-none text-sm"
-                  style={{ borderColor: "#e5e5e5" }}
-                  onFocus={(e) => (e.target.style.borderColor = ACCENT)}
-                  onBlur={(e) => (e.target.style.borderColor = "#e5e5e5")}
-                />
-                <p className="text-xs text-muted-foreground">
-                  Characters: <strong>{charCount}</strong>
-                </p>
-              </div>
-
-              {/* Font Style Picker */}
-              <div className="space-y-2">
-                <Label>Font Style</Label>
-                <div className="grid grid-cols-4 sm:grid-cols-8 gap-1.5">
-                  {STYLE_OPTIONS.map((opt) => {
-                    const active = style === opt.key;
-                    return (
-                      <button
-                        key={opt.key}
-                        type="button"
-                        onClick={() => setStyle(opt.key)}
-                        data-testid={`style-${opt.key}`}
-                        className="flex flex-col items-center gap-0.5 px-2 py-2 rounded-lg border text-xs font-medium transition-all"
-                        style={{
-                          backgroundColor: active ? ACCENT : "#fff",
-                          color: active ? "#fff" : "#374151",
-                          borderColor: active ? ACCENT : "#e5e7eb",
-                        }}
-                      >
-                        <span className="text-base leading-none">{opt.preview}</span>
-                        <span className="text-[10px] uppercase tracking-wide">{opt.label}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-                <p className="text-[11px] text-muted-foreground">
-                  Pick a style to convert your text into stylish Unicode letters. Switch at any time — the output updates automatically.
-                </p>
-              </div>
-
-              {/* Character Spacing Picker */}
-              <div className="space-y-2">
-                <Label>Character Spacing</Label>
-                <div className="grid grid-cols-3 sm:grid-cols-5 gap-1.5">
-                  {SPACING_OPTIONS.map((opt) => {
-                    const active = spacing === opt.key;
-                    return (
-                      <button
-                        key={opt.key}
-                        type="button"
-                        onClick={() => setSpacing(opt.key)}
-                        data-testid={`spacing-${opt.key}`}
-                        className="flex flex-col items-center gap-0.5 px-2 py-2 rounded-lg border text-[11px] font-medium transition-all"
-                        style={{
-                          backgroundColor: active ? ACCENT : "#fff",
-                          color: active ? "#fff" : "#374151",
-                          borderColor: active ? ACCENT : "#e5e7eb",
-                        }}
-                      >
-                        {opt.label}
-                      </button>
-                    );
-                  })}
-                </div>
-                <p className="text-[11px] text-muted-foreground">
-                  Add extra space or dots between each character for a unique aesthetic look.
-                </p>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <Button
-                  data-testid="button-ts-generate"
-                  onClick={generate}
-                  className="text-white"
-                  style={{ backgroundColor: ACCENT }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#019270")}
-                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = ACCENT)}
+        {/* Options Bar */}
+        <motion.div variants={fadeIn} className="rounded-xl border bg-white p-4 flex flex-wrap gap-x-6 gap-y-3 items-center" style={{ borderColor: `${ACCENT}20` }}>
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground shrink-0">Font:</span>
+            {STYLE_OPTIONS.map((opt) => {
+              const active = style === opt.key;
+              return (
+                <button
+                  key={opt.key}
+                  type="button"
+                  onClick={() => setStyle(opt.key)}
+                  data-testid={`style-${opt.key}`}
+                  className="flex items-center gap-1 px-2.5 py-1 rounded-lg border text-xs font-medium transition-all"
+                  style={{ backgroundColor: active ? ACCENT : "#f9fafb", color: active ? "#fff" : "#374151", borderColor: active ? ACCENT : "#e5e7eb" }}
                 >
-                  <Sparkles className="mr-2 h-4 w-4" /> Generate Spaced Text
-                </Button>
-                <Button
-                  data-testid="button-ts-clear"
-                  onClick={clear}
-                  variant="outline"
-                  style={{ borderColor: "#e5e5e5" }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = ACCENT;
-                    e.currentTarget.style.backgroundColor = `${ACCENT}15`;
-                    e.currentTarget.style.color = ACCENT;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = "#e5e5e5";
-                    e.currentTarget.style.backgroundColor = "transparent";
-                    e.currentTarget.style.color = "inherit";
-                  }}
+                  <span>{opt.preview}</span>
+                  <span>{opt.label}</span>
+                </button>
+              );
+            })}
+          </div>
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground shrink-0">Spacing:</span>
+            {SPACING_OPTIONS.map((opt) => {
+              const active = spacing === opt.key;
+              return (
+                <button
+                  key={opt.key}
+                  type="button"
+                  onClick={() => setSpacing(opt.key)}
+                  data-testid={`spacing-${opt.key}`}
+                  className="px-2.5 py-1 rounded-lg border text-xs font-medium transition-all"
+                  style={{ backgroundColor: active ? ACCENT : "#f9fafb", color: active ? "#fff" : "#374151", borderColor: active ? ACCENT : "#e5e7eb" }}
                 >
-                  <Trash2 className="mr-2 h-4 w-4" /> Clear
-                </Button>
-              </div>
+                  {opt.label}
+                </button>
+              );
+            })}
+          </div>
+        </motion.div>
 
-              {/* Output */}
-              <div className="space-y-2">
-                <Label htmlFor="ts-output">Spaced Output (Ready to Paste)</Label>
-                <Textarea
-                  id="ts-output"
-                  data-testid="textarea-ts-output"
-                  readOnly
-                  value={output}
-                  placeholder='Click "Generate Spaced Text" to create properly spaced output...'
-                  className="min-h-[160px] resize-none text-sm bg-muted/20"
-                />
-                <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-                  <span className="text-muted-foreground">
-                    Output Characters: <strong>{outputCharCount}</strong> / {INSTAGRAM_LIMIT} (Instagram limit)
-                  </span>
-                  <span
-                    className="font-semibold"
-                    style={{ color: overLimit ? "#dc2626" : ACCENT }}
+        {/* Two-panel Tool */}
+        <motion.div variants={fadeIn} className="rounded-2xl overflow-hidden border shadow-sm" style={{ borderColor: `${ACCENT}25` }}>
+          <div className="grid grid-cols-1 lg:grid-cols-2">
+
+            {/* Left: Input Text */}
+            <div className="flex flex-col lg:border-r" style={{ borderColor: `${ACCENT}20` }}>
+              <div className="px-5 py-3 border-b flex items-center gap-2" style={{ borderColor: `${ACCENT}20`, backgroundColor: `${ACCENT}08` }}>
+                <span className="text-sm font-semibold text-foreground">Input Text</span>
+              </div>
+              <textarea
+                id="ts-input"
+                data-testid="textarea-ts-input"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Paste or type your caption here…"
+                className="flex-1 p-5 text-sm resize-none bg-white outline-none min-h-[300px] font-sans leading-relaxed"
+              />
+              <div className="px-5 py-3 border-t flex items-center justify-between gap-3" style={{ borderColor: `${ACCENT}20`, backgroundColor: `${ACCENT}05` }}>
+                <span className="text-xs text-muted-foreground">{charCount} characters</span>
+                <div className="flex gap-2">
+                  <button
+                    data-testid="button-ts-clear"
+                    onClick={clear}
+                    className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors px-3 py-1.5 rounded-lg border bg-white hover:border-current"
+                    style={{ borderColor: `${ACCENT}25` }}
                   >
-                    {overLimit ? `Over by ${Math.abs(remaining)}` : `${remaining} remaining`}
-                  </span>
+                    <Trash2 className="h-3 w-3" /> Clear
+                  </button>
+                  <button
+                    data-testid="button-ts-generate"
+                    onClick={generate}
+                    className="flex items-center gap-1 text-xs text-white px-3 py-1.5 rounded-lg transition-all hover:opacity-90"
+                    style={{ backgroundColor: ACCENT }}
+                  >
+                    <Sparkles className="h-3 w-3" /> Generate
+                  </button>
                 </div>
               </div>
-
-              {/* Copy Button */}
-              <Button
-                data-testid="button-ts-copy"
-                onClick={handleCopy}
-                disabled={!output}
-                className="w-full text-white"
-                size="lg"
-                style={{ backgroundColor: copied ? "#16a34a" : ACCENT }}
-                onMouseEnter={(e) => { if (!copied) e.currentTarget.style.backgroundColor = "#019270"; }}
-                onMouseLeave={(e) => { if (!copied) e.currentTarget.style.backgroundColor = ACCENT; }}
-              >
-                {copied ? (
-                  <><Check className="mr-2 h-4 w-4" /> Copied!</>
-                ) : (
-                  <><Copy className="mr-2 h-4 w-4" /> Copy to Clipboard</>
-                )}
-              </Button>
-
-              {/* Live Preview */}
-              {output && (
-                <div className="space-y-2">
-                  <Label>Live Preview</Label>
-                  <div
-                    className="rounded-xl p-4 border bg-white text-sm whitespace-pre-wrap leading-relaxed"
-                    style={{ borderColor: `${ACCENT}30` }}
-                  >
-                    {output}
-                  </div>
-                </div>
-              )}
             </div>
+
+            {/* Right: Spaced Text */}
+            <div className="flex flex-col border-t lg:border-t-0" style={{ borderColor: `${ACCENT}20` }}>
+              <div className="px-5 py-3 border-b flex items-center justify-between" style={{ borderColor: `${ACCENT}20`, backgroundColor: `${ACCENT}08` }}>
+                <span className="text-sm font-semibold" style={{ color: ACCENT }}>Spaced Text</span>
+                {overLimit && <span className="text-xs font-semibold text-red-600">Over Instagram limit</span>}
+              </div>
+              <textarea
+                id="ts-output"
+                data-testid="textarea-ts-output"
+                readOnly
+                value={output}
+                placeholder='Click "Generate" to see your spaced text here…'
+                className="flex-1 p-5 text-sm resize-none bg-white outline-none min-h-[300px] font-sans leading-relaxed whitespace-pre-wrap"
+              />
+              <div className="px-5 py-3 border-t flex items-center justify-between gap-3" style={{ borderColor: `${ACCENT}20`, backgroundColor: `${ACCENT}05` }}>
+                <span className="text-xs text-muted-foreground">
+                  <strong>{outputCharCount}</strong> / {INSTAGRAM_LIMIT} —{" "}
+                  <span style={{ color: overLimit ? "#dc2626" : ACCENT }}>
+                    {overLimit ? `over by ${Math.abs(remaining)}` : `${remaining} left`}
+                  </span>
+                </span>
+                <button
+                  data-testid="button-ts-copy"
+                  onClick={handleCopy}
+                  disabled={!output}
+                  className="flex items-center gap-1 text-xs text-white px-3 py-1.5 rounded-lg transition-all hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
+                  style={{ backgroundColor: copied ? "#16a34a" : ACCENT }}
+                >
+                  {copied ? <><Check className="h-3 w-3" /> Copied!</> : <><Copy className="h-3 w-3" /> Copy to Clipboard</>}
+                </button>
+              </div>
+            </div>
+
           </div>
         </motion.div>
 

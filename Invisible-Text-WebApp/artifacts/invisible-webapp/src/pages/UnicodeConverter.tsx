@@ -207,6 +207,20 @@ export default function UnicodeConverter() {
     toast({ title: "All styles copied!", description: "All style variations copied to clipboard." });
   };
 
+  const CATEGORIES = [
+    { group: "Stylish Fonts", styles: STYLISH_STYLES },
+    { group: "Fancy Styles", styles: FANCY_STYLES },
+    { group: "Case Styles", styles: CASE_STYLES },
+    { group: "Encode / Transform", styles: ENCODE_STYLES },
+  ];
+
+  const handleCopyAllOpen = () => {
+    const visibleStyles = CATEGORIES.filter(c => openGroups.has(c.group)).flatMap(c => c.styles);
+    const allText = visibleStyles.map(s => `${s.label}:\n${s.fn(input)}`).join("\n\n");
+    navigator.clipboard.writeText(allText);
+    toast({ title: "Copied!", description: "All visible styles copied to clipboard." });
+  };
+
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
@@ -301,26 +315,18 @@ export default function UnicodeConverter() {
           </div>
         </motion.div>
 
-        {/* Font Style Category Pills + Collapsible Grids */}
+        {/* Font Style Category Pills + Two-panel */}
         <motion.div variants={fadeIn} className="max-w-6xl mx-auto border-t border-border pt-8" ref={stylesRef}>
           {/* Pill Buttons Row */}
-          <div className="flex flex-wrap justify-center gap-3 mb-8">
-            {[
-              { group: "Stylish Fonts", styles: STYLISH_STYLES },
-              { group: "Fancy Styles", styles: FANCY_STYLES },
-              { group: "Case Styles", styles: CASE_STYLES },
-              { group: "Encode / Transform", styles: ENCODE_STYLES },
-            ].map(({ group }) => {
+          <div className="flex flex-wrap justify-center gap-3 mb-6">
+            {CATEGORIES.map(({ group }) => {
               const isOpen = openGroups.has(group);
               return (
                 <button
                   key={group}
                   onClick={() => toggleGroup(group)}
                   className="px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 shadow-sm hover:shadow-md active:scale-95"
-                  style={{
-                    backgroundColor: isOpen ? "#019270" : ACCENT,
-                    color: "#fff",
-                  }}
+                  style={{ backgroundColor: isOpen ? "#019270" : ACCENT, color: "#fff" }}
                 >
                   {group}
                 </button>
@@ -328,38 +334,62 @@ export default function UnicodeConverter() {
             })}
           </div>
 
-          {/* Collapsible Card Grids */}
-          {[
-            { group: "Stylish Fonts", styles: STYLISH_STYLES },
-            { group: "Fancy Styles", styles: FANCY_STYLES },
-            { group: "Case Styles", styles: CASE_STYLES },
-            { group: "Encode / Transform", styles: ENCODE_STYLES },
-          ].map(({ group, styles }) => {
-            const isOpen = openGroups.has(group);
-            if (!isOpen) return null;
-            return (
-              <div key={group} className="mb-8 animate-in fade-in slide-in-from-top-2 duration-300">
-                <div className="flex items-center justify-between mb-3">
-                  <h2 className="text-sm font-bold uppercase tracking-widest" style={{ color: ACCENT }}>{group}</h2>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="text-xs h-7 px-3"
-                    style={{ borderColor: `${ACCENT}40`, color: ACCENT }}
-                    onClick={() => handleCopyAll(styles)}
-                    disabled={!input}
-                  >
-                    <Copy className="h-3 w-3 mr-1" /> Copy All
-                  </Button>
+          {/* Two-panel — appears when at least one category is open */}
+          {openGroups.size > 0 && (
+            <div className="rounded-2xl overflow-hidden border shadow-sm" style={{ borderColor: `${ACCENT}25` }}>
+              <div className="grid grid-cols-1 lg:grid-cols-2">
+
+                {/* Left: Input Text */}
+                <div className="flex flex-col lg:border-r" style={{ borderColor: `${ACCENT}20` }}>
+                  <div className="px-5 py-3 border-b" style={{ borderColor: `${ACCENT}20`, backgroundColor: `${ACCENT}08` }}>
+                    <span className="text-sm font-semibold text-foreground">Input Text</span>
+                  </div>
+                  <textarea
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder="Type your text here…"
+                    className="flex-1 p-5 text-sm resize-none bg-white outline-none min-h-[320px] font-sans leading-relaxed"
+                  />
+                  <div className="px-5 py-3 border-t flex items-center justify-between" style={{ borderColor: `${ACCENT}20`, backgroundColor: `${ACCENT}05` }}>
+                    <span className="text-xs text-muted-foreground">{input.length} characters</span>
+                    <button
+                      onClick={() => setInput("")}
+                      className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors px-3 py-1.5 rounded-lg border bg-white"
+                      style={{ borderColor: `${ACCENT}25` }}
+                    >
+                      <Trash2 className="h-3 w-3" /> Clear
+                    </button>
+                  </div>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {styles.map(s => (
-                    <StyleCard key={s.label} label={s.label} value={input ? s.fn(input) : ""} />
-                  ))}
+
+                {/* Right: Generated Text */}
+                <div className="flex flex-col border-t lg:border-t-0" style={{ borderColor: `${ACCENT}20` }}>
+                  <div className="px-5 py-3 border-b flex items-center justify-between" style={{ borderColor: `${ACCENT}20`, backgroundColor: `${ACCENT}08` }}>
+                    <span className="text-sm font-semibold" style={{ color: ACCENT }}>Generated Text</span>
+                    <button
+                      onClick={handleCopyAllOpen}
+                      disabled={!input}
+                      className="flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg border transition-colors disabled:opacity-40"
+                      style={{ borderColor: `${ACCENT}30`, color: ACCENT }}
+                    >
+                      <Copy className="h-3 w-3" /> Copy All
+                    </button>
+                  </div>
+                  <div className="flex-1 overflow-y-auto p-5 bg-white min-h-[320px] space-y-3">
+                    {CATEGORIES.filter(c => openGroups.has(c.group)).flatMap(c =>
+                      c.styles.map(s => (
+                        <StyleCard key={`${c.group}-${s.label}`} label={s.label} value={input ? s.fn(input) : ""} />
+                      ))
+                    )}
+                  </div>
+                  <div className="px-5 py-3 border-t text-xs text-muted-foreground" style={{ borderColor: `${ACCENT}20`, backgroundColor: `${ACCENT}05` }}>
+                    {[...openGroups].join(" · ")} — {CATEGORIES.filter(c => openGroups.has(c.group)).reduce((n, c) => n + c.styles.length, 0)} styles shown
+                  </div>
                 </div>
+
               </div>
-            );
-          })}
+            </div>
+          )}
         </motion.div>
 
         {/* What is Unicode Converter */}
